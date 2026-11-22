@@ -129,15 +129,18 @@ fast-weight and linear-attention models:
 - Yang, Kautz and Hatamizadeh, *Gated Delta Networks* (2024),
   [arXiv:2412.06464](https://arxiv.org/abs/2412.06464)
 
-Changing TriNet's settings does not turn it into linear attention.
-- Its write uses a delta error.
-- Blue's normalization depends on what is read.
-- Its cache holds no key-mass state.
-- Its keys and queries can be negative.
-- It reads the memory before writing it, and clips it.
+Changing TriNet's settings does not turn it into linear attention. ChatGPT's
+review lists why (record 012-09-05, lines 16368 to 16372):
 
-(ChatGPT's review, record 012-09-05, lines 16368 to 16372; checked here
-against `modeling_trinet.py`.)
+> * Its memory write always uses a Delta error: it subtracts the value already predicted by the memory before writing.
+> * Its Blue normalization depends on the retrieved values.
+> * Its cache does not contain the separate key-mass vector z.
+> * Its key and query features can be negative.
+> * It reads before the current write and clips the resulting fast-weight matrix.
+
+Checked here against `trinet/modeling_trinet.py`: all five hold. The
+clipping is at `max_fast_weight` (6.0 by default), which is a setting; the
+other four are not.
 
 What TriNet adds to that family is its own way of making the gates: a
 "receptor" layer that reads a three-colour signal, a slow yellow state that
