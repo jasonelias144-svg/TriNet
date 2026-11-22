@@ -71,10 +71,10 @@ queries how often the answer is the old value.
 In Gemini's `make_reasoning_example` the pointer always named the first
 name bound, and the overwrite always fell on the second. A model could
 answer every pointer query with the first value bound, without following
-the pointer. ChatGPT pointed this out (their record 012-09-05, line 16522;
-[`CONTRIBUTIONS.md`](../CONTRIBUTIONS.md)). `experiments/pointer_check.py`
-trains a model on the task as given and tests it on that task and on the
-task with change 6 (seeds 0 and 1, 1,500 steps, as above):
+the pointer. ChatGPT's review pointed this out (record 012-09-05, line
+16522). `experiments/pointer_check.py` trains a model on the task as given
+and tests it on that task and on the task with change 6 (seeds 0 and 1,
+1,500 steps, as above):
 
 | Model | Pointer queries, task as given | Pointer queries, change 6 (~52 / ~100 / ~200) |
 |---|---|---|
@@ -91,11 +91,10 @@ task with change 6 (seeds 0 and 1, 1,500 steps, as above):
   query of each episode, they scored 82.6 to 88.1%.
 - **Trained on the task with change 6, both follow the pointer** (the
   results above).
-- **Earlier answers in the text do not explain the scores.** ChatGPT
-  pointed out that later queries see the answers to earlier ones (line
-  16519). Scoring only the first query of each episode, which no earlier
-  answer can help, gives the same picture (pointer queries 53.1 / 41.1 /
-  45.7% with change 6).
+- **Earlier answers in the text do not explain the scores.** ChatGPT's
+  review raised this too (line 16519). Scoring only the first query of
+  each episode, which no earlier answer can help, gives the same picture
+  (pointer queries 53.1 / 41.1 / 45.7% with change 6).
 
 ### What this shows
 
@@ -119,7 +118,7 @@ task with change 6 (seeds 0 and 1, 1,500 steps, as above):
   - It is ours, untuned, and twice the prototype's size.
   - It learns its positions, so beyond the trained length it meets
     positions it never saw. That is part of why it does worse on longer
-    texts. (ChatGPT made the same point, line 16516.)
+    texts.
   - A fair comparison needs a tuned Transformer of the same size,
     including one without learned positions. Gemini ran one; we have not.
 
