@@ -11,7 +11,9 @@ it: it decides what is written to a fast, temporary memory and how quickly
 that memory dissolves back to its resting state. The founder worked the
 idea out with Gemini in the conversation
 [`012-08-04-GMNI-Patterns_Multiverses.txt`](https://github.com/jasonelias144-svg/open-worlds/blob/main/sketches/records/012-08-04-GMNI-Patterns_Multiverses.txt),
-from line 35595, and Gemini wrote the code that is here.
+from line 35595, and Gemini wrote the code that is here. ChatGPT reviewed
+the conversation and this repository, in their own conversation with the
+founder. Who wrote what: [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md).
 
 What it is for, in the founder's words (line 37647): "to produce a model
 and share on Hugging Face with all other models that are being developed
@@ -54,6 +56,7 @@ Transformer beside it does better in most runs.
 | `experiments/` | Ours: experiments that anyone can run again, with their results ([README](experiments/README.md)) |
 | `provenance/` | Where each of Gemini's files was taken from, the changes made here, and Gemini's draft model card |
 | `tests/` | Ours: the checks below |
+| `CONTRIBUTIONS.md` | Who wrote what, and where the quotations come from |
 
 ## Run and test
 
@@ -125,6 +128,19 @@ fast-weight and linear-attention models:
   Sequence Length* (2024), [arXiv:2406.06484](https://arxiv.org/abs/2406.06484)
 - Yang, Kautz and Hatamizadeh, *Gated Delta Networks* (2024),
   [arXiv:2412.06464](https://arxiv.org/abs/2412.06464)
+
+Changing TriNet's settings does not turn it into linear attention. ChatGPT's
+review lists why (record 012-09-05, lines 16368 to 16372):
+
+> * Its memory write always uses a Delta error: it subtracts the value already predicted by the memory before writing.
+> * Its Blue normalization depends on the retrieved values.
+> * Its cache does not contain the separate key-mass vector z.
+> * Its key and query features can be negative.
+> * It reads before the current write and clips the resulting fast-weight matrix.
+
+Checked here against `trinet/modeling_trinet.py`: all five hold. The
+clipping is at `max_fast_weight` (6.0 by default), which is a setting; the
+other four are not.
 
 What TriNet adds to that family is its own way of making the gates: a
 "receptor" layer that reads a three-colour signal, a slow yellow state that

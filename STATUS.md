@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: the task without its shortcut (change 6), the results run again on it, and the claims corrected (#3)
+- Claude: who wrote what (`CONTRIBUTIONS.md`), ChatGPT named as a reviewer, and where each result table ran (#4)
 
 ## Next
 
@@ -63,6 +63,16 @@ on Hugging Face:
 
 ## Decided
 
+- 2026-11-22, founder, on credit: "Our records should allow others to
+  recreate our results, in theory. That is the goal." On quoting ChatGPT:
+  "Yes, feel free to quote ChatGPT, as they are aware of the public nature
+  of the project, having been there since the start." And: "Credit in
+  terms of final product, but we don't have to get into credit in terms of
+  idea origin. … only authorship credit in terms of who wrote what code or
+  what part for the repo. … And if a quote is already being reproduced in
+  the records, then provide the source of the quote." Hence
+  `CONTRIBUTIONS.md` (who wrote what, and where quotations come from) and
+  where each result table ran (`experiments/README.md`).
 - 2026-11-22, founder: "Publishing comes last but should be an intention
   from the beginning. We have some work to do before publishing the model,
   but I wanted to make sure we would always be moving in that direction."
@@ -111,6 +121,10 @@ on Hugging Face:
   missing gate bias gets PyTorch's value on transformers 5.x and 0.25 or
   0.90 on 4.46. Only matters for a checkpoint that lacks weights.
   (Independent review of #2.)
+- `provenance/MANIFEST.json` gives the record 43,646 lines: the pieces
+  from splitting on newlines. `wc -l` gives 43,645, as the file ends with a
+  newline. Say which count it is, in a later change. (Independent review of
+  #4.)
 - `config.initializer_range` no longer sets any weight (change 5). Say so
   in the config, or drop it, in a later change. (Independent review of #2.)
 - Gemini's Colab script (conversation lines 42767 to 43561) did not come
@@ -124,6 +138,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)
 - 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
 - 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)
 - 2026-11-22 Claude: the repository set up from Gemini's conversation: the model, training, the app, provenance, 15 tests, CI; after independent review, a fourth change (generate() used no cache on transformers 5.x) and stronger tests (#1)

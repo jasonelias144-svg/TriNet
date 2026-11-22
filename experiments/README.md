@@ -36,6 +36,13 @@ all), and with 24 and 74 characters of each filler (about 100 and 200).
 **Run.** `python experiments/answers_only.py MODEL` (two seeds, a few
 minutes each).
 
+**Where the tables on this page ran** (2026-11-22): a CPU (Intel Xeon,
+2.10 GHz, 4 cores), on 2 threads unless stated otherwise (the
+scripts' `--threads` default; `OMP_NUM_THREADS=2` for `train_trinet.py`),
+with Python 3.11.17, PyTorch 2.15.0 (CPU build), transformers 5.24.0 and
+NumPy 2.4.6. PyTorch does not promise the same numbers on another number
+of threads.
+
 ### Results, 2026-11-22 (task with change 6, seeds 0 and 1)
 
 | Model | Parameters | ~52 characters | ~100 characters | ~200 characters |
@@ -64,9 +71,10 @@ queries how often the answer is the old value.
 In Gemini's `make_reasoning_example` the pointer always named the first
 name bound, and the overwrite always fell on the second. A model could
 answer every pointer query with the first value bound, without following
-the pointer. `experiments/pointer_check.py` trains a model on the task as
-given and tests it on that task and on the task with change 6 (seeds 0 and
-1, 1,500 steps, as above):
+the pointer. ChatGPT's review pointed this out (record 012-09-05, line
+16522). `experiments/pointer_check.py` trains a model on the task as given
+and tests it on that task and on the task with change 6 (seeds 0 and 1,
+1,500 steps, as above):
 
 | Model | Pointer queries, task as given | Pointer queries, change 6 (~52 / ~100 / ~200) |
 |---|---|---|
@@ -83,8 +91,10 @@ given and tests it on that task and on the task with change 6 (seeds 0 and
   query of each episode, they scored 82.6 to 88.1%.
 - **Trained on the task with change 6, both follow the pointer** (the
   results above).
-- **Earlier answers in the text do not explain the scores.** Scoring only
-  the first query of each episode, which no earlier answer can help, gives
+- **Earlier answers in the text do not explain the scores.** ChatGPT's
+  review pointed out that later queries can see earlier answers (record
+  012-09-05, line 16519), so `pointer_check.py` also scores the first
+  query of each episode alone, which no earlier answer can help. It gives
   the same picture (pointer queries 53.1 / 41.1 / 45.7% with change 6).
 
 ### What this shows
