@@ -56,6 +56,41 @@
     42295
    ],
    "sha256": "e629e8118a5d7baa8b13006cecac36953972c4aaf455b2b80a45c0572ae4a49a"
+  },
+  "prototypes/tri_net.py": {
+   "lines": [
+    36703,
+    36816
+   ],
+   "sha256": "fc989832db08dc16d2f2236a8544041df1c642ae7a62041c0cdfc7ba999d13d6"
+  },
+  "prototypes/cell_library_ext.py": {
+   "lines": [
+    36871,
+    37007
+   ],
+   "sha256": "3c2faa39b1bf84ef8e99d1ddbf5742db0699361fd9b008b860e00d0014704c32"
+  },
+  "prototypes/micro_brain.py": {
+   "lines": [
+    37058,
+    37248
+   ],
+   "sha256": "6c258d8b7d5e69d4a489c7e09c12f7d489fc99c57a1476f83903811dfe4c9412"
+  },
+  "prototypes/meta_micro_brain.py": {
+   "lines": [
+    37298,
+    37441
+   ],
+   "sha256": "4ced3dc86398c66d6eb485b7213b2b0eeba11a684934e585720375cd0ce25418"
+  },
+  "prototypes/tri_lm.py": {
+   "lines": [
+    37486,
+    37639
+   ],
+   "sha256": "69545aae82783bb8537854e958028397626593275cfb41ba35803c2a87dde933"
   }
  },
  "changes": [
@@ -86,6 +121,13 @@
    "new": "    ) -> dict:\n        if past_key_values is None:\n            past_key_values = kwargs.get(\"cache\")\n        if isinstance(past_key_values, TriNetCache)",
    "count": 1,
    "why": "transformers 5.x hands generate()'s cache to prepare_inputs_for_generation as cache=, not past_key_values=, so the cache was dropped and every step ran the whole text again from an empty state: right output, no O(1) generation. Found by the independent review of TriNet #1."
+  },
+  {
+   "file": "trinet/modeling_trinet.py",
+   "old": "    def _init_weights(self, module: nn.Module) -> None:\n",
+   "new": "    def _init_weights(self, module: nn.Module) -> None:\n        if isinstance(module, (nn.Linear, nn.Embedding, nn.Conv1d, nn.LayerNorm)):\n            module.reset_parameters()  # PyTorch's own initial values (provenance/MANIFEST.json, change 5)\n        if not isinstance(module, TriNetLayer):\n            return\n",
+   "count": 1,
+   "why": "Gemini's _init_weights drew every linear, embedding and convolution weight from N(0, 0.02), as Hugging Face models usually do; the prototype tri_lm.py keeps PyTorch's own initial values. On the in-context task (bind, overwrite, two hops; trained on the answers only, 1,500 steps), the packaged model reached 78.6 to 92.5% as given and 100% with PyTorch's values, two seeds each (experiments/README.md). _init_weights now sets PyTorch's own values (reset_parameters), so that a weight missing from a checkpoint gets them too; the gate biases are still set as Gemini set them, and config.initializer_range no longer sets any weight."
   }
  ]
 }
