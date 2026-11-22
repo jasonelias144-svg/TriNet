@@ -1,0 +1,91 @@
+{
+ "about": "Where each of Gemini's files in this repository was taken from, and every change made to it here. tests/test_provenance.py undoes the changes and checks that the result is, byte for byte, what Gemini gave.",
+ "record": {
+  "name": "012-08-04-GMNI-Patterns_Multiverses.txt",
+  "kept_at": "https://github.com/jasonelias144-svg/open-worlds/blob/main/sketches/records/012-08-04-GMNI-Patterns_Multiverses.txt",
+  "bytes": 1829108,
+  "lines": 43646,
+  "sha256": "52ae3fc6629d6e77f3e605b06e5e24cdbbe8ff611aedc14929b196573fa1eddf"
+ },
+ "files": {
+  "trinet/configuration_trinet.py": {
+   "lines": [
+    40734,
+    40794
+   ],
+   "sha256": "58139a223ebdaa201dc599f19cd7fe3d5753217a66de383855f35d33c743dd69"
+  },
+  "trinet/modeling_trinet.py": {
+   "lines": [
+    40797,
+    41315
+   ],
+   "sha256": "b380355bdc46e1080f100e2501a5b38e1b5db4758665fb9f9664f7552d2f59e5"
+  },
+  "verify_hf_roundtrip.py": {
+   "lines": [
+    41329,
+    41358
+   ],
+   "sha256": "93e881d8f35ee96814d9e37da04bcedb7f1b02f4de285160a838ebfd24f9de5c"
+  },
+  "train_trinet.py": {
+   "lines": [
+    41379,
+    42189
+   ],
+   "sha256": "5cfc5215519573684775ade50dbde6a553d96797a47083789ab0a7f31c8c96a2"
+  },
+  "app.py": {
+   "lines": [
+    42302,
+    42741
+   ],
+   "sha256": "7fb73f8d8f9934fe723e913c336f9abb646fb64d8adfb8546bda84c9a99a378f"
+  },
+  "requirements.txt": {
+   "lines": [
+    42744,
+    42751
+   ],
+   "sha256": "ae3fa875486a1c4a056a9cb286888d2e4771a5f24df97a61bb2de62d0afead6c"
+  },
+  "provenance/model-card-draft.md": {
+   "lines": [
+    42218,
+    42295
+   ],
+   "sha256": "e629e8118a5d7baa8b13006cecac36953972c4aaf455b2b80a45c0572ae4a49a"
+  }
+ },
+ "changes": [
+  {
+   "file": "trinet/configuration_trinet.py",
+   "old": "    model_type = \"trinet\"\n",
+   "new": "    model_type = \"trinet\"\n    attribute_map = {\"num_hidden_layers\": \"n_layers\"}\n",
+   "count": 1,
+   "why": "transformers 5.x builds a cache in generate() from config.num_hidden_layers; TriNet's config calls it n_layers, so generate() failed with AttributeError."
+  },
+  {
+   "file": "trinet/modeling_trinet.py",
+   "old": "            except TypeError:\n",
+   "new": "            except (TypeError, ValueError):\n",
+   "count": 1,
+   "why": "transformers 5.x's Cache() with no arguments raises ValueError, not TypeError, so the guard around it did not catch it."
+  },
+  {
+   "file": "trinet/modeling_trinet.py",
+   "old": "seen_tokens",
+   "new": "_seen_tokens",
+   "count": 4,
+   "why": "transformers 4.x's Cache has a read-only property seen_tokens, so TriNetCache could not set it (AttributeError); the count is kept under _seen_tokens, the name that property reads."
+  },
+  {
+   "file": "trinet/modeling_trinet.py",
+   "old": "    ) -> dict:\n        if isinstance(past_key_values, TriNetCache)",
+   "new": "    ) -> dict:\n        if past_key_values is None:\n            past_key_values = kwargs.get(\"cache\")\n        if isinstance(past_key_values, TriNetCache)",
+   "count": 1,
+   "why": "transformers 5.x hands generate()'s cache to prepare_inputs_for_generation as cache=, not past_key_values=, so the cache was dropped and every step ran the whole text again from an empty state: right output, no O(1) generation. Found by the independent review of TriNet #1."
+  }
+ ]
+}
