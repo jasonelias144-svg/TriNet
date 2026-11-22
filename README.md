@@ -27,12 +27,20 @@ token at a time with a memory of fixed size, and trains on a CPU. It has
 been trained here only in small test runs on a CPU, and nothing has been
 published on Hugging Face.
 
-**What it was built for, it can learn.** On a task of binding values,
-overwriting one and following a pointer, trained on the answers, the model
-reaches 100%, and keeps that at four times the length it was trained
-on, with a memory of fixed size (`experiments/README.md`). It needed one
-change for that: starting from PyTorch's own initial values instead of the
-small ones Gemini's code drew (change 5).
+**What it was built for, it can learn, when trained on the answers.** On a
+task of binding values, overwriting one and following a pointer, trained on
+the answers alone, the model reaches 100% and keeps that at four times the
+length it was trained on, with a memory of fixed size
+(`experiments/README.md`). Two changes made that true and measurable:
+- **Change 5:** starting from PyTorch's own initial values instead of the
+  small ones Gemini's code drew.
+- **Change 6:** a task in which the pointer names a random variable. In
+  Gemini's task it always named the first, and the models learned that
+  shortcut instead of following the pointer.
+
+Trained on every next character, as `train_trinet.py` trains, it learns the
+task only in part so far (34% at best, one seed of three), and the small
+Transformer beside it does better in most runs.
 
 ## What is here
 
@@ -52,7 +60,7 @@ small ones Gemini's code drew (change 5).
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install transformers safetensors numpy pytest
-python -m pytest -q                      # 31 tests, seconds
+python -m pytest -q                      # 35 tests, seconds
 python verify_hf_roundtrip.py            # Gemini's own check
 python train_trinet.py --preset smoke --smoke-test --seq-len 72 --steps 100
 python experiments/answers_only.py trinet  # minutes; see experiments/README.md
@@ -84,9 +92,9 @@ Checked here, on 2026-11-22:
 - **Training runs**, and its checkpoint loads again.
 - **The app** draws its three figures from the untrained model (by hand;
   it is not in CI).
-- **The model learns its in-context task**, as above, and so does Gemini's
-  prototype, at about the pace they reported, on a different set-up
-  (`experiments/README.md`). A few smaller things Gemini said of their
+- **The model learns its in-context task** when trained on the answers, as
+  above, and so does Gemini's prototype, at about the pace they reported, on
+  a different set-up (`experiments/README.md`). A few smaller things Gemini said of their
   prototypes hold too (`prototypes/README.md`).
 
 Not checked: most of Gemini's reported results from runs in their own

@@ -128,6 +128,13 @@
    "new": "    def _init_weights(self, module: nn.Module) -> None:\n        if isinstance(module, (nn.Linear, nn.Embedding, nn.Conv1d, nn.LayerNorm)):\n            module.reset_parameters()  # PyTorch's own initial values (provenance/MANIFEST.json, change 5)\n        if not isinstance(module, TriNetLayer):\n            return\n",
    "count": 1,
    "why": "Gemini's _init_weights drew every linear, embedding and convolution weight from N(0, 0.02), as Hugging Face models usually do; the prototype tri_lm.py keeps PyTorch's own initial values. On the in-context task (bind, overwrite, two hops; trained on the answers only, 1,500 steps), the packaged model reached 78.6 to 92.5% as given and 100% with PyTorch's values, two seeds each (experiments/README.md). _init_weights now sets PyTorch's own values (reset_parameters), so that a weight missing from a checkpoint gets them too; the gate biases are still set as Gemini set them, and config.initializer_range no longer sets any weight."
+  },
+  {
+   "file": "train_trinet.py",
+   "old": "    src_var = direct_vars[0]\n    parts.append(f\"{ptr_var}={src_var};\")\n\n    reb_var = direct_vars[1]\n",
+   "new": "    # Change 6 (provenance/MANIFEST.json): which variable the pointer names,\n    # and which is overwritten, are drawn at random, not always the first two.\n    src_i, reb_i = rng.choice(n_direct, size=2, replace=False)\n    src_var = direct_vars[src_i]\n    parts.append(f\"{ptr_var}={src_var};\")\n\n    reb_var = direct_vars[reb_i]\n",
+   "count": 1,
+   "why": "In Gemini's make_reasoning_example the pointer always named the first variable bound and the overwrite always fell on the second. A model could answer every pointer query with the first value without following the pointer, and the models here did: trained on Gemini's task, TriNet and the prototype scored 100% on it and 41 to 51% on pointer queries once the pointer named a variable at random, the score that rule predicts (experiments/README.md; an outside review pointed out the fixed roles). Drawing both at random makes following the pointer the only way to answer."
   }
  ]
 }

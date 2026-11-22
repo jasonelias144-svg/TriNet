@@ -41,3 +41,34 @@ def test_each_answer_is_read_at_the_gt_that_comes_before_it():
     assert torch.all(x[rows, cols] == ord(">"))
     assert torch.all(x[rows, cols + 1] == want)
     assert torch.all(olds[kinds == 2] != want[kinds == 2])
+
+
+def roles(make, seeds=range(300)):
+    """Which binding the pointer names, and which is overwritten, by position."""
+    import numpy as np
+    seen = set()
+    for seed in seeds:
+        text, _ = make(3, 4, 4, np.random.default_rng(seed))
+        bound = [text[i] for i in range(0, 12, 4)]
+        pointer, overwrite = text[16:20], text[20:24]  # after four characters of filler
+        seen.add((bound.index(pointer[2]), bound.index(overwrite[0])))
+    return seen
+
+
+def test_gemini_task_as_given_always_points_to_the_first_and_overwrites_the_second():
+    spec = importlib.util.spec_from_file_location("pointer_check", SCRIPT.parent / "pointer_check.py")
+    pointer_check = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pointer_check)
+    assert roles(pointer_check.TASKS["as given"]) == {(0, 1)}
+    # Change 6: every pair of different bindings occurs.
+    assert roles(answers_only.train_trinet.make_reasoning_example) == {
+        (a, b) for a in range(3) for b in range(3) if a != b}
+
+
+def test_the_pointer_check_runs():
+    spec = importlib.util.spec_from_file_location("pointer_check", SCRIPT.parent / "pointer_check.py")
+    pointer_check = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pointer_check)
+    [results] = pointer_check.main(["trinet", "--steps", "2", "--seeds", "0"])
+    assert {task for task, _ in results} == {"as given", "change 6"}
+    assert answers_only.train_trinet.make_reasoning_example is pointer_check.TASKS["change 6"]
