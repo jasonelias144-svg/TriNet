@@ -51,6 +51,9 @@ HALF = dict(vocab_size=256, d_model=32, d_hemi=20, d_key=12, d_val=12, n_layers=
 BICAMERAL = {"bicam-sym": {}, "bicam-asym": {"symmetric": False}, "bicam-nocal": {"callosum": False}}
 MODELS = ["trinet", "trinet-residual", *BICAMERAL, "transformer"]
 TASKS = ["answers", "harder"]
+# Filler lengths as in answers_only.TESTS; the harder task's episodes are longer.
+TESTS = {"answers": A.TESTS,
+         "harder": {"~125 characters": (2, 10), "~160 characters": (24, 24), "~260 characters": (74, 74)}}
 
 
 class HarderTask:
@@ -95,13 +98,23 @@ def build(name, task):
     return model, (lambda x: model(x, use_cache=False).logits), data
 
 
-def run(name, task, seed, steps, eval_batches=8):
+def curve_point(logits_of, data, step):
+    """Accuracy at the training length on two fixed batches, for the
+    learning curve. Its own random generator, so the training is the same
+    with or without it."""
+    with torch.no_grad():
+        x, metas = data.batch(128, 2, 10, np.random.default_rng(999))
+        got, want, _, _ = A.answers(logits_of(x), metas)
+    return f"{step}: {100 * (got.argmax(-1) == want).float().mean():.1f}"
+
+
+def run(name, task, seed, steps, eval_batches=8, curve_every=0):
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
     model, logits_of, data = build(name, task)
     opt = torch.optim.Adam(model.parameters(), lr=3e-3)
-    start = time.time()
-    for _ in range(steps):
+    start, curve = time.time(), []
+    for step in range(1, steps + 1):
         x, metas = data.batch(32, 2, 10, rng)
         got, want, _, _ = A.answers(logits_of(x), metas)
         loss = F.cross_entropy(got, want)
@@ -109,13 +122,17 @@ def run(name, task, seed, steps, eval_batches=8):
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
+        if curve_every and step % curve_every == 0:
+            curve.append(curve_point(logits_of, data, step))
     params = sum(p.numel() for p in model.parameters())
     print(f"{name} on {task}, seed {seed}, {steps} steps, {params:,} parameters ({time.time() - start:.0f} s)",
           flush=True)
+    if curve:
+        print("    learning curve, % right at the training length, by step: " + "; ".join(curve), flush=True)
     kinds = H.KINDS if task == "harder" else {1: "direct", 2: "overwrite", 3: "two hops"}
     results = {}
     with torch.no_grad():
-        for label, (lo, hi) in A.TESTS.items():
+        for label, (lo, hi) in TESTS[task].items():
             erng = np.random.default_rng(1000 + lo)
             right, confused, kind = [], [], []
             for _ in range(eval_batches):
@@ -140,9 +157,11 @@ def main(argv=None):
     p.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
     p.add_argument("--threads", type=int, default=2)
     p.add_argument("--eval-batches", type=int, default=8, help="batches of 64 episodes per test length")
+    p.add_argument("--curve-every", type=int, default=250, help="steps between learning-curve points (0: none)")
     args = p.parse_args(argv)
     torch.set_num_threads(args.threads)
-    return [run(args.model, args.task, seed, args.steps, args.eval_batches) for seed in args.seeds]
+    return [run(args.model, args.task, seed, args.steps, args.eval_batches, args.curve_every)
+            for seed in args.seeds]
 
 
 if __name__ == "__main__":

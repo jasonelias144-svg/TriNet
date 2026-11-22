@@ -67,7 +67,7 @@ def test_the_harder_task_varies_what_a_rule_could_fix():
             depths[len(rec["history"][v]) - 1] += 1
         kinds.update(k for _, _, k in meta)
     assert targets["pointer"] > 0 and targets["bound"] > 0  # chains happen
-    assert set(depths) == {0, 1, 2, 3, 4}  # from no overwrite up to four
+    assert {0, 1, 2, 3, 4} <= set(depths)  # from no overwrite to four and more
     assert set(kinds) == {1, 2, 3, 4}
     assert copies_differ > 0  # a pointer's value can differ from its target's value now
 
@@ -139,5 +139,5 @@ def test_the_stage_a_script_runs_every_model_on_both_tasks(capsys):
     for task in stage_a.TASKS:
         for name in ("trinet-residual", "bicam-nocal", "transformer"):
             results = stage_a.run(name, task, seed=0, steps=2, eval_batches=1)
-            assert set(results) == {"~52 characters", "~100 characters", "~200 characters"}
+            assert set(results) == set(stage_a.TESTS[task])
     assert "before last overwrite" in capsys.readouterr().out

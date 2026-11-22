@@ -4,26 +4,26 @@ On the task of answers_only.py, one TriNet answers every query (100%, three
 seeds), so a model built from two TriNets cannot show that it does better.
 This task asks more of a memory:
 
-    e=2;g=3;f=4;d=3;yz-x,,g=4;f=2;xxg=2; yc=e;f=3; h=f;y .,..?f>3;?c>2;?e>2;?f<2;?g<4;?h>3;?d>3;?g>2;
+    h=4;g=3;f=1;c=4;e=5;z-x,,-d=h;f=3; g=5;z.b=c;--e=0;xf=1;e=4;c=2; c,- f?b>4;?f>1;?c>2;?f<3;?h>4;?g<3;?e>4;?c<4;?d>4;?g>5;?e<0;
 
 (`make_episode(6, 6, numpy.random.default_rng(4))`.)
 
-- Four names are bound to values.
+- Five names are bound to values.
 - Then, in random order, with a little filler between them:
-  - two pointers, each a new name given an earlier name (`c=e`); the second
+  - two pointers, each a new name given an earlier name (`d=h`); the second
     may name the first, making a chain;
-  - four overwrites of the first four names (`g=4`). One name can be
-    overwritten up to four times, and some are not overwritten at all.
+  - six overwrites of the first five names (`f=3`). One name can be
+    overwritten several times, and some are not overwritten at all.
 - Then the queries, in random order:
   - `?x>` asks for the current value of x;
   - `?x<` asks for the value x had before its last overwrite (only for names
     that were overwritten).
 
-A pointer copies the value its target has at that moment: `h=f` sets h to
-f's value then, 3, and `?h>3` asks for it even if f is overwritten later.
-A later overwrite of the target does not change it. So
-neither "the target's value now" nor "the target's first value" is always
-right; `shortcut_scores` measures how often each such rule is.
+A pointer copies the value its target has at that moment: `b=c` sets b to
+c's value then, 4, and `?b>4` asks for it, although c is overwritten later
+(`c=2`). So neither "the target's value now" nor "the target's first
+value" is always right; `shortcut_scores` measures how often each such rule
+is.
 
 Query kinds: 1 current value, never overwritten; 2 current value,
 overwritten; 3 pointer; 4 value before the last overwrite.
@@ -47,9 +47,9 @@ def make_episode(
     l1: int,
     l2: int,
     rng: np.random.Generator,
-    n_bound: int = 4,
+    n_bound: int = 5,
     n_pointers: int = 2,
-    n_overwrites: int = 4,
+    n_overwrites: int = 6,
 ) -> Tuple[str, List[Tuple[int, int, int]], Dict]:
     """One episode: its text, and for each query (position of its ">" or
     "<", the answer's character code, kind). The third value records what
