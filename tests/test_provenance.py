@@ -14,7 +14,7 @@ MANIFEST = json.loads((ROOT / "provenance" / "MANIFEST.json").read_text(encoding
 
 
 def as_given(name):
-    text = (ROOT / name).read_text(encoding="utf-8")
+    text = (ROOT / name).read_bytes().decode("utf-8")  # no newline translation
     for change in reversed(MANIFEST["changes"]):
         if change["file"] != name:
             continue

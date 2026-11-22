@@ -22,9 +22,10 @@ package format that meets the requirements of Hugging Face".
 ## State
 
 **The code runs; there is no trained model yet.** The package loads and
-saves through Hugging Face's `AutoModelForCausalLM`, generates text with a
-memory of fixed size, and trains on a CPU. Nothing has been trained beyond a
-few hundred steps, and nothing has been published on Hugging Face.
+saves through Hugging Face's `AutoModelForCausalLM`, generates text one
+token at a time with a memory of fixed size, and trains on a CPU. It has
+been trained here only in small test runs (the smallest preset, up to
+2,000 steps, on CPU), and nothing has been published on Hugging Face.
 
 ## What is here
 
@@ -42,7 +43,7 @@ few hundred steps, and nothing has been published on Hugging Face.
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install transformers safetensors numpy pytest
-python -m pytest -q                      # 11 tests
+python -m pytest -q                      # 15 tests
 python verify_hf_roundtrip.py            # Gemini's own check
 python train_trinet.py --preset smoke --smoke-test --seq-len 72 --steps 100
 ```
@@ -53,16 +54,22 @@ CI runs the tests and Gemini's check with transformers 4.46.3 and 5.24.0.
 
 Checked here, on 2026-11-22:
 
-- **Three small changes were needed** for the model to work with the real
+- **Four small changes were needed** for the model to work with the real
   transformers library: Gemini's sandbox did not have it, and Gemini tested
-  against a stand-in of their own (they said so, line 41318). Each change
-  is listed with its reason in `provenance/MANIFEST.json`; a test undoes
-  them and checks that the rest is, byte for byte, what Gemini gave.
+  against a stand-in of their own (they said so, line 41318). Three made it
+  run at all; the fourth, found by this repository's first review, made
+  `generate()` on transformers 5.x use the cache instead of reading the
+  whole text again at every step. Each change is listed with its reason in
+  `provenance/MANIFEST.json`; a test undoes them and checks that the rest
+  is, byte for byte, what Gemini gave.
 - **Stepping token by token with the cache gives what one full pass
-  gives**, and the cache stays the same size, however long the text
-  (`tests/test_model.py`).
+  gives**, each of the cache's three states matters, `generate()` feeds the
+  model one new token at a time, and the cache stays the same size, however
+  long the text (`tests/test_model.py`).
 - **The four presets have exactly the sizes in Gemini's table**, for both
-  TriNet and the Transformer beside it (`tests/test_training.py`).
+  TriNet and the Transformer beside it (`tests/test_training.py`). At the
+  smallest preset the Transformer is 20% larger (71,648 parameters against
+  59,708); at the others they are within 0.2%.
 - **Training runs**, and its checkpoint loads again.
 - **The app** draws its three figures from the untrained model (by hand;
   it is not in CI).
@@ -77,9 +84,10 @@ wrote it and is not this repository's model card.
 ## How it relates to known work
 
 The layer in `modeling_trinet.py` keeps a fast-weight matrix that it
-updates by a gated delta rule: each step it decays the matrix (yellow's
-retention gate), then writes the difference between the new value and what
-the memory already predicts (yellow's write gate). That is the family of
+updates by a variant of the gated delta rule: each step it decays the
+matrix (yellow's retention gate) and writes the difference between the new
+value and what the memory predicted before the decay (yellow's write gate,
+which can reach 1.5; the matrix is clipped to ±6). That is the family of
 fast-weight and linear-attention models:
 
 - Ba et al., *Using Fast Weights to Attend to the Recent Past* (2016),

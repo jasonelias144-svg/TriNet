@@ -1,7 +1,13 @@
 """Ours, not Gemini's. What TriNetForCausalLM promises, checked on a small
 model: stepping token by token with the cache gives what one full pass
-gives; the cache stays the same size however long the text; and the model
-survives save_pretrained and AutoModelForCausalLM.from_pretrained.
+gives; each of the cache's three states matters; generate() feeds the
+model one new token at a time; the cache stays the same size however long
+the text; and the model survives save_pretrained and
+AutoModelForCausalLM.from_pretrained.
+
+At its first values the model barely uses its yellow state, so a cache
+that forgot it would pass. The fixture sets the yellow gates and the head
+to values that make every state count.
 """
 import json
 
@@ -12,14 +18,25 @@ from transformers import AutoModelForCausalLM
 from trinet.configuration_trinet import TriNetConfig
 from trinet.modeling_trinet import TriNetForCausalLM
 
-TOL = 1e-4
+STATES = ("fast_weights", "yellow_tonic", "delay_buffers")
+
+
+def close(a, b):
+    torch.testing.assert_close(a, b, rtol=1e-5, atol=1e-5)
 
 
 @pytest.fixture(scope="module")
 def model():
     torch.manual_seed(0)
     cfg = TriNetConfig(vocab_size=256, d_model=48, d_key=24, d_val=24, n_layers=2, n_receptors=8)
-    return TriNetForCausalLM(cfg).eval()
+    m = TriNetForCausalLM(cfg).eval()
+    with torch.no_grad():
+        for layer in m.model.layers:
+            layer.mod_in.bias.fill_(0.3)
+            layer.yellow_to_write.weight.normal_(0.0, 0.5)
+            layer.yellow_to_retain.weight.normal_(0.0, 0.5)
+        m.lm_head.weight.normal_(0.0, 0.5)
+    return m
 
 
 @pytest.fixture(scope="module")
@@ -36,7 +53,7 @@ def test_token_by_token_with_the_cache_equals_one_full_pass(model, ids):
         out = model(ids[:, t : t + 1], past_key_values=past, use_cache=True)
         past = out.past_key_values
         steps.append(out.logits)
-    assert (torch.cat(steps, dim=1) - full).abs().max().item() < TOL
+    close(torch.cat(steps, dim=1), full)
 
 
 @torch.no_grad()
@@ -48,7 +65,42 @@ def test_a_prompt_then_one_token_at_a_time_equals_one_full_pass(model, ids):
         out = model(ids[:, t : t + 1], past_key_values=past, use_cache=True)
         past = out.past_key_values
         parts.append(out.logits)
-    assert (torch.cat(parts, dim=1) - full).abs().max().item() < TOL
+    close(torch.cat(parts, dim=1), full)
+
+
+@torch.no_grad()
+@pytest.mark.parametrize("state", STATES)
+def test_each_state_in_the_cache_matters(model, ids, state):
+    # A cache that forgot this state at every step would drift from the
+    # full pass by far more than the stepping tests allow: measured on
+    # 2026-11-22, 4.4e-3 (fast weights), 1.7e-3 (yellow), 3.4 (delay
+    # line), against 3.3e-6 when nothing is forgotten.
+    full = model(ids, use_cache=False).logits
+    past, steps = None, []
+    for t in range(ids.shape[1]):
+        out = model(ids[:, t : t + 1], past_key_values=past, use_cache=True)
+        past = out.past_key_values
+        steps.append(out.logits)
+        for tensor in getattr(past, state):
+            tensor.zero_()
+    assert (torch.cat(steps, dim=1) - full).abs().max().item() > 1e-4, state
+
+
+@torch.no_grad()
+def test_generate_feeds_the_model_one_new_token_at_a_time(model, ids):
+    lengths = []
+    forward = model.model.forward
+
+    def spy(*args, **kwargs):
+        lengths.append(kwargs["input_ids"].shape[1])
+        return forward(*args, **kwargs)
+
+    model.model.forward = spy
+    try:
+        model.generate(ids[:1, :6], max_new_tokens=5, do_sample=False, use_cache=True)
+    finally:
+        del model.model.forward
+    assert lengths == [6, 1, 1, 1, 1]
 
 
 @torch.no_grad()
@@ -70,7 +122,7 @@ def test_save_and_load_through_auto_model_for_causal_lm(model, ids, tmp_path):
     assert (tmp_path / "model.safetensors").exists()
 
     loaded = AutoModelForCausalLM.from_pretrained(tmp_path, trust_remote_code=True).eval()
-    assert (loaded(ids).logits - model(ids).logits).abs().max().item() == 0.0
+    assert torch.equal(loaded(ids).logits, model(ids).logits)
 
     prompt = ids[:1, :6]
     cached = loaded.generate(prompt, max_new_tokens=12, do_sample=False, use_cache=True)

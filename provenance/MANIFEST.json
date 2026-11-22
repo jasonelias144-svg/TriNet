@@ -79,6 +79,13 @@
    "new": "_seen_tokens",
    "count": 4,
    "why": "transformers 4.x's Cache has a read-only property seen_tokens, so TriNetCache could not set it (AttributeError); the count is kept under _seen_tokens, the name that property reads."
+  },
+  {
+   "file": "trinet/modeling_trinet.py",
+   "old": "    ) -> dict:\n        if isinstance(past_key_values, TriNetCache)",
+   "new": "    ) -> dict:\n        if past_key_values is None:\n            past_key_values = kwargs.get(\"cache\")\n        if isinstance(past_key_values, TriNetCache)",
+   "count": 1,
+   "why": "transformers 5.x hands generate()'s cache to prepare_inputs_for_generation as cache=, not past_key_values=, so the cache was dropped and every step ran the whole text again from an empty state: right output, no O(1) generation. Found by the independent review of TriNet #1."
   }
  ]
 }

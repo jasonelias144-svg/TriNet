@@ -450,6 +450,8 @@ class TriNetForCausalLM(TriNetPreTrainedModel, GenerationMixin):
         use_cache: Optional[bool] = True,
         **kwargs,
     ) -> dict:
+        if past_key_values is None:
+            past_key_values = kwargs.get("cache")
         if isinstance(past_key_values, TriNetCache) and past_key_values.get_seq_length() > 0:
             input_ids = input_ids[:, -1:]
             inputs_embeds = None
