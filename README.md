@@ -11,7 +11,10 @@ it: it decides what is written to a fast, temporary memory and how quickly
 that memory dissolves back to its resting state. The founder worked the
 idea out with Gemini in the conversation
 [`012-08-04-GMNI-Patterns_Multiverses.txt`](https://github.com/jasonelias144-svg/open-worlds/blob/main/sketches/records/012-08-04-GMNI-Patterns_Multiverses.txt),
-from line 35595, and Gemini wrote the code that is here.
+from line 35595, and Gemini wrote the code that is here. ChatGPT reviewed
+that conversation and this repository, and found, among other things, the
+shortcut in the task that change 6 removes. Who contributed what, with
+where to check each: [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md).
 
 What it is for, in the founder's words (line 37647): "to produce a model
 and share on Hugging Face with all other models that are being developed
@@ -35,8 +38,8 @@ length it was trained on, with a memory of fixed size
 - **Change 5:** starting from PyTorch's own initial values instead of the
   small ones Gemini's code drew.
 - **Change 6:** a task in which the pointer names a random variable. In
-  Gemini's task it always named the first, and the models learned that
-  shortcut instead of following the pointer.
+  Gemini's task it always named the first, as ChatGPT pointed out, and the
+  models learned that shortcut instead of following the pointer.
 
 Trained on every next character, as `train_trinet.py` trains, it learns the
 task only in part so far (34% at best, one seed of three), and the small
@@ -54,6 +57,7 @@ Transformer beside it does better in most runs.
 | `experiments/` | Ours: experiments that anyone can run again, with their results ([README](experiments/README.md)) |
 | `provenance/` | Where each of Gemini's files was taken from, the changes made here, and Gemini's draft model card |
 | `tests/` | Ours: the checks below |
+| `CONTRIBUTIONS.md` | Who contributed what: the founder, Gemini, ChatGPT and Claude, each cited to its record |
 
 ## Run and test
 
@@ -125,6 +129,10 @@ fast-weight and linear-attention models:
   Sequence Length* (2024), [arXiv:2406.06484](https://arxiv.org/abs/2406.06484)
 - Yang, Kautz and Hatamizadeh, *Gated Delta Networks* (2024),
   [arXiv:2412.06464](https://arxiv.org/abs/2412.06464)
+
+Changing TriNet's settings does not turn it into linear attention:
+ChatGPT names five differences, and all five hold in the code
+([`CONTRIBUTIONS.md`](CONTRIBUTIONS.md), ChatGPT, point 3).
 
 What TriNet adds to that family is its own way of making the gates: a
 "receptor" layer that reads a three-colour signal, a slow yellow state that

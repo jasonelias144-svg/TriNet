@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: the task without its shortcut (change 6), the results run again on it, and the claims corrected (#3)
+- Claude: who contributed what (`CONTRIBUTIONS.md`), with ChatGPT named and quoted for their part; where each result table ran (#4)
 
 ## Next
 
@@ -63,6 +63,16 @@ on Hugging Face:
 
 ## Decided
 
+- 2026-11-22, founder, on credit: "Yes, name ChatGPT in all functions they
+  have been engaged. We definitely want any positive results to be
+  properly attributed, whereas negative results can fall upon the project
+  as a whole, or myself. But when it comes to credit for producing a
+  working component, we should be very specific about the individual
+  contributions from each source. Our records should allow others to
+  recreate our results, in theory. That is the goal." And: "Yes, feel free
+  to quote ChatGPT, as they are aware of the public nature of the project,
+  having been there since the start." Hence `CONTRIBUTIONS.md`, and where
+  each result table ran (`experiments/README.md`).
 - 2026-11-22, founder: "Publishing comes last but should be an intention
   from the beginning. We have some work to do before publishing the model,
   but I wanted to make sure we would always be moving in that direction."
@@ -71,7 +81,8 @@ on Hugging Face:
   012-08-04, line 43649 of a later copy: 1,843,004 bytes, SHA-256
   `d3a9e7edfd8004433f935772234a706512e2d8c15dceaef8fe6c53d305449406`, not
   yet in open-worlds, whose copy ends earlier and differs from line
-  43643): "I meant those to be a
+  43643; said to ChatGPT in the same words, their record 012-09-05, line
+  16622): "I meant those to be a
   class of weights, short-term or temporary weights. Those would work in
   addition to and in conjunction with long-term weights that act as more
   stable default or baseline values or states. Think of Aristotle’s
@@ -124,6 +135,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (the founder, Gemini, ChatGPT and Claude, each contribution cited to its record and line); ChatGPT named and quoted for the shortcut (change 6), the first-query check, the five differences from linear attention (checked against the code) and the two-branch protocol; the machine, versions and threads given for every result table (#4)
 - 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
 - 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)
 - 2026-11-22 Claude: the repository set up from Gemini's conversation: the model, training, the app, provenance, 15 tests, CI; after independent review, a fourth change (generate() used no cache on transformers 5.x) and stronger tests (#1)
