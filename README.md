@@ -29,7 +29,7 @@ published on Hugging Face.
 
 **What it was built for, it can learn.** On a task of binding values,
 overwriting one and following a pointer, trained on the answers, the model
-reaches 99 to 100%, and keeps that at four times the length it was trained
+reaches 100%, and keeps that at four times the length it was trained
 on, with a memory of fixed size (`experiments/README.md`). It needed one
 change for that: starting from PyTorch's own initial values instead of the
 small ones Gemini's code drew (change 5).
@@ -85,7 +85,7 @@ Checked here, on 2026-11-22:
 - **The app** draws its three figures from the untrained model (by hand;
   it is not in CI).
 - **The model learns its in-context task**, as above, and so does Gemini's
-  prototype, which is slower to learn than they reported
+  prototype, at about the pace they reported, on a different set-up
   (`experiments/README.md`). A few smaller things Gemini said of their
   prototypes hold too (`prototypes/README.md`).
 

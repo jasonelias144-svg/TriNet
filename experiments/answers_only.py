@@ -24,6 +24,7 @@ MODEL is one of:
 Results of 2026-11-22 are in experiments/README.md.
 """
 import argparse
+import re
 import sys
 import time
 from pathlib import Path
@@ -58,7 +59,7 @@ class CharTask:
             text, meta = train_trinet.make_reasoning_example(
                 3, int(rng.integers(lo, hi + 1)), int(rng.integers(lo, hi + 1)), rng)
             seqs.append([self.ids(c) for c in text])
-            old = {text[i]: text[i + 2] for i in range(0, 12, 4)}  # the first three bindings, "h=3;a=0;b=0;"
+            old = dict(re.findall(r"(\w)=(\d);", re.match(r"(?:\w=\d;)+", text).group()))  # "h=3;a=0;b=0;"
             metas.append([(pos, self.ids(chr(ans)), kind, self.ids(old.get(text[pos - 1], " ")))
                           for pos, ans, kind in meta])
         x = np.zeros((size, max(map(len, seqs))), dtype=np.int64)
