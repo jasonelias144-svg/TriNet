@@ -76,10 +76,11 @@ given and tests it on that task and on the task with change 6 (seeds 0 and
 
 - **Both TriNet models learned the shortcut.** Their pointer scores with
   change 6 are the same to the decimal, for both models and both seeds, and
-  close to what the rule "answer with the first value bound" gives (about
-  44%: right when the pointer names the first name, or another holding the
-  same value). Their other queries stayed right: 82.6 to 88.1% over all
-  kinds.
+  exactly what the rule "answer with the first value bound" scores on the
+  same test episodes: 51.2 / 40.6 / 45.9%. (The rule is right when the
+  pointer names the first name, or another holding the same value: about
+  44% on average.) Counting every kind of query together, on the first
+  query of each episode, they scored 82.6 to 88.1%.
 - **Trained on the task with change 6, both follow the pointer** (the
   results above).
 - **Earlier answers in the text do not explain the scores.** Scoring only

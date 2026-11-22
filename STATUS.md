@@ -45,7 +45,7 @@ The founder's word (Decided, 2026-11-22): publishing comes last, and every
 change moves toward it. What stands between this repository and a model
 on Hugging Face:
 
-- [x] A task without shortcuts (change 6, #3).
+- [x] A task without the fixed-roles shortcut (change 6, #3).
 - [ ] The comparisons of Next 2, so the model card says honestly what
       TriNet adds.
 - [ ] A model trained on real text (Next 3), judged on text it was not
@@ -68,7 +68,9 @@ on Hugging Face:
   but I wanted to make sure we would always be moving in that direction."
   Hence the list "Before publishing" above.
 - 2026-11-22, founder, on TriNet's dissolving weights (Gemini's record
-  012-08-04, the copy of 2026-11-22, line 43649): "I meant those to be a
+  012-08-04, line 43649 of a later copy: 1,843,004 bytes, SHA-256
+  `d3a9e7edfd8004433f935772234a706512e2d8c15dceaef8fe6c53d305449406`, not
+  yet in open-worlds, whose copy ends earlier): "I meant those to be a
   class of weights, short-term or temporary weights. Those would work in
   addition to and in conjunction with long-term weights that act as more
   stable default or baseline values or states. Think of Aristotle’s

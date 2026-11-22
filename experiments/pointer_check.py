@@ -31,14 +31,15 @@ import answers_only as A  # noqa: E402
 
 def as_given():
     """Gemini's make_reasoning_example as the conversation gives it: this
-    repository's train_trinet.py with change 6 undone, as the provenance
-    test undoes it."""
-    manifest = json.loads((ROOT / "provenance" / "MANIFEST.json").read_text())
-    [change] = [c for c in manifest["changes"] if c["file"] == "train_trinet.py"]
-    source = (ROOT / "train_trinet.py").read_text()
-    assert source.count(change["new"]) == change["count"]
+    repository's train_trinet.py with its listed changes undone, in reverse
+    order, as the provenance test undoes them."""
+    manifest = json.loads((ROOT / "provenance" / "MANIFEST.json").read_text(encoding="utf-8"))
+    source = (ROOT / "train_trinet.py").read_text(encoding="utf-8")
+    for change in reversed([c for c in manifest["changes"] if c["file"] == "train_trinet.py"]):
+        assert source.count(change["new"]) == change["count"]
+        source = source.replace(change["new"], change["old"])
     namespace = {"__name__": "train_trinet_as_given"}
-    exec(compile(source.replace(change["new"], change["old"]), "train_trinet.py (as given)", "exec"), namespace)
+    exec(compile(source, "train_trinet.py (as given)", "exec"), namespace)
     return namespace["make_reasoning_example"]
 
 
@@ -50,6 +51,13 @@ def using(task):
 
 
 def run(name, seed, steps, train_task="as given"):
+    try:
+        return _run(name, seed, steps, train_task)
+    finally:
+        using("change 6")  # train_trinet.py's own task, whatever happened
+
+
+def _run(name, seed, steps, train_task):
     using(train_task)
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
@@ -84,7 +92,6 @@ def run(name, seed, steps, train_task="as given"):
                 print(f"    tested on the task {test_task:9s} {label:16s} pointer queries {100 * hops:5.1f}%"
                       f"  (first query of the episode: {100 * alone:5.1f}%, all kinds {100 * right[first].mean():5.1f}%)",
                       flush=True)
-    using("change 6")
     return results
 
 
