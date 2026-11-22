@@ -24,8 +24,15 @@ package format that meets the requirements of Hugging Face".
 **The code runs; there is no trained model yet.** The package loads and
 saves through Hugging Face's `AutoModelForCausalLM`, generates text one
 token at a time with a memory of fixed size, and trains on a CPU. It has
-been trained here only in small test runs (the smallest preset, up to
-2,000 steps, on CPU), and nothing has been published on Hugging Face.
+been trained here only in small test runs on a CPU, and nothing has been
+published on Hugging Face.
+
+**What it was built for, it can learn.** On a task of binding values,
+overwriting one and following a pointer, trained on the answers, the model
+reaches 99 to 100%, and keeps that at four times the length it was trained
+on, with a memory of fixed size (`experiments/README.md`). It needed one
+change for that: starting from PyTorch's own initial values instead of the
+small ones Gemini's code drew (change 5).
 
 ## What is here
 
@@ -35,6 +42,8 @@ been trained here only in small test runs (the smallest preset, up to
 | `train_trinet.py` | Byte-level training, beside a Transformer of the same size, on TinyStories, a local text, or an offline sample; with a mix of in-context tasks (bind a value, overwrite it, follow a pointer) |
 | `verify_hf_roundtrip.py` | Gemini's check: save, load through `AutoModelForCausalLM`, and generate with and without the cache |
 | `app.py`, `requirements.txt` | A Gradio app that shows the model's yellow gates and fast memory, token by token |
+| `prototypes/` | Gemini's earlier prototypes, kept as given, for checking what they reported ([README](prototypes/README.md)) |
+| `experiments/` | Ours: experiments that anyone can run again, with their results ([README](experiments/README.md)) |
 | `provenance/` | Where each of Gemini's files was taken from, the changes made here, and Gemini's draft model card |
 | `tests/` | Ours: the checks below |
 
@@ -43,9 +52,10 @@ been trained here only in small test runs (the smallest preset, up to
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install transformers safetensors numpy pytest
-python -m pytest -q                      # 15 tests
+python -m pytest -q                      # 31 tests, seconds
 python verify_hf_roundtrip.py            # Gemini's own check
 python train_trinet.py --preset smoke --smoke-test --seq-len 72 --steps 100
+python experiments/answers_only.py trinet  # minutes; see experiments/README.md
 ```
 
 CI runs the tests and Gemini's check with transformers 4.46.3 and 5.24.0.
@@ -54,14 +64,15 @@ CI runs the tests and Gemini's check with transformers 4.46.3 and 5.24.0.
 
 Checked here, on 2026-11-22:
 
-- **Four small changes were needed** for the model to work with the real
-  transformers library: Gemini's sandbox did not have it, and Gemini tested
-  against a stand-in of their own (they said so, line 41318). Three made it
-  run at all; the fourth, found by this repository's first review, made
-  `generate()` on transformers 5.x use the cache instead of reading the
-  whole text again at every step. Each change is listed with its reason in
-  `provenance/MANIFEST.json`; a test undoes them and checks that the rest
-  is, byte for byte, what Gemini gave.
+- **Five small changes were needed.** Four for the model to work with the
+  real transformers library: Gemini's sandbox did not have it, and Gemini
+  tested against a stand-in of their own (they said so, line 41318). Three
+  made it run at all; the fourth, found by this repository's first review,
+  made `generate()` on transformers 5.x use the cache instead of reading
+  the whole text again at every step. The fifth lets the model learn: it
+  starts from PyTorch's own initial values. Each change is listed with its
+  reason in `provenance/MANIFEST.json`; a test undoes them and checks that
+  the rest is, byte for byte, what Gemini gave.
 - **Stepping token by token with the cache gives what one full pass
   gives**, each of the cache's three states matters, `generate()` feeds the
   model one new token at a time, and the cache stays the same size, however
@@ -73,11 +84,17 @@ Checked here, on 2026-11-22:
 - **Training runs**, and its checkpoint loads again.
 - **The app** draws its three figures from the untrained model (by hand;
   it is not in CI).
+- **The model learns its in-context task**, as above, and so does Gemini's
+  prototype, which is slower to learn than they reported
+  (`experiments/README.md`). A few smaller things Gemini said of their
+  prototypes hold too (`prototypes/README.md`).
 
-Not checked: Gemini reports many results from runs in their own sandbox
-(TriNet at 100% on tasks where Transformers and GRUs score 30 to 70%). The
-code for most of those runs is not in the conversation, so they cannot be
-repeated here yet, and none of them is claimed here. Gemini's draft model
+Not checked: most of Gemini's reported results from runs in their own
+sandbox (comparisons with GRUs and tuned Transformers, the "crucible" of
+the micro-brain). The code for them is not in the conversation. Our own
+Transformer for comparison is small and untuned, so the comparison in
+`experiments/README.md` shows that TriNet learns the task, not that it
+beats a good Transformer. Gemini's draft model
 card (`provenance/model-card-draft.md`) repeats them; it is kept as Gemini
 wrote it and is not this repository's model card.
 

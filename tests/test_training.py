@@ -45,8 +45,9 @@ def test_a_short_offline_run_trains_both_models_and_saves_a_checkpoint(tmp_path)
     assert (summary["trinet_params"], summary["baseline_params"]) == TABLE["smoke"]
     # Both models were trained, and their losses recorded at every log step.
     assert [h["step"] for h in summary["history"]] == [1, 3, 6]
-    for h in summary["history"]:
-        assert h["trinet_loss"] > 0 and h["baseline_loss"] > 0
+    first, last = summary["history"][0], summary["history"][-1]
+    assert last["trinet_loss"] < first["trinet_loss"]
+    assert last["baseline_loss"] < first["baseline_loss"]
     # The script's own check that the trained model's cache gives what a
     # full pass gives.
     assert summary["o1_cache_check"]["max_logit_diff"] < 1e-4

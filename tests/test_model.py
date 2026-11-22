@@ -73,8 +73,9 @@ def test_a_prompt_then_one_token_at_a_time_equals_one_full_pass(model, ids):
 def test_each_state_in_the_cache_matters(model, ids, state):
     # A cache that forgot this state at every step would drift from the
     # full pass by far more than the stepping tests allow: measured on
-    # 2026-11-22, 4.4e-3 (fast weights), 1.7e-3 (yellow), 3.4 (delay
-    # line), against 3.3e-6 when nothing is forgotten.
+    # 2026-11-22, 0.31 (fast weights), 0.31 (yellow; a different drift,
+    # peaking at the same token), 2.9 (delay line), against 3.3e-6 when
+    # nothing is forgotten.
     full = model(ids, use_cache=False).logits
     past, steps = None, []
     for t in range(ids.shape[1]):
@@ -129,3 +130,18 @@ def test_save_and_load_through_auto_model_for_causal_lm(model, ids, tmp_path):
     uncached = loaded.generate(prompt, max_new_tokens=12, do_sample=False, use_cache=False)
     assert torch.equal(cached, uncached)
     assert torch.equal(cached, model.generate(prompt, max_new_tokens=12, do_sample=False))
+
+
+def test_the_model_starts_from_pytorchs_own_values_but_for_the_gate_biases():
+    # Change 5 (provenance/MANIFEST.json): Gemini's code drew every weight
+    # from N(0, 0.02); with PyTorch's own values the model learns its
+    # in-context task (experiments/README.md).
+    torch.manual_seed(0)
+    m = TriNetForCausalLM(TriNetConfig(vocab_size=256, d_model=48, d_key=24, d_val=24, n_layers=2))
+    for layer in m.model.layers:
+        assert layer.out_proj.weight.std().item() > 0.05
+        assert layer.delay_conv.weight.std().item() > 0.03  # 0.042 here; 0.02 as Gemini drew it
+        assert torch.all(layer.yellow_to_write.bias == 0.25)
+        assert torch.all(layer.yellow_to_retain.bias == 0.90)
+    assert m.model.embed_tokens.weight.std().item() > 0.5
+

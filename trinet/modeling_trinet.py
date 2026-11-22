@@ -298,6 +298,8 @@ class TriNetPreTrainedModel(PreTrainedModel):
     _no_split_modules = ["TriNetLayer"]
 
     def _init_weights(self, module: nn.Module) -> None:
+        if not isinstance(module, TriNetLayer):
+            return  # PyTorch's own initial values (provenance/MANIFEST.json, change 5)
         std = self.config.initializer_range
         if isinstance(module, nn.Linear):
             nn.init.normal_(module.weight, mean=0.0, std=std)

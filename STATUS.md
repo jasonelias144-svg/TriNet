@@ -12,45 +12,33 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-22, the 15 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-22, the 31 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
-- Claude: the repository set up, with Gemini's code as given and four changes (#1)
+- Claude: Gemini's prototypes, the experiments, and change 5 (the model's initial values) (#2)
 
 ## Next
 
-1. **Find why the packaged model learns less than Gemini's prototype.**
-   On the in-context task of `train_trinet.py` (bind three values, follow a
-   pointer, overwrite one, filler, four queries), trained on the answers
-   only, 1,500 steps, two seeds each, on 2026-11-22:
-   - Gemini's prototype `tri_lm.py` (18,358 parameters): 100% at the
-     trained length (about 52 characters), and 99.9 to 100% at about 100
-     and 200 characters. A small Transformer (39,322 parameters, ours,
-     untuned): 55 to 77%.
-   - `TriNetForCausalLM` here (33,748 and 59,708 parameters): about 70%,
-     the same at all three lengths. Letting its gates see the local
-     context, as the prototype's do, did not change that.
-   - With `train_trinet.py` as written (smallest preset, 2,000 steps, half
-     the batches on that task, seed 42; the second seed did not finish in
-     its time limit): TriNet at chance, 20.3% with 6 characters of filler
-     and 14.6% with 24; the Transformer beside it, 20% larger, 48.4% and
-     18.0%. Command: `python train_trinet.py --preset smoke --smoke-test
-     --seq-len 96 --steps 2000 --warmup-steps 100 --reasoning-mix 0.5
-     --log-every 500 --save-every 0 --seed 42`.
-   The prototype and the scripts that trained it on the answers only are
-   to be added here in the next pull request, so that these can be
-   repeated; until then they are noted, not claimed.
-2. A real training run (the `1m` preset on TinyStories) on a GPU, with the
+1. **Teach the in-context task under the training script.** With change 5
+   the model learns it when trained on the answers (99 to 100%, two seeds;
+   `experiments/README.md`), but `train_trinet.py`, which trains on every
+   next character with half the batches from the task, teaches it only in
+   part (32.8% and 34.4% at seed 42, against 20.3% and 14.6% before change
+   5). Weight the answers in the loss, or train longer, and measure.
+2. **A fair comparison.** A tuned Transformer of the same size, including
+   one without learned positions, on the task of `experiments/` (ours is
+   small and untuned).
+3. A real training run (the `1m` preset on TinyStories) on a GPU, with the
    founder's choice of where it runs.
-3. This repository's own model card, from what has been measured here.
-4. Publishing on Hugging Face, when the founder decides (P5).
+4. This repository's own model card, from what has been measured here.
+5. Publishing on Hugging Face, when the founder decides (P5).
 
 ## Open questions
 
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
-  published. Not needed until Next item 2. (asked 2026-11-22)
+  published. Not needed until Next item 3. (asked 2026-11-22)
 
 ## Decided
 
@@ -89,4 +77,5 @@ of every session; update it on your branch at the end. Keep it short and true. -
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 99 to 100% against about 70%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; the review's two nits (#2)
 - 2026-11-22 Claude: the repository set up from Gemini's conversation: the model, training, the app, provenance, 15 tests, CI; after independent review, a fourth change (generate() used no cache on transformers 5.x) and stronger tests (#1)
