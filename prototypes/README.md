@@ -28,8 +28,9 @@ can be checked.
   benchmark 5B; `tests/test_prototypes.py`).
 - **`TriLanguageModel` learns to bind, overwrite and follow a pointer, and
   keeps it on longer texts.** Repeated here with
-  `experiments/answers_only.py tri_lm`, with more training steps than
-  Gemini reports: `experiments/README.md`.
+  `experiments/answers_only.py tri_lm`: 99.4 to 100% at 250 steps, as
+  Gemini reports, though trained here on the answers only, a different
+  set-up from theirs (`experiments/README.md`).
 
 Not checked: Gemini's other reported results for these files (the
 "crucible" of the micro-brain, the comparisons with GRUs). The code that

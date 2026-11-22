@@ -125,9 +125,9 @@
   {
    "file": "trinet/modeling_trinet.py",
    "old": "    def _init_weights(self, module: nn.Module) -> None:\n",
-   "new": "    def _init_weights(self, module: nn.Module) -> None:\n        if not isinstance(module, TriNetLayer):\n            return  # PyTorch's own initial values (provenance/MANIFEST.json, change 5)\n",
+   "new": "    def _init_weights(self, module: nn.Module) -> None:\n        if isinstance(module, (nn.Linear, nn.Embedding, nn.Conv1d, nn.LayerNorm)):\n            module.reset_parameters()  # PyTorch's own initial values (provenance/MANIFEST.json, change 5)\n        if not isinstance(module, TriNetLayer):\n            return\n",
    "count": 1,
-   "why": "Gemini's _init_weights drew every linear, embedding and convolution weight from N(0, 0.02), as Hugging Face models usually do; the prototype tri_lm.py keeps PyTorch's own initial values. On the in-context task (bind, overwrite, two hops; trained on the answers only, 1,500 steps), the packaged model reached about 70% as given and 99 to 100% with PyTorch's values, two seeds each (experiments/README.md). Only the gate biases are still set, as in the prototype."
+   "why": "Gemini's _init_weights drew every linear, embedding and convolution weight from N(0, 0.02), as Hugging Face models usually do; the prototype tri_lm.py keeps PyTorch's own initial values. On the in-context task (bind, overwrite, two hops; trained on the answers only, 1,500 steps), the packaged model reached 78.6 to 92.5% as given and 100% with PyTorch's values, two seeds each (experiments/README.md). _init_weights now sets PyTorch's own values (reset_parameters), so that a weight missing from a checkpoint gets them too; the gate biases are still set as Gemini set them, and config.initializer_range no longer sets any weight."
   }
  ]
 }

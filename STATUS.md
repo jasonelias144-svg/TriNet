@@ -12,7 +12,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-22, the 31 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-22, the 33 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
@@ -21,11 +21,13 @@ of every session; update it on your branch at the end. Keep it short and true. -
 ## Next
 
 1. **Teach the in-context task under the training script.** With change 5
-   the model learns it when trained on the answers (99 to 100%, two seeds;
-   `experiments/README.md`), but `train_trinet.py`, which trains on every
-   next character with half the batches from the task, teaches it only in
-   part (32.8% and 34.4% at seed 42, against 20.3% and 14.6% before change
-   5). Weight the answers in the loss, or train longer, and measure.
+   the model learns it when trained on the answers (100%, two seeds;
+   `experiments/README.md`). Under `train_trinet.py`, which trains on
+   every next character with half the batches from the task, it learned it
+   in two runs of three (seed 0: 99.7 and 100%; seed 42: 67%; seed 1: at
+   chance), and in none with Gemini's initial values. Find what decides it
+   (more seeds, weighting the answers in the loss, training longer) and
+   measure.
 2. **A fair comparison.** A tuned Transformer of the same size, including
    one without learned positions, on the task of `experiments/` (ours is
    small and untuned).
@@ -66,6 +68,16 @@ of every session; update it on your branch at the end. Keep it short and true. -
 - With `--smoke-test` or `--local-text`, `train_trinet.py` validates on the
   same text it trains on, so its BPB is training BPB. (Independent review
   of #1.)
+- A weight missing from a checkpoint: since change 5, a linear,
+  convolution, embedding or norm weight starts from PyTorch's own values
+  (tested). Still not set, as in Gemini's code: `TriNetLayer`'s own
+  parameters (`W_base`, `shunt_w`, `affinity_logits`, `log_sigma`,
+  `log_g0`, `tonic_decay_logit`), which load as whatever memory held. A
+  missing gate bias gets PyTorch's value on transformers 5.x and 0.25 or
+  0.90 on 4.46. Only matters for a checkpoint that lacks weights.
+  (Independent review of #2.)
+- `config.initializer_range` no longer sets any weight (change 5). Say so
+  in the config, or drop it, in a later change. (Independent review of #2.)
 - Gemini's Colab script (conversation lines 42767 to 43561) did not come
   through whole: its code lost its indentation and the underscores of
   names like `__init__`, and it begins partway in. It is not here; its
@@ -77,5 +89,5 @@ of every session; update it on your branch at the end. Keep it short and true. -
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 99 to 100% against about 70%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; the review's two nits (#2)
+- 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)
 - 2026-11-22 Claude: the repository set up from Gemini's conversation: the model, training, the app, provenance, 15 tests, CI; after independent review, a fourth change (generate() used no cache on transformers 5.x) and stronger tests (#1)

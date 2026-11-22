@@ -2,12 +2,14 @@
 model: stepping token by token with the cache gives what one full pass
 gives; each of the cache's three states matters; generate() feeds the
 model one new token at a time; the cache stays the same size however long
-the text; and the model survives save_pretrained and
-AutoModelForCausalLM.from_pretrained.
+the text; the model survives save_pretrained and
+AutoModelForCausalLM.from_pretrained; and a weight missing from a
+checkpoint starts from PyTorch's own values.
 
-At its first values the model barely uses its yellow state, so a cache
-that forgot it would pass. The fixture sets the yellow gates and the head
-to values that make every state count.
+The fixture sets the yellow gates and the head to values that make every
+state count more (forgetting the yellow state moves the output by 0.081
+with them, 0.016 without), and moves the gate biases off the values the
+model starts from, so a load that set them again would show.
 """
 import json
 
@@ -35,6 +37,8 @@ def model():
             layer.mod_in.bias.fill_(0.3)
             layer.yellow_to_write.weight.normal_(0.0, 0.5)
             layer.yellow_to_retain.weight.normal_(0.0, 0.5)
+            layer.yellow_to_write.bias.fill_(0.35)
+            layer.yellow_to_retain.bias.fill_(0.80)
         m.lm_head.weight.normal_(0.0, 0.5)
     return m
 
@@ -73,9 +77,8 @@ def test_a_prompt_then_one_token_at_a_time_equals_one_full_pass(model, ids):
 def test_each_state_in_the_cache_matters(model, ids, state):
     # A cache that forgot this state at every step would drift from the
     # full pass by far more than the stepping tests allow: measured on
-    # 2026-11-22, 0.31 (fast weights), 0.31 (yellow; a different drift,
-    # peaking at the same token), 2.9 (delay line), against 3.3e-6 when
-    # nothing is forgotten.
+    # 2026-11-22, 0.52 (fast weights), 0.081 (yellow), 3.0 (delay line),
+    # against 3.8e-6 when nothing is forgotten.
     full = model(ids, use_cache=False).logits
     past, steps = None, []
     for t in range(ids.shape[1]):
@@ -130,6 +133,24 @@ def test_save_and_load_through_auto_model_for_causal_lm(model, ids, tmp_path):
     uncached = loaded.generate(prompt, max_new_tokens=12, do_sample=False, use_cache=False)
     assert torch.equal(cached, uncached)
     assert torch.equal(cached, model.generate(prompt, max_new_tokens=12, do_sample=False))
+
+
+@torch.no_grad()
+def test_a_weight_missing_from_a_checkpoint_starts_from_pytorchs_own_values(model, tmp_path):
+    # Hugging Face builds the model without PyTorch's initial values and
+    # leaves weights missing from a checkpoint to _init_weights (change 5).
+    from safetensors.torch import load_file, save_file
+
+    model.save_pretrained(tmp_path, safe_serialization=True)
+    weights = load_file(tmp_path / "model.safetensors")
+    missing = "model.layers.0.out_proj.weight"
+    del weights[missing]
+    save_file(weights, tmp_path / "model.safetensors", metadata={"format": "pt"})
+
+    loaded = TriNetForCausalLM.from_pretrained(tmp_path).state_dict()
+    assert torch.isfinite(loaded[missing]).all()
+    assert 0.05 < loaded[missing].std().item() < 0.2  # PyTorch's own scale here: 0.065
+    assert all(torch.equal(loaded[name], value) for name, value in weights.items())
 
 
 def test_the_model_starts_from_pytorchs_own_values_but_for_the_gate_biases():

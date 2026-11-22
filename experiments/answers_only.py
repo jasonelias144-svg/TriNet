@@ -4,7 +4,8 @@ pointer in context, and keep doing it on longer texts?
 The task is the one train_trinet.py mixes into training
 (make_reasoning_example): three values bound, then filler, a pointer to
 one of them, an overwrite of another, more filler, and four queries. Each
-model is trained on the answers only (the character after each "?x>"),
+model is trained on the answers only (the character after each "?x>",
+predicted at the ">"),
 with filler of 2 to 10 characters, and tested on 512 new episodes at that
 length (about 52 characters in all), and with 24 and 74 characters of
 filler (about 100 and 200). Runs on a CPU: a few minutes per model and
@@ -57,7 +58,9 @@ class CharTask:
             text, meta = train_trinet.make_reasoning_example(
                 3, int(rng.integers(lo, hi + 1)), int(rng.integers(lo, hi + 1)), rng)
             seqs.append([self.ids(c) for c in text])
-            metas.append([(pos, self.ids(chr(ans)), kind) for pos, ans, kind in meta])
+            old = {text[i]: text[i + 2] for i in range(0, 12, 4)}  # the first three bindings, "h=3;a=0;b=0;"
+            metas.append([(pos, self.ids(chr(ans)), kind, self.ids(old.get(text[pos - 1], " ")))
+                          for pos, ans, kind in meta])
         x = np.zeros((size, max(map(len, seqs))), dtype=np.int64)
         for i, s in enumerate(seqs):
             x[i, : len(s)] = s
@@ -65,14 +68,16 @@ class CharTask:
 
 
 def answers(logits, metas):
-    rows, cols, targets, kinds = [], [], [], []
+    """The logits at each ">" of "?x>", which predict the answer after it."""
+    rows, cols, targets, kinds, olds = [], [], [], [], []
     for b, meta in enumerate(metas):
-        for pos, target, kind in meta:
+        for pos, target, kind, old in meta:
             rows.append(b)
-            cols.append(pos - 1)
+            cols.append(pos)
             targets.append(target)
             kinds.append(kind)
-    return logits[rows, cols], torch.tensor(targets), np.array(kinds)
+            olds.append(old)
+    return logits[rows, cols], torch.tensor(targets), np.array(kinds), torch.tensor(olds)
 
 
 class SmallTransformer(nn.Module):
@@ -125,7 +130,7 @@ def run(name, seed, steps, eval_batches=8):
     start = time.time()
     for _ in range(steps):
         x, metas = task.batch(32, 2, 10, rng)
-        got, want, _ = answers(logits_of(x), metas)
+        got, want, _, _ = answers(logits_of(x), metas)
         loss = F.cross_entropy(got, want)
         opt.zero_grad()
         loss.backward()
@@ -137,17 +142,18 @@ def run(name, seed, steps, eval_batches=8):
     with torch.no_grad():
         for label, (lo, hi) in TESTS.items():
             erng = np.random.default_rng(1000 + lo)
-            right, kinds = [], []
+            right, stale, kinds = [], [], []
             for _ in range(eval_batches):
                 x, metas = task.batch(64, lo, hi, erng)
-                got, want, kind = answers(logits_of(x), metas)
+                got, want, kind, old = answers(logits_of(x), metas)
                 right.append((got.argmax(-1) == want).numpy())
+                stale.append((got.argmax(-1) == old).numpy())
                 kinds.append(kind)
-            right, kinds = np.concatenate(right), np.concatenate(kinds)
+            right, stale, kinds = np.concatenate(right), np.concatenate(stale), np.concatenate(kinds)
             results[label] = 100 * right.mean()
             print(f"    {label:16s} all {100 * right.mean():5.1f}%  (direct {100 * right[kinds == 1].mean():5.1f},"
-                  f" overwrite {100 * right[kinds == 2].mean():5.1f}, two hops {100 * right[kinds == 3].mean():5.1f})",
-                  flush=True)
+                  f" overwrite {100 * right[kinds == 2].mean():5.1f} [old value {100 * stale[kinds == 2].mean():4.1f}],"
+                  f" two hops {100 * right[kinds == 3].mean():5.1f})", flush=True)
     return results
 
 
