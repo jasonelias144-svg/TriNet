@@ -158,6 +158,7 @@ class TriNetLayer(nn.Module):
         self.max_fast_weight = config.max_fast_weight
         self.max_write_rate = config.max_write_rate
         self.min_retention = config.min_retention
+        self.residual_error = bool(getattr(config, "residual_error", False))  # change 7
 
         # Archetype 6: Causal DelayLineUnit over token representations
         self.delay_conv = nn.Conv1d(
@@ -264,6 +265,8 @@ class TriNetLayer(nn.Module):
 
             # Pyramidal mismatch (basal value vs apical fast-memory prediction)
             v_apical = torch.bmm(kt.unsqueeze(1), f_fast).squeeze(1)
+            if self.residual_error:  # change 7: F_fast stores adjustments to W_base
+                v_apical = v_apical + torch.matmul(kt, self.W_base)
             delta_err = vt - v_apical
             surprise = torch.sqrt((delta_err * delta_err).mean(dim=-1, keepdim=True) + 1e-6)
 
