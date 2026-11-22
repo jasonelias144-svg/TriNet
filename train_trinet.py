@@ -245,10 +245,13 @@ def make_reasoning_example(
     )
     parts.append(f1)
 
-    src_var = direct_vars[0]
+    # Change 6 (provenance/MANIFEST.json): which variable the pointer names,
+    # and which is overwritten, are drawn at random, not always the first two.
+    src_i, reb_i = rng.choice(n_direct, size=2, replace=False)
+    src_var = direct_vars[src_i]
     parts.append(f"{ptr_var}={src_var};")
 
-    reb_var = direct_vars[1]
+    reb_var = direct_vars[reb_i]
     new_d = str((int(env[reb_var]) + int(rng.integers(1, len(_VALS)))) % len(_VALS))
     env[reb_var] = new_d
     parts.append(f"{reb_var}={new_d};")

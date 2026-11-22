@@ -12,29 +12,48 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-22, the 33 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-22, the 35 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
-- Claude: Gemini's prototypes, the experiments, and change 5 (the model's initial values) (#2)
+- Claude: the task without its shortcut (change 6), the results run again on it, and the claims corrected (#3)
 
 ## Next
 
-1. **Teach the in-context task under the training script.** With change 5
-   the model learns it when trained on the answers (100%, two seeds;
-   `experiments/README.md`). Under `train_trinet.py`, which trains on
-   every next character with half the batches from the task, it learned it
-   in two runs of three (seed 0: 99.7 and 100%; seed 42: 67%; seed 1: at
-   chance), and in none with Gemini's initial values. Find what decides it
-   (more seeds, weighting the answers in the loss, training longer) and
-   measure.
+1. **Teach the in-context task under the training script.** Trained on
+   the answers, the model learns the task with change 6 completely (100%,
+   two seeds; `experiments/README.md`). Under `train_trinet.py`, which
+   trains on every next character with half the batches from the task, it
+   learns it only in part: 34% in one seed of three, near chance in the
+   others, and the Transformer beside it does better in five runs of six.
+   (Before change 6 it seemed to do better, 99.7% at seed 0, but much of
+   that was the shortcut.) Find what decides it (weighting the answers in
+   the loss, training longer, more seeds) and measure.
 2. **A fair comparison.** A tuned Transformer of the same size, including
    one without learned positions, on the task of `experiments/` (ours is
-   small and untuned).
+   small and untuned); and a plain gated delta-rule memory (Gated DeltaNet)
+   of the same size, with TriNet's own parts removed one at a time, to show
+   what they add.
 3. A real training run (the `1m` preset on TinyStories) on a GPU, with the
    founder's choice of where it runs.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
+
+## Before publishing
+
+The founder's word (Decided, 2026-11-22): publishing comes last, and every
+change moves toward it. What stands between this repository and a model
+on Hugging Face:
+
+- [x] A task without shortcuts (change 6, #3).
+- [ ] The comparisons of Next 2, so the model card says honestly what
+      TriNet adds.
+- [ ] A model trained on real text (Next 3), judged on text it was not
+      trained on (see Noticed: validation).
+- [ ] `app.py` made safe for a public Space (see Noticed).
+- [ ] This repository's own model card, from measured results only
+      (Next 4).
+- [ ] The founder's decision on where and under which account (P5).
 
 ## Open questions
 
@@ -44,6 +63,19 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Decided
 
+- 2026-11-22, founder: "Publishing comes last but should be an intention
+  from the beginning. We have some work to do before publishing the model,
+  but I wanted to make sure we would always be moving in that direction."
+  Hence the list "Before publishing" above.
+- 2026-11-22, founder, on TriNet's dissolving weights (Gemini's record
+  012-08-04, the copy of 2026-11-22, line 43649): "I meant those to be a
+  class of weights, short-term or temporary weights. Those would work in
+  addition to and in conjunction with long-term weights that act as more
+  stable default or baseline values or states. Think of Aristotle’s
+  Nicomachean Ethics and the way character has to develop from a stable
+  base of habitual behavior. Also consider Cybernetics." TriNet reads
+  through `W_base + F_fast`, which is this; how temporary weights would
+  become lasting ones (consolidation) is not built.
 - 2026-11-22, founder: "I just created a new repo: TriNet, which is public
   without any license chosen." The licence is the founder's standing one,
   CC0 1.0 (handbook decision 0003). The repository was empty, so the
@@ -89,5 +121,6 @@ of every session; update it on your branch at the end. Keep it short and true. -
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
 - 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)
 - 2026-11-22 Claude: the repository set up from Gemini's conversation: the model, training, the app, provenance, 15 tests, CI; after independent review, a fourth change (generate() used no cache on transformers 5.x) and stronger tests (#1)
