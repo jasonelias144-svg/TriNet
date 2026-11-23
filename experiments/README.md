@@ -174,7 +174,7 @@ chance is 16.7%; 2 threads, `OMP_NUM_THREADS=2`):
   without it.
 - So TriNet can learn the task, trained on the answers (above), but not
   yet from every next character in 2,000 small steps. That is STATUS
-  "Next" 1.
+  "Next" 2.
 - The Transformer's runs differ with and without change 5 because the
   TriNet built before it draws a different amount from the random number
   generator.
@@ -322,7 +322,7 @@ runs below used only this version.
   504 to 559 for one TriNet.
 - **The small Transformer fails the task** (24 to 34%), and does worse as
   the text grows. It learns its positions and is untuned (STATUS "Next"
-  2); it is no measure of what attention can do here.
+  1); it is no measure of what attention can do here.
 
 **Not checked:**
 - More seeds, and the thread noise above, for the harder task.
@@ -339,10 +339,11 @@ runs below used only this version.
 Two TriNet stacks did not do measurably better than one, on either task.
 One guess, not tested: the two halves are too alike to bring different
 strengths (though `bicam-asym`, whose halves differ in how long they
-keep their memory, did not help either). The next step is a pair of
-different halves, a TriNet and a Transformer, with an executive network
-between them. Its code is on its own branch (`claude/hybrid-prototype`,
-not merged); its results will come with its own pull request.
+keep their memory, did not help either). A pair of different halves, a
+TriNet and a Transformer with an executive network between them, is to
+be one of the models of the fair comparison (STATUS "Next" 1). Its code
+is on its own branch (`claude/hybrid-prototype`, not merged); its results
+will come with its own pull request.
 
 ## Writing and reading a hologram
 
@@ -484,8 +485,9 @@ piece of the plate shows the whole, less sharp and less bright; and many
 memories share one plate, kept apart by direction, or traded against
 noise. As a memory, a hologram holds big memories noisily in few
 numbers; a matrix holds small memories cleanly. Which serves a network
-better is the catalog's next step: the same operations inside a TriNet
-layer, with learned keys, on the recall task.
+better would be shown by the same operations inside a TriNet layer, with
+learned keys, on the recall task: the catalog's holographic layer, set
+aside for now (STATUS.md, Decided, 2026-11-23).
 
 **Not checked.** Light of more than one colour; a thick (volume)
 hologram; noise in the recording; objects other than isolated points (a
