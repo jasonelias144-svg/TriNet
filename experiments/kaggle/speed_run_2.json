@@ -1,0 +1,144 @@
+[
+ {
+  "torch": "2.11.0+cu130",
+  "transformers": "4.46.3",
+  "gpu": "Tesla T4",
+  "gpus": 2,
+  "commit": "ef9af1f8640aa04b62dc0b63ce2e138b5b31654d"
+ },
+ {
+  "model": "stage-a",
+  "length": 128,
+  "batch": 512,
+  "parameters": 33748,
+  "seconds_per_step": 0.6983,
+  "characters_per_second": 93850,
+  "peak_gib": 1.14
+ },
+ {
+  "model": "stage-a",
+  "length": 128,
+  "batch": 2048,
+  "parameters": 33748,
+  "seconds_per_step": 0.744,
+  "characters_per_second": 352340,
+  "peak_gib": 4.47
+ },
+ {
+  "model": "1m",
+  "length": 128,
+  "batch": 256,
+  "parameters": 837512,
+  "seconds_per_step": 1.4263,
+  "characters_per_second": 22974,
+  "peak_gib": 10.61
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 989952,
+  "seconds_per_step": 0.0103,
+  "characters_per_second": 99708,
+  "peak_gib": 0.06
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 989952,
+  "seconds_per_step": 0.0132,
+  "characters_per_second": 310536,
+  "peak_gib": 0.15
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 989952,
+  "seconds_per_step": 0.0535,
+  "characters_per_second": 306247,
+  "peak_gib": 0.52
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 989952,
+  "seconds_per_step": 0.0175,
+  "characters_per_second": 234226,
+  "peak_gib": 0.15
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 989952,
+  "seconds_per_step": 0.0685,
+  "characters_per_second": 239163,
+  "peak_gib": 0.52
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 989952,
+  "seconds_per_step": 0.2644,
+  "characters_per_second": 247906,
+  "peak_gib": 2.01
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 11236864,
+  "seconds_per_step": 0.0282,
+  "characters_per_second": 36266,
+  "peak_gib": 0.32
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 11236864,
+  "seconds_per_step": 0.104,
+  "characters_per_second": 39381,
+  "peak_gib": 0.67
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 11236864,
+  "seconds_per_step": 0.3938,
+  "characters_per_second": 41603,
+  "peak_gib": 2.2
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 11236864,
+  "seconds_per_step": 0.1191,
+  "characters_per_second": 34386,
+  "peak_gib": 0.67
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 11236864,
+  "seconds_per_step": 0.4619,
+  "characters_per_second": 35468,
+  "peak_gib": 2.2
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 11236864,
+  "seconds_per_step": 1.8887,
+  "characters_per_second": 34699,
+  "peak_gib": 8.38
+ }
+]

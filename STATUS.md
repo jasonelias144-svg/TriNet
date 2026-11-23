@@ -12,7 +12,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-23, the 56 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-23, the 57 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
@@ -20,24 +20,28 @@ of every session; update it on your branch at the end. Keep it short and true. -
   experiment proposed (`docs/NEURON-CATALOG.md`, "Levels of text", #10)
 - Claude: the fair comparison (Next 1), run on Kaggle's CPU sessions
   under the founder's account (branch `claude/fair-comparison`)
-- Claude: TriNet's speed on a Kaggle GPU (Next 3's first step; a private
-  script on the founder's Kaggle account)
+- Claude: TriNet's speed on a Kaggle GPU, its record
+  (`experiments/README.md`, "Speed on a GPU", #11)
 - Claude: complex retention, the first test of complex signals (branch
   `claude/complex-retention`; its pull request to come)
 
 ## Next
 
-1. **A fair comparison**, the main line (Decided, 2026-11-23): what
-   every other proposal is measured against. On the harder task
+1. **A fair comparison**, the main line (Decided, 2026-11-23): what every
+   other proposal is measured against. On the harder task
    (`experiments/harder_task.py`), where Stage A found the seeds differ
-   more than the models, with more seeds and a fixed number of threads:
-   a tuned Transformer of the same size, including one without learned
-   positions; a plain gated delta-rule memory (Gated DeltaNet) of the
-   same size; and TriNet with its own parts removed one at a time (the
-   receptor bus, the yellow gates, the shunt, the delays), to show what
-   they add. Then the hybrid of `experiments/README.md` ("What Stage A
-   shows"), a TriNet and a Transformer with an executive network between
-   them, once a Transformer learns the task.
+   more than the models, with more seeds and a fixed number of threads: a
+   tuned Transformer of the same size, including one without learned
+   positions; a plain gated delta-rule memory (Gated DeltaNet) of the same
+   size; and TriNet with its own parts removed one at a time, to show what
+   they add: the receptor bus, the reading of the memory's surprise by the
+   yellow state and gates, the gates themselves, the shunt, the delays,
+   the fast memory (`experiments/ablations.py`, branch
+   `claude/fair-comparison`), and the clamp on the memory (to come). The
+   surprise and the clamp decide which faster form TriNet can have (Next
+   3). Then the hybrid of `experiments/README.md` ("What Stage A shows"),
+   a TriNet and a Transformer with an executive network between them, once
+   a Transformer learns the task.
 2. **Teach the in-context task under the training script.** Trained on
    the answers, the model learns the task with change 6 completely (100%,
    two seeds, on 2 threads; 98.2 to 100% in Stage A's three seeds on 1
@@ -50,14 +54,20 @@ of every session; update it on your branch at the end. Keep it short and true. -
    the loss, training longer, more seeds) and measure.
 3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
    GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order).
-   A short test of TriNet's speed there comes first, now, beside Next 1.
-   The founder's Kaggle token is among this environment's network secrets
-   (never in the repository). On 2026-11-23, after the founder moved to
-   their other Kaggle account, a private script was saved and run under it
-   through the API; the account shows 30 GPU hours a week. Kaggle's own
-   command-line tool cannot sign in with a token held this way (its check
-   sends the token in the request body), so the calls go to Kaggle's API
-   directly.
+   Its first step, a test of TriNet's speed there, is done
+   (`experiments/README.md`, "Speed on a GPU"): the step time hardly
+   changes with the batch, memory runs out first (three stored matrices
+   per layer per character), and at the `1m` size a Transformer trains
+   13.5 times faster at 128 characters and 86 times at 512. So before a
+   long run TriNet needs a faster form, and which form depends on Next 1:
+   without surprise and without the clamp, its update is Gated DeltaNet's
+   form and can be computed in parallel chunks. The founder's Kaggle token
+   is among this environment's network secrets (never in the repository).
+   On 2026-11-23, after the founder moved to their other Kaggle account, a
+   private script was saved and run under it through the API; the account
+   shows 30 GPU hours a week. Kaggle's own command-line tool cannot sign
+   in with a token held this way (its check sends the token in the request
+   body), so the calls go to Kaggle's API directly.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
@@ -243,6 +253,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: TriNet's speed on a Kaggle GPU (a Tesla T4), the scripts and raw results kept in `experiments/kaggle/`: the step time hardly changes with the batch (about 2.6 ms per layer per character at every size), memory runs out first (three stored matrices per layer per character; the `10m` preset cannot train on 32 texts of 128 characters), and at the `1m` size a Transformer trains 13.5 times faster at 128 characters and 86 times at 512; without surprise and the clamp, TriNet's update is Gated DeltaNet's form; after independent review, the ranges per size, the memory count, the ratios like for like, and the condition for a chunked form corrected (#11)
 - 2026-11-23 Claude: the founder's levels of text in the catalog (a TriNet that steps through characters, then words, then sentences): why it would cut the steps one after another, what has been built before (clockwork and multiscale networks, byte patches, learned chunks), the brain's ladder of timescales, the power-law invariant of text, what would be TriNet's own (boundaries from surprise, context on the apical side, one cell at every level), cautions, and an experiment, on real text too, placed after the fair comparison's first five seeds; 13 sources added; after independent review, two citations narrowed, a theory labelled as one, the conditions of the cost argument stated, and what measures surprise corrected; Next 3's account of Kaggle access corrected (a script saved and run under the founder's account, not a call that may not need the token) (#10)
 - 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
