@@ -204,7 +204,11 @@ def test_the_learning_curve_does_not_change_the_training(monkeypatch):
         return made
 
     monkeypatch.setattr(stage_a, "build", keep)
+    threads = torch.get_num_threads()
     torch.set_num_threads(1)
-    stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=1)
-    stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=0)
+    try:
+        stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=1)
+        stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=0)
+    finally:
+        torch.set_num_threads(threads)
     assert all(torch.equal(p, q) for p, q in zip(built[0].parameters(), built[1].parameters()))

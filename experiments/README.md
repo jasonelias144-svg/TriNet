@@ -224,13 +224,14 @@ changes are to docstrings only), two at a time, on 1 thread each, on
 - **Every TriNet model, one stack or two, scores 98.2 to 100%** at every
   length in every seed, and passes 95% on the learning curve by step
   500. A pair of stacks has no room to do better here.
-- **The number of threads alone moves a run by up to 1.8 points.** On
-  the default 2 threads, `trinet` seed 1 scores 100% at every length (an
-  earlier run, and the independent review of #7); on 1 thread, as in the
-  table, 98.2 to 99.2%. PyTorch adds numbers in a different order on a
-  different number of threads, and training amplifies the difference.
-  So a single run's outcome, here and on the harder task below, carries
-  that much noise beside the seed's.
+- **The number of threads alone moved a run by 1.8 points,** in the one
+  case compared. On the default 2 threads, `trinet` seed 1 scores 100% at
+  every length (an earlier run, and the independent review of #7); on 1
+  thread, as in the table, 98.2 to 99.2%. PyTorch adds numbers in a
+  different order on a different number of threads, and training
+  amplifies the difference. So a single run's outcome carries noise
+  beside the seed's; how much on the harder task below was not measured,
+  and there it could decide whether a run stops short.
 - The small Transformer scores 34 to 51%, less as the text grows, as in
   the results above.
 - Time: 228 to 244 seconds a run for one TriNet, 403 to 447 for two
@@ -267,10 +268,11 @@ and 2; about 9 minutes a seed for one TriNet, 17 for two stacks, 1 for the
 Transformer). The runs below used commit ac96fb5, two at a time, on 2
 threads each.
 
-The task was made harder once before these runs. Its first version, with
-four names and four overwrites, let one TriNet score 96 to 97% at seed 0,
-leaving little room above it; five names and six overwrites gave 99.1 to
-99.5% at seed 0 but left room in other seeds (commit ac96fb5).
+The task was changed once before these runs. Its first version, with
+four names and four overwrites, gave one TriNet 96 to 97% at seed 0. The
+version here, with five names and six overwrites, gave it 99.1 to 99.5%
+at seed 0 (more overwrites are more practice; commit ac96fb5). All the
+runs below used only this version.
 
 ### Results, 2026-11-22 (harder task, seeds 0 / 1 / 2)
 
