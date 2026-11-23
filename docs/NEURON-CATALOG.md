@@ -498,6 +498,120 @@ complement each other", is measured at each level. If it holds for the
 whole but not its parts, it may be only nominal; if the parts show it
 but the whole destroys it, the parts may remain fragile.
 
+## Levels of text
+
+The founder, 2026-11-23, for discussion: "One question: you mentioned
+that TriNet's design 'steps through the text one character at a time,'
+but I would think that leads to a higher level process that uses a
+TriNet system architecture to step through the text one word at a time.
+And this feeds to a higher level architecture that processes the same
+text one sentence at a time, and so on. This is where the fractal
+architecture mirrors the structure of information or categories or some
+invariants. Thoughts?"
+
+**Why it matters for cost.** TriNet's fast memory steps through its text
+one byte at a time (one character, in English; three for most Chinese
+characters), and each step's gates read the memory's surprise, so no step
+can begin before the one before it ends. A graphics card is fast when it
+does many things at once, so at this point it waits. **Our reading**
+(arithmetic, not measured): in training, levels would let each level step
+only over short spans, the characters of a word (about six, with its
+space), the words of a sentence (about fifteen to twenty), the sentences
+of a passage, and the spans of one level could run at the same time. A
+text of 512 characters would then take a few dozen steps one after another
+instead of 512, and each level added would multiply the length that a
+fixed number of steps can cover. One condition and two limits. The
+condition: the work goes once up the levels and once back down, each span
+below taking context only from spans above that are already finished (as
+the byte-patch models and H-Net below are built); if a word must instead
+wait for the level above to take in the word before it, the steps run one
+after another again. The limits: each level's count is set by its longest
+span in a batch, not its average; and writing text still goes one
+character at a time.
+
+**Built before (reported, each by one group).**
+- Fixed clocks: a recurrent network whose modules update at different
+  fixed rates (Koutník et al., 2014).
+- Learned boundaries: a recurrent network whose upper layers update only
+  at boundaries it learns to find (Chung, Ahn & Bengio, 2016).
+- Patches of bytes: a small model within each patch and a large one
+  across them (Yu et al., 2023); a Transformer that shortens its sequence
+  in its middle layers (Nawrot et al., 2021).
+- Patches cut where the next byte is hard to predict, which at large
+  scale matched models that read word pieces (Pagnoni et al., 2024).
+- Chunks learned with the rest of the model, and the levels nested
+  (Hwang, Wang & Gu, 2025).
+- An early precedent for boundaries from surprise, in a neural network: a
+  small recurrent network's error in predicting the next letter is highest
+  at the start of a word (Elman, 1990).
+
+**In the brain.**
+- Reported: areas higher in the cortex's hierarchy integrate over longer
+  windows, for a silent film (Hasson et al., 2008), and for a story,
+  from words to sentences to paragraphs (Lerner et al., 2011); and the
+  cortex's activity follows syllables, phrases and sentences, each at
+  its own rate, even when nothing in the sound marks the phrases (Ding
+  et al., 2016).
+- Reported: across the monkey cortex, how long a region's spontaneous
+  fluctuations last grows from the sensory areas to the prefrontal ones
+  (Murray et al., 2014).
+- Established (reviewed in Larkum, 2013): much of the feedback from
+  higher areas ends on the far branches of pyramidal cells' apical
+  dendrites. That the cell joins this context to its input is a leading
+  theory, as in the catalog above.
+- Reported: people perceive activity as a series of separate events. A
+  theory (event segmentation theory: Zacks et al., 2007): a boundary is
+  perceived where predictions briefly fail.
+
+**An invariant.** Reported, with proofs (Lin & Tegmark, 2017): in text,
+how much one character tells about another falls off with their
+distance roughly as a power law. A Markov chain, each symbol depending
+only on the few before it, gives a much faster, exponential fall (as
+does a hidden Markov model); some grammars that build text in levels
+give a power law, though not all do. The paper uses this to test models:
+text written by a model, against text from a Markov chain. **Our
+reading:** the power law is one signature of text built in levels, and a
+test of a model in levels is whether the text it writes shows it.
+
+**What would be ours** (our reading). Models in levels have been built;
+what is new would be the cell, and three ways it fits:
+1. **Boundaries from surprise.** TriNet already measures surprise (its
+   apical prediction against the basal value), and its yellow channel
+   reads it. A level's boundary could fall where surprise jumps, as the
+   byte-patch model cuts where prediction is hard, and as event
+   segmentation describes.
+2. **Context from above on the apical side.** TriNet's cell already
+   compares an apical prediction with a basal value; the level above
+   would feed the apical side. (TriNet subtracts the prediction, where
+   the pyramidal cell amplifies a coincidence: an analogy of place, not
+   of operation.)
+3. **One cell at every level, one dial changed.** Higher levels keep
+   their memory longer (TriNet's retention floor), as the cortex's
+   timescales grow.
+
+All three are the one interface and the control both ways of "Fractal
+design" above, and the stack of "Levels of magnification".
+
+**Cautions** (our reading).
+- Spaces and punctuation are not boundaries in every language (Chinese
+  has no spaces) or in code; learned boundaries are harder to train.
+- The lowest level gives up its own long memory: what earlier words held
+  must come down from above.
+- Levels multiply whatever the cell is. The fair comparison (STATUS.md,
+  Next 1) still decides that.
+
+**Our proposal.** On this session's CPUs: a TriNet of two levels against
+the flat one, at the same size. The tasks of `experiments/` are bindings
+with random filler, with no words or sentences, and recall needs the
+long memory the lowest level would give up; so the test is on real text
+too, measured in bits per byte on text not trained on, with boundaries
+first at spaces and punctuation, then where surprise jumps. Measured:
+the score, and the number of steps one after another. Placed by the
+technical lead after the fair comparison's first five seeds and before
+the canyon and the ledger (STATUS.md, Next), because it bears on what
+training on a GPU would cost; the real training run of Next 3 does not
+wait for it.
+
 ## Memory spread through the network
 
 The founder, 2026-11-23, proposed for discussion: "How to distribute
@@ -1148,6 +1262,8 @@ Order of work:
 - Carr, C. E., & Konishi, M. (1990). A circuit for detection of interaural
   time differences in the brain stem of the barn owl. *Journal of
   Neuroscience* 10, 3227–3246.
+- Chung, J., Ahn, S., & Bengio, Y. (2016). Hierarchical multiscale
+  recurrent neural networks. arXiv:1609.01704.
 - Del Rey, N. L.-G., Trigo-Damas, I., Obeso, J. A., Cavada, C., & Blesa,
   J. (2022). Neuron types in the primate striatum: stereological analysis
   of projection neurons and interneurons in control and parkinsonian
@@ -1158,7 +1274,12 @@ Order of work:
 - Dimakis, A. G., Godfrey, P. B., Wu, Y., Wainwright, M. J., &
   Ramchandran, K. (2010). Network coding for distributed storage systems.
   *IEEE Transactions on Information Theory* 56, 4539–4551.
+- Ding, N., Melloni, L., Zhang, H., Tian, X., & Poeppel, D. (2016).
+  Cortical tracking of hierarchical linguistic structures in connected
+  speech. *Nature Neuroscience* 19, 158–164 (online in 2015).
 - Ebbinghaus, H. (1885). *Über das Gedächtnis.* Duncker & Humblot.
+- Elman, J. L. (1990). Finding structure in time. *Cognitive Science* 14,
+  179–211.
 - Evci, U., Gale, T., Menick, J., Castro, P. S., & Elsen, E. (2020).
   Rigging the lottery: making all tickets winners. *ICML 2020.*
 - Feldmann, J., et al. (2021). Parallel convolutional processing using
@@ -1188,6 +1309,9 @@ Order of work:
   behavior. *Neuron* 53, 439–452.
 - Goodman, J. W. (1968). *Introduction to Fourier Optics.* McGraw-Hill
   (later editions since).
+- Hasson, U., Yang, E., Vallines, I., Heeger, D. J., & Rubin, N. (2008).
+  A hierarchy of temporal receptive windows in human cortex. *Journal of
+  Neuroscience* 28, 2539–2550.
 - He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning
   for image recognition. *CVPR 2016*, 770–778.
 - Hebb, D. O. (1949). *The Organization of Behavior.* Wiley.
@@ -1207,6 +1331,8 @@ Order of work:
 - Hughes, T. W., Minkov, M., Shi, Y., & Fan, S. (2018). Training of
   photonic neural networks through in situ backpropagation and gradient
   measurement. *Optica* 5, 864.
+- Hwang, S., Wang, B., & Gu, A. (2025). Dynamic chunking for end-to-end
+  hierarchical sequence modeling. arXiv:2507.07955.
 - Isaac, J. T. R., Nicoll, R. A., & Malenka, R. C. (1995). Evidence for
   silent synapses: implications for the expression of LTP. *Neuron* 15,
   427–434.
@@ -1232,6 +1358,8 @@ Order of work:
 - Klopf, A. H. (1982). *The Hedonistic Neuron: A Theory of Memory,
   Learning, and Intelligence.* Hemisphere.
 - Koestler, A. (1967). *The Ghost in the Machine.* Hutchinson.
+- Koutník, J., Greff, K., Gomez, F., & Schmidhuber, J. (2014). A
+  clockwork RNN. arXiv:1402.3511.
 - Larkum, M. (2013). A cellular mechanism for cortical associations: an
   organizing principle for the cerebral cortex. *Trends in Neurosciences*
   36, 141–151.
@@ -1243,12 +1371,17 @@ Order of work:
 - Leith, E. N., & Upatnieks, J. (1962). Reconstructed wavefronts and
   communication theory. *Journal of the Optical Society of America* 52,
   1123.
+- Lerner, Y., Honey, C. J., Silbert, L. J., & Hasson, U. (2011).
+  Topographic mapping of a hierarchy of temporal receptive windows using
+  a narrated story. *Journal of Neuroscience* 31, 2906–2915.
 - Leutgeb, J. K., Leutgeb, S., Moser, M.-B., & Moser, E. I. (2007).
   Pattern separation in the dentate gyrus and CA3 of the hippocampus.
   *Science* 315, 961–966.
 - Liao, D., Hessler, N. A., & Malinow, R. (1995). Activation of
   postsynaptically silent synapses during pairing-induced LTP in CA1
   region of hippocampal slice. *Nature* 375, 400–404.
+- Lin, H. W., & Tegmark, M. (2017). Critical behavior in physics and
+  probabilistic formal languages. *Entropy* 19, 299.
 - Lisman, J. E. (1997). Bursts as a unit of neural information: making
   unreliable synapses reliable. *Trends in Neurosciences* 20, 38–43.
 - Löwe, S., et al. (2022). Complex-valued autoencoders for object
@@ -1274,11 +1407,15 @@ Order of work:
   *ICML 2018.*
 - Monderer, D., & Shapley, L. S. (1996). Potential games. *Games and
   Economic Behavior* 14, 124–143.
+- Murray, J. D., et al. (2014). A hierarchy of intrinsic timescales across
+  primate cortex. *Nature Neuroscience* 17, 1661–1663.
 - Najarro, E., & Risi, S. (2020). Meta-learning through Hebbian
   plasticity in random networks. *NeurIPS 2020.*
 - Napper, R. M., & Harvey, R. J. (1988). Number of parallel fiber
   synapses on an individual Purkinje cell in the cerebellum of the rat.
   *Journal of Comparative Neurology* 274, 168–177.
+- Nawrot, P., et al. (2021). Hierarchical Transformers are more efficient
+  language models. arXiv:2110.13711.
 - Oberheim, N. A., et al. (2009). Uniquely hominid features of adult
   human astrocytes. *Journal of Neuroscience* 29, 3276–3287.
 - O'Keefe, J., & Recce, M. L. (1993). Phase relationship between
@@ -1286,6 +1423,8 @@ Order of work:
   317–330.
 - Orvieto, A., et al. (2023). Resurrecting recurrent neural networks for
   long sequences. arXiv:2303.06349.
+- Pagnoni, A., et al. (2024). Byte latent transformer: patches scale
+  better than tokens. arXiv:2412.09871.
 - Pai, S., et al. (2023). Experimentally realized in situ
   backpropagation for deep learning in photonic neural networks.
   *Science* 380, 398–404.
@@ -1364,6 +1503,11 @@ Order of work:
   deep optics and photonics. *Nature* 588, 39–47.
 - Willshaw, D. J., Buneman, O. P., & Longuet-Higgins, H. C. (1969).
   Non-holographic associative memory. *Nature* 222, 960–962.
+- Yu, L., et al. (2023). MEGABYTE: predicting million-byte sequences with
+  multiscale Transformers. arXiv:2305.07185.
+- Zacks, J. M., Speer, N. K., Swallow, K. M., Braver, T. S., & Reynolds,
+  J. R. (2007). Event perception: a mind-brain perspective.
+  *Psychological Bulletin* 133, 273–293.
 
 How these were checked:
 
@@ -1411,6 +1555,15 @@ How these were checked:
   CFR §§ 73.681–73.682 (subcarrier, line rate, the two colour
   bandwidths, the burst, the 6 MHz channel); the 4.2 MHz figure and the
   1953 date against the NTSC article on Wikipedia.
+- For "Levels of text" (2026-11-23): Ding et al., Elman, Hasson et al.,
+  Lerner et al., Lin & Tegmark, Murray et al. and Zacks et al. were
+  checked against Crossref (Larkum 2013 was listed already); Chung et
+  al., Hwang et al., Koutník et al., Nawrot et al., Pagnoni et al. and Yu
+  et al. against arXiv. The independent review of #10 checked what the
+  page says of each against its abstract (on Crossref, arXiv or PubMed),
+  and of Lin & Tegmark against the paper's text; Larkum's anatomy is not
+  in Larkum's abstract and was not checked; Elman's finding is from
+  Claude's knowledge of the paper.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
   Ramsauer et al., Shazeer et al., Simon, Waddington, and the books,
