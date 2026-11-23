@@ -5,7 +5,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 **What this is:** a small language model built from the founder's three-channel neuron, packaged for Hugging Face; details in README.md
 **State:** active since 2026-11-22
-**Updated:** 2026-11-22 by Claude
+**Updated:** 2026-11-23 by Claude
 
 ## Live
 
@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: who wrote what (`CONTRIBUTIONS.md`), ChatGPT named as a reviewer, and where each result table ran (#4)
+- Claude: a catalog of neuron types, toward a general cell (`docs/NEURON-CATALOG.md`, #5)
 
 ## Next
 
@@ -57,12 +57,39 @@ on Hugging Face:
 
 ## Open questions
 
+- For the founder: may passages of the project's earlier stage texts
+  (003, 004 and 005, kept privately in `ebook-press`), on "levels of
+  magnification", be quoted in `docs/NEURON-CATALOG.md`, or only
+  described, with the stage and line as the source? (The passage in 008
+  is public already, in the open-worlds library.) The technical lead's
+  recommendation: quote short passages, each with its stage and line,
+  and keep the stage texts themselves private; they are private for the
+  published translations they hold, not for these passages. A section
+  on them follows the answer. (asked 2026-11-23)
+- For the founder: does the work toward the general cell
+  (`docs/NEURON-CATALOG.md`, "Order of work") come before the items under
+  "Next", or run beside them? The technical lead's recommendation:
+  beside. Next 1 and 2 test what TriNet already is, and their results
+  are what the general cell is compared against. (asked 2026-11-23)
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
   published. Not needed until Next item 3. (asked 2026-11-22)
 
 ## Decided
 
+- 2026-11-23, founder, on where TriNet is going: "first we should catalog
+  the existing known types of neurons in the human brain. … My thought is
+  to map the differences in shape and location and configuration to the
+  known functions of the brain in certain regions. By doing so, I would
+  hope to understand how the brain adapts the neuron to the system in
+  which it is functioning." And: "The end goal is a general neural stem
+  cell with all the dials and switches needed to change parameters."
+  Hence `docs/NEURON-CATALOG.md` (#5). The founder's further proposals of
+  that day, each offered for discussion with "Thoughts?", are quoted
+  there in their own sections, not recorded here as decisions:
+  connections that fade and come back, a cell that chooses, dials,
+  switches and buttons, two levels of learning, shared-benefit
+  optimization, and fractal design with the Transformer as a black box.
 - 2026-11-22, founder, on credit: "Our records should allow others to
   recreate our results, in theory. That is the goal." On quoting ChatGPT:
   "Yes, feel free to quote ChatGPT, as they are aware of the public nature
@@ -138,6 +165,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
 - 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)
 - 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
 - 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)

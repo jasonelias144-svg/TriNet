@@ -55,6 +55,7 @@ Transformer beside it does better in most runs.
 | `prototypes/` | Gemini's earlier prototypes, kept as given, for checking what they reported ([README](prototypes/README.md)) |
 | `bicameral/` | Gemini's BicameralTriNet for Stage A: two TriNet stacks, with a narrow "callosum" between them, kept as given ([experiments/README.md](experiments/README.md), "Stage A") |
 | `experiments/` | Ours: experiments that anyone can run again, with their results ([README](experiments/README.md)) |
+| `docs/` | Ours: [a catalog of neuron types](docs/NEURON-CATALOG.md), toward one general cell whose dials can set it to act like any of them |
 | `provenance/` | Where each of Gemini's files was taken from, the changes made here, and Gemini's draft model card |
 | `tests/` | Ours: the checks below |
 | `CONTRIBUTIONS.md` | Who wrote what, and where the quotations come from |
