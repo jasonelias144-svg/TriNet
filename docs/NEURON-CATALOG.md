@@ -413,9 +413,9 @@ under the name "levels of magnification". The records are the project's
 stage texts. They are kept privately, in the `ebook-press` repository, at
 the founder's word: some hold others' work at length, in published
 translations whose terms are still to be checked, and the founder has
-said that is one reason among others. (The kept copies also replace a
-personal name, in 003, 004, 005 and 007, and links tied to the founder's
-accounts, in 005 and 007: things no repository holds.) Asked whether
+said that is one reason among others. (In some of them the kept copies
+also replace a personal name and links tied to the founder's accounts:
+things no repository holds.) Asked whether
 passages from stages 003, 004 and 005 may be quoted here, the founder
 answered on 2026-11-23: "Yes, quote them". The passages below hold no
 translation, name or link. Each gives its stage file and line, and the
@@ -709,10 +709,12 @@ in a thick hologram, the peak of an optical correlator (Vander Lugt,
   the key, which averages the other memories' terms down while there are
   fewer than d of them, and the delta rule writes only the error, the
   target less what the memory already returns, cutting them further.
-  The plate keeps d numbers: a point-by-point product in the Fourier
-  domain is a circular convolution of the items themselves, which sums
-  their outer product along its diagonals (Plate, 1995). It is smaller,
-  and noisier memory by memory.
+  The plate keeps d numbers: its product `O·R*`, taken in the Fourier
+  domain, is a circular correlation of the items themselves, which sums
+  their outer product along its wrapped diagonals (a circular
+  convolution, the binding of holographic reduced representations, sums
+  it along the wrapped anti-diagonals; Plate, 1995). It is smaller, and
+  noisier memory by memory.
 
 **Our proposal**, in two steps.
 
@@ -950,6 +952,7 @@ How these were checked:
   checked against Open Library.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
-  Ramsauer et al., Shazeer et al., Simon, and the books)
+  Ramsauer et al., Shazeer et al., Simon, and the books, except
+  Goodman's title, author and year)
   are from Claude's knowledge, and are to be checked before this page is
   cited elsewhere.
