@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: levels of magnification, memory spread through the network, and writing and reading a hologram, in `docs/NEURON-CATALOG.md` (#6)
+- Claude: the hologram simulation (`experiments/holography.py`, #8)
 
 ## Next
 
@@ -42,8 +42,10 @@ of every session; update it on your branch at the end. Keep it short and true. -
 Beside these, not after them (Decided, 2026-11-23): the general cell, by
 the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
 Items 1 and 2 test what TriNet already is, and their results are what the
-general cell is compared against. Where the hologram simulation proposed
-there goes is asked under "Open questions".
+general cell is compared against. Also beside them (Decided, 2026-11-23):
+the hologram simulation proposed there ("Writing and reading a
+hologram"), whose first step is in `experiments/README.md`; and a test of
+complex retention, a fast memory that fades and rotates.
 
 ## Before publishing
 
@@ -63,18 +65,17 @@ on Hugging Face:
 
 ## Open questions
 
-- For the founder: does the hologram simulation proposed in
-  `docs/NEURON-CATALOG.md` ("Writing and reading a hologram") run beside
-  the items under "Next", as the general cell does, or after them? The
-  technical lead's recommendation: beside. It is small, runs on a CPU,
-  and its second step compares a holographic memory with TriNet's own,
-  which is what Next 2 asks of TriNet's parts. (asked 2026-11-23)
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
   published. Not needed until Next item 3. (asked 2026-11-22)
 
 ## Decided
 
+- 2026-11-23, founder, answering two questions: does the hologram
+  simulation run beside the items under "Next", and should the first test
+  of complex signals be complex retention (a fast memory that fades and
+  rotates, so a trace's phase tells its age)? "Yes to both, alongside is
+  fine." Hence `experiments/holography.py` and the paragraph under Next.
 - 2026-11-23, founder, answering the two questions then open (may
   passages of the stage texts 003 to 005 on "levels of magnification" be
   quoted; does the general-cell work come before Next, or beside it):
@@ -176,6 +177,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 8 tests): each of three points comes back at its own depth only with a reference beam; a quarter of the plate shows every point, twice as wide; as a memory, a hologram's read-out falls as 1/sqrt(n) but still finds the memory asked for up to 128 memories in 4,096 numbers, where a 64 x 64 matrix reads more cleanly but finds less past 64; keys at different angles read back exactly (#8)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
 - 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)
