@@ -12,7 +12,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-23, the 54 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-23, the 56 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
@@ -45,8 +45,10 @@ the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
 Items 1 and 2 test what TriNet already is, and their results are what the
 general cell is compared against. Also beside them (Decided, 2026-11-23):
 the hologram simulation proposed there ("Writing and reading a
-hologram"), whose first step is in `experiments/README.md`; and a test of
-complex retention, a fast memory that fades and rotates.
+hologram"), whose first step is in `experiments/README.md`; and, as the
+first test of complex signals, complex retention: a fast memory that
+fades and rotates, so a trace's phase tells its age (in its own pull
+request).
 
 ## Before publishing
 
@@ -178,7 +180,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 8 tests): each of three points comes back at its own depth only with a reference beam; a quarter of the plate shows every point, twice as wide; as a memory, a hologram's read-out falls as 1/sqrt(n) but still finds the memory asked for up to 128 memories in 4,096 numbers, where a 64 x 64 matrix reads more cleanly but finds less past 64; keys at different angles read back exactly (#8)
+- 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
