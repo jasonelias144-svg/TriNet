@@ -5,7 +5,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 **What this is:** a small language model built from the founder's three-channel neuron, packaged for Hugging Face; details in README.md
 **State:** active since 2026-11-22
-**Updated:** 2026-11-22 by Claude
+**Updated:** 2026-11-23 by Claude
 
 ## Live
 
@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: who wrote what (`CONTRIBUTIONS.md`), ChatGPT named as a reviewer, and where each result table ran (#4)
+- Claude: a catalog of neuron types, toward a general cell (`docs/NEURON-CATALOG.md`)
 
 ## Next
 
@@ -63,6 +63,18 @@ on Hugging Face:
 
 ## Decided
 
+- 2026-11-23, founder, on where TriNet is going: "first we should catalog
+  the existing known types of neurons in the human brain. … My thought is
+  to map the differences in shape and location and configuration to the
+  known functions of the brain in certain regions. By doing so, I would
+  hope to understand how the brain adapts the neuron to the system in
+  which it is functioning." And: "The end goal is a general neural stem
+  cell with all the dials and switches needed to change parameters." On
+  connections: they may form, strengthen with repeated firing, fade to
+  zero when unused, and come back when fired again, "like riding a bike".
+  And: "This suggests a model where each neuron has some capacity to
+  change continuously and be embedded with some primitive choice
+  capacity, or agency." Hence `docs/NEURON-CATALOG.md`.
 - 2026-11-22, founder, on credit: "Our records should allow others to
   recreate our results, in theory. That is the goal." On quoting ChatGPT:
   "Yes, feel free to quote ChatGPT, as they are aware of the public nature
@@ -138,6 +150,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, connections that fade and come back (a visible strength and a hidden trace), a cell that chooses, and an order of work toward the general cell
 - 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)
 - 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
 - 2026-11-22 Claude: the packaged model learns its in-context task once it starts from PyTorch's own initial values (change 5; 100% against 78.6 to 92.5%); Gemini's prototypes kept and checked; `experiments/answers_only.py` and its results; after independent review, the answers scored at the `>`, missing weights given PyTorch's values, and the results re-run (#2)
