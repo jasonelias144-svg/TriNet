@@ -11,7 +11,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiments"))
 
-from complex_retention import ComplexRetentionLayer, make_complex  # noqa: E402
+from complex_retention import THETA_MAX, THETA_MAX_WIDE, ComplexRetentionLayer, angles, make_complex  # noqa: E402
 from trinet.configuration_trinet import TriNetConfig  # noqa: E402
 from trinet.modeling_trinet import TriNetForCausalLM  # noqa: E402
 
@@ -33,7 +33,7 @@ def plain_model(residual_error=False):
 
 
 def rotating(m):
-    c = make_complex(copy.deepcopy(m))
+    c = make_complex(copy.deepcopy(m), THETA_MAX_WIDE)  # wide angles, so rotation shows
     with torch.no_grad():
         for layer in c.model.layers:
             layer.w_im.normal_(0.0, 1.0)
@@ -97,5 +97,42 @@ def test_making_a_model_complex_leaves_the_random_state_alone():
     torch.manual_seed(5)
     make_complex(m)
     assert torch.equal(torch.rand(3), expected)
-    angles = torch.cat([layer.theta for layer in m.model.layers])
-    assert angles.min().item() >= 0.0 and angles.max().item() < torch.pi / 10 and angles.std().item() > 0
+
+
+@pytest.mark.parametrize("theta_max", [THETA_MAX, THETA_MAX_WIDE])
+def test_the_starting_angles_fill_their_range_and_w_im_starts_at_zero(theta_max):
+    m = make_complex(plain_model(), theta_max)
+    theta = torch.cat([layer.theta for layer in m.model.layers])
+    assert theta.min().item() >= 0.0 and theta.max().item() < theta_max
+    assert theta.max().item() > theta_max / 2 and theta.std().item() > 0
+    assert all(layer.w_im.abs().max().item() == 0.0 for layer in m.model.layers)
+    assert angles(m).count("layer ") == len(m.model.layers)
+
+
+@torch.no_grad()
+def test_starting_near_zero_the_model_starts_close_to_trinet_and_wide_does_not(ids):
+    plain = plain_model()
+    base = plain(ids, use_cache=False).logits
+    gap = {}
+    for theta_max in (THETA_MAX, THETA_MAX_WIDE):
+        c = make_complex(copy.deepcopy(plain), theta_max)
+        for layer in c.model.layers:
+            layer.w_im.fill_(1.0)  # so the imaginary part is read
+        gap[theta_max] = (c(ids, use_cache=False).logits - base).abs().max().item()
+    assert 0.0 < gap[THETA_MAX] < gap[THETA_MAX_WIDE] / 10
+
+
+def test_at_exactly_zero_the_angles_get_no_gradient_and_near_zero_they_do(ids):
+    plain = plain_model()
+    grads = {}
+    for start in (0.0, THETA_MAX):
+        c = make_complex(copy.deepcopy(plain), THETA_MAX)
+        with torch.no_grad():
+            for layer in c.model.layers:
+                if start == 0.0:
+                    layer.theta.zero_()
+        c(ids, use_cache=False).logits.square().mean().backward()
+        grads[start] = [(layer.theta.grad.abs().max().item(), layer.w_im.grad.abs().max().item())
+                        for layer in c.model.layers]
+    assert all(g == (0.0, 0.0) for g in grads[0.0])
+    assert any(t > 0.0 and w > 0.0 for t, w in grads[THETA_MAX])

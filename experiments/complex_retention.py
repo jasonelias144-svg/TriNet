@@ -25,6 +25,7 @@ docs/NEURON-CATALOG.md.
 
     make_complex(model)   # turns a TriNetForCausalLM's layers complex,
                           # keeping every weight it has
+    angles(model)         # the angles and imaginary weights, summarized
 """
 import math
 from typing import Optional, Tuple
@@ -35,7 +36,19 @@ import torch.nn.functional as F
 
 from trinet.modeling_trinet import TriNetLayer
 
-THETA_MAX = math.pi / 10  # starting angles drawn from [0, THETA_MAX)
+# Starting angles, drawn from [0, theta_max). The first version started
+# them in [0, pi/10) (THETA_MAX_WIDE): a trace then turns half a circle in
+# 10 characters or more, so an old trace read through Re(q F) is scaled by
+# cos(theta * age), which swings between 1 and -1 within one episode of
+# the harder task. It scored 37 to 81% in six seeds, well below TriNet
+# (experiments/README.md); the angles are the likely cause, and this
+# version tests that. Now they start in [0, 0.003) (THETA_MAX): a
+# trace turns at most 0.38 radians over the training length (about 125
+# characters), so the model starts close to TriNet, and the angles it ends
+# with are learned rather than given. At exactly zero they would not move:
+# with theta = 0 and w_im = 0 neither gets a gradient.
+THETA_MAX = 0.003
+THETA_MAX_WIDE = math.pi / 10
 
 
 class ComplexRetentionLayer(TriNetLayer):
@@ -167,3 +180,16 @@ def make_complex(model, theta_max: float = THETA_MAX):
             new.train(layer.training)
             layers[idx] = new.to(next(layer.parameters()).device)
     return model
+
+
+def angles(model) -> str:
+    """One line per layer: the angles (mean and largest, in radians per
+    character, and the largest turn over 125 characters) and the mean size
+    of w_im."""
+    out = []
+    for i, layer in enumerate(model.model.layers):
+        th = layer.theta.detach().abs()
+        out.append(f"layer {i}: angle mean {th.mean():.4f}, max {th.max():.4f} "
+                   f"(turn over 125 characters up to {125 * th.max():.2f}); "
+                   f"|w_im| mean {layer.w_im.detach().abs().mean():.3f}")
+    return "; ".join(out)
