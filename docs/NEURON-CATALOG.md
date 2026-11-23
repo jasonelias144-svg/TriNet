@@ -729,6 +729,314 @@ in a thick hologram, the peak of an optical correlator (Vander Lugt,
    memory on the recall task, with the same count of stored numbers;
    then delete parts of each and compare how they fail.
 
+## Signals like light
+
+The founder, 2026-11-23, for discussion: "Also consider optoelectronics,
+and optical multiplexing. Imagine our three-channel neuron produces
+signals that behave like light does, in all ways, so that it could be
+implemented with diodes, in theory. I think of the history of television
+and how much changed going from black and white color, and I think we may
+look to that advance as an example. Thoughts?"
+
+**What light gives, and what it lacks (established).** A light signal has
+an amplitude and a phase, so it is a complex number; many colours share
+one fibre or waveguide without mixing (wavelength multiplexing); sums are
+made by superposition, and Fourier transforms by a lens. What light lacks
+is light acting on light: in ordinary materials it does not, so there is
+no nonlinearity, no gain and no decision without a detector or a special
+material. A photodiode measures intensity, `|E|²`, the rule the
+hologram's plate follows: it sums the light falling on it and, where two
+beams interfere, multiplies them. An optoelectronic neuron is then a
+photodiode (listen and sum), a transistor (decide) and a laser or LED
+(speak).
+
+**Built in parts (established, or reported where one group).**
+- *Broadcast and weight* (Tait et al., 2014; 2017): each neuron sends on
+  its own wavelength, all share one waveguide, and at each receiving
+  neuron tuned rings weight each wavelength before a photodiode sums them.
+- Meshes of interferometers multiply matrices (Shen et al., 2017);
+  frequency combs run many convolutions at once, one per wavelength
+  (Feldmann et al., 2021); networks have been trained in the optics
+  themselves (Hughes et al., 2018).
+- Volume holograms can hold a network's connections: two interfering
+  beams write the product of value and key into a crystal, the key reads
+  it back, and in light-sensitive crystals the pattern fades (Psaltis et
+  al., 1990).
+- What is still open (Wetzstein et al., 2020): the linear algebra works;
+  the nonlinearity, the precision (a few bits) and keeping phase steady
+  are the hard parts.
+
+**Our reading:** TriNet's fast memory does the three things a dynamic
+hologram does: it writes value times key, reads with a key, and fades.
+The yellow channel's write and retain gates would be the beam's strength
+and the rate of erasure.
+
+**Colour television as the example** (NTSC colour, adopted in the United
+States in 1953; the figures are from Claude's knowledge):
+1. **Compatibility.** Colour was added without breaking black-and-white
+   sets: the old signal stayed as brightness, and colour rode in the same
+   6 MHz channel. **Our proposal:** a light-like TriNet must reduce
+   exactly to today's TriNet when its new parts are off, so that every
+   result so far still stands.
+2. **Colour as phase, read against a reference.** The two colour signals
+   ride a 3.58 MHz subcarrier: hue is its phase, saturation its
+   amplitude, and each scan line carries a short burst of the subcarrier
+   for the set to lock to, the hologram's reference beam again.
+3. **Interleaving.** The subcarrier sits at 455/2 times the line rate, so
+   colour's energy falls between brightness's: more information in no
+   more bandwidth.
+4. **Precision where the receiver looks.** The eye sees less detail in
+   colour, so colour got about 1.3 and 0.4 MHz against brightness's 4.2.
+5. **Three numbers, because the eye has three kinds of cone.** A
+   spectrum has endless dimensions; spectra the eye cannot tell apart are
+   metamers. **Our reading,** for the founder's earlier "infinite variety
+   ... like the collection of all possible colors": the space of cells
+   may be endless, while a task tells only a few of its dimensions apart.
+   How many is a measurement.
+
+## Amplitude and phase
+
+The founder, 2026-11-23, for discussion: "When you said "each signal
+becomes a complex number." I realized that is the key, and phase can be
+represented alongside amplitude in a single complex number. That works.
+My intuition is lighting up like fireworks. Not sure exactly why, but
+that feels like a fundamental piece of the picture. Thoughts?"
+
+**Established (mathematics).** A complex number holds how much and where
+in its cycle; multiplying two multiplies the amounts and adds the phases,
+so one operation scales and rotates. Every signal is a sum of rotating
+complex numbers (Fourier), a shift in time is a change of phase, and
+interference is complex addition.
+
+**Already in machine learning.**
+- Rotary position embeddings rotate pairs of numbers by the position, a
+  multiplication by a complex phase, so attention sees how far apart two
+  words are as a phase difference (Su et al., 2021).
+- The Linear Recurrent Unit gives each memory channel a complex decay:
+  its size how fast the memory fades, its angle how fast it rotates
+  (Orvieto et al., 2023).
+- In complex-valued autoencoders, amplitude says a feature is present and
+  phase which object it belongs to (Löwe et al., 2022; proposed by
+  Reichert & Serre, 2014). Complex networks in general match real ones on
+  some tasks (Trabelsi et al., 2018).
+- **Limits (established).** A complex number is two real ones, so the
+  gain is structure, not capacity. No function that is smooth in the
+  complex sense everywhere and bounded is anything but constant
+  (Liouville's theorem), so there is no complex sigmoid; networks act on
+  the amplitude and leave the phase (Arjovsky et al., 2016). And a phase
+  means something only against a reference.
+
+**In the brain.** Established: hippocampal cells fire at a phase of the
+theta rhythm that moves as an animal moves through a place (O'Keefe &
+Recce, 1993). Leading theory, still argued over: brain areas communicate
+by bringing their rhythms into phase (Fries, 2005). Contested: that
+synchrony binds features into objects.
+
+**Our reading.** Electrical engineers write three phases as one real
+number and one complex number (the Clarke transform). TriNet's red,
+yellow and blue could be written so: their sum, and one complex number
+whose phase says which leads. Its receptor bus already reads this:
+each receptor's preferred hue is, exactly (distances scale by √1.5), a
+point on that complex plane. The channels do different jobs, so whether
+the form helps is a test.
+
+**Our proposal,** agreed by the founder as the first test of complex
+signals (STATUS.md, Decided): complex retention, a fast memory that fades
+and rotates, so a trace's phase tells its age; then the holographic layer
+of "Writing and reading a hologram"; then the channels as one sum and one
+complex number.
+
+## Ports and receptors
+
+The founder, 2026-11-23, for discussion: "Also, consider different
+connection ports or port types, which would be like different receptors
+being suited or designated or tuned only to respond to signals of a
+particular form. Thoughts?"
+
+**What TriNet has.** The receptor bus (archetype 5) splits each layer's
+three-colour signal into an intensity and a hue; each of its receptors
+has a preferred hue and a width, and answers strongly to signals near it.
+These are ports tuned to the form of a signal. Today they feed only the
+yellow channel.
+
+**Established: the meaning is in the receiver.** Dopamine excites through
+D1 receptors and inhibits through D2; acetylcholine acts in milliseconds
+through nicotinic receptors and over seconds through muscarinic ones.
+Ports differ in
+
+| What differs | Examples | Nearest in TriNet |
+|---|---|---|
+| what they accept | each receptor binds its own molecule | the receptor bus's hue |
+| what they do | add (AMPA); divide, at the cell body (GABA-A); need two things at once (NMDA, transmitter and an active cell); change the mode slowly (metabotropic) | red adds, blue divides, yellow modulates; nothing needs two at once |
+| how fast | milliseconds to minutes | yellow's slow state |
+| where | near the output, strong; far out on the dendrite, needing coincidence | the basal and apical sides of the pyramidal comparison |
+| their own learning | silent synapses, present but silent until learning adds receptors (Isaac, Nicoll & Malenka, 1995; Liao, Hessler & Malinow, 1995) | "Connections that grow, fade and come back" |
+
+**From engineering.** A tuned receiver listens to one form: a radio to
+its frequency, a colour set to its subcarrier, an optical ring to its
+wavelength. With complex signals all three are one operation, multiply
+by the conjugate of the port's tuning and add up, the hologram's read.
+**Our reading:** typed ports and complex signals together give
+multiplexing inside the network, many signals on one line and each port
+taking its own; and for fractal design, a unit's interface becomes its
+list of typed ports, connections allowed only between ports that match.
+
+**Our proposal.**
+1. First measure the ports TriNet has: do its receptors spread over the
+   colour wheel, and what is lost when the bus is replaced by a constant?
+   (Part of "Next" 2 in STATUS.md.)
+2. Ports as dials of the general cell: tuning, effect, speed, gain, and a
+   switch between silent and active.
+3. The first new port type: one that needs two signals at once (as NMDA
+   does), tested on a task that needs coincidence.
+
+## The 5-HT2A receptor
+
+The founder, 2026-11-23, for discussion: "And in particular, I would love
+to learn about the 5-HT2A receptor. It seems to be related to
+consciousness in some interesting ways. Thoughts?"
+
+**Established.**
+- One of about fourteen kinds of serotonin receptor; it makes the cells
+  that carry it more excitable.
+- In the primate cortex it is densest on the apical dendrites of layer-5
+  pyramidal neurons (Jakab & Goldman-Rakic, 1998), the long branch to the
+  cortex's surface where context from other areas arrives.
+- The classic psychedelics act through it. In people, ketanserin, which
+  blocks it, prevents the effects of psilocybin (Vollenweider et al.,
+  1998) and of LSD (Preller et al., 2017); mice without the receptor do
+  not respond to them (González-Maeso et al., 2007).
+
+**How it touches consciousness: theories, labelled.**
+- **Leading theory, still argued over.** Dendritic integration theory
+  (Aru, Suzuki & Larkum, 2020): conscious processing depends on the
+  coupling of a layer-5 cell's apical dendrite (context) with its cell
+  body (input). Reported, in mice: general anaesthesia decouples the two
+  (Suzuki & Larkum, 2020).
+- **Leading among psychedelic researchers, contested.** REBUS
+  (Carhart-Harris & Friston, 2019): through 5-HT2A, psychedelics relax
+  the brain's high-level beliefs, so information from the senses flows
+  more freely.
+- **Reported, in rodents and cells.** These drugs make neurons grow new
+  spines and synapses (Ly et al., 2018).
+- **Our reading.** The receptor most tied to changes in experience sits
+  on the branch where one theory says experience is put together: a
+  match of place, not a proof. In the founder's canyon image (below), it
+  may be one way the brain softens a canyon's walls for a while.
+
+**Our proposal.** TriNet's pyramidal part compares an apical prediction
+(from the fast memory) with a basal value (the evidence). A 5-HT2A-like
+port would be a dial on how far the prediction is trusted: turned down,
+surprise grows, and the model writes and learns more, and holds less
+steady. Test: change the task's rules within an episode, and measure
+whether the dial helps it relearn, and what it costs.
+
+## The canyon
+
+The founder, 2026-11-23, for discussion: "I want to add one image to the
+whole, an image I take as fundamental: the Grand Canyon. This was carved
+out by the continuous flow of a river to the point where it has shaped
+and continues to shape the landscape. But on a smaller scale, a
+connection already made, a path already traveled is slightly stronger,
+slightly smoother than if there had been no connection. Repeated
+connection carves a smooth path. This is how learning becomes stable.
+Thoughts?"
+
+William James, in the chapter on habit of *The Principles of Psychology*
+(1890): "A path once traversed by a nerve-current might be expected to
+follow the law of most of the paths we know, and to be scooped out and
+made more permeable than before; and this ought to be repeated with each
+new passage of the current. Whatever obstructions may have kept it at
+first from being a path should then, little by little, and more and
+more, be swept out of the way, until at last it might become a natural
+drainage-channel."
+
+**In the brain.** Established: use strengthens a path (Bliss & Lømo,
+1973), and cells active together keep the connections between them
+(Löwel & Singer, 1992). Reported: spines grown in a first experience
+outlast it, and relearning is faster for them (Hofer et al., 2009); and
+activity adds myelin to the fibres in use, so their signals run faster,
+in mice (Gibson et al., 2014). When the water stops the canyon stays,
+and rain runs back into it: relearning is faster than learning
+(Ebbinghaus, 1885). In models, memories are valleys that learning digs
+(Hopfield, 1982); in development, Waddington's landscape of deepening
+valleys (1957).
+
+**Two warnings from the river (established).** Positive feedback runs
+away: a deeper channel takes more water. Pure strengthening with use is
+unstable in the same way, and the brain scales a cell's synapses to keep
+its activity in range (Turrigiano et al., 1998); in the founder's
+shared-benefit terms, a deep channel concentrates flow, and captures it
+when it starves the rest. And deep grooves resist change: the price of
+stability.
+
+**Where TriNet stands.** Training already carves `W_base`. Within use,
+the fast memory is rain on rock: it fades back to nothing, and its delta
+rule stops writing once a path is learned. How temporary weights become
+lasting ones is not built (STATUS.md, Decided, 2026-11-22). In the brain
+this is the leading theory of complementary learning systems: a fast
+learner replays to a slow one (McClelland, McNaughton & O'Reilly, 1995).
+
+## The connection ledger
+
+The founder, 2026-11-23, for discussion: "Consider a fully connected
+network, each node connects to every other node, and themselves. The
+default connection between any two nodes is zero. If one node A sends a
+signal to a node B, the overall value of the connection becomes
+non-zero, if only minimally. But each connection triggers something like
+a counter. This contains metadata about connections from this and that
+neuron, information about the connection to the neuron, information
+about the other neuron, but information from the other neuron, which
+comes and goes over time. This would be like a connection ledger built
+into the system. Perhaps this is what glial cells do, or one their
+functions. Thoughts?"
+
+**What exists (established).**
+- TriNet's fast memory is the first half: a full matrix, every key to
+  every value, zero by default, made non-zero by each write.
+- Synapses keep ledgers. An active synapse sets a tag that lasts hours,
+  and later plasticity proteins are taken up only by tagged synapses
+  (Frey & Morris, 1997). A synapse's history changes how it will change
+  (metaplasticity: Abraham & Bear, 1996). A synapse keeps a fading trace
+  of recent activity that a later neuromodulator turns into a lasting
+  change (Frémaux & Gerstner, 2016).
+- Machine learning trains most networks with a ledger per weight: Adam
+  keeps two running averages for each and sets each weight's own step
+  from them (Kingma & Ba, 2015).
+
+**Glia.**
+- Astrocytes (established) wrap synapses (Araque et al., 1999). Each holds
+  its own territory, of about 140,000 synapses in the rat hippocampus
+  (Bushong et al., 2002), estimated at up to two million in humans
+  (Oberheim et al., 2009). They sense transmitters, answer with slow
+  calcium signals and send signals of their own; how far they shape
+  learning in the living brain is a leading theory, partly contested, and
+  whether they keep records in the founder's sense is open.
+- Microglia (established, in development) remove synapses that are weak
+  or little used, after complement proteins tag them (Stevens et al.,
+  2007; Schafer et al., 2012): pruning by activity history.
+- Oligodendrocytes add myelin to paths in use (Gibson et al., 2014).
+- **Our reading:** astrocytes as ledger-keepers of a territory, microglia
+  as auditors, oligodendrocytes as road-builders.
+
+**Cost.** N nodes fully connected have N² connections, and a ledger of k
+entries each k·N². Zero by default is what makes it affordable: a
+connection needs storage only from its first use, as a ledger records
+only what has happened, so the network is fully connected in principle,
+sparse in practice, and grows with use (as in dynamic sparse training:
+Evci et al., 2020). An astrocyte's way is cheaper still: one ledger per
+territory.
+
+**Our proposal,** with the canyon, as one experiment. Each used
+connection gets a ledger entry, how often and how lately it was used;
+the count slowly carves a third memory between the fast memory (the
+water) and `W_base` (the bedrock), fading very slowly and held between a
+floor and a ceiling; connections never used cost nothing; an auditor
+prunes those long unused, unless their canyon is deep. Tests: savings
+(relearning faster than learning), interference between memories, memory
+size against connections used, and, with its rates at zero, today's
+TriNet exactly.
+
 ## The general cell
 
 **Our proposal.** The founder's general neural stem cell has five parts:
@@ -755,9 +1063,18 @@ Order of work:
 
 ## Sources
 
+- Abraham, W. C., & Bear, M. F. (1996). Metaplasticity: the plasticity
+  of synaptic plasticity. *Trends in Neurosciences* 19, 126–130.
 - Albus, J. S. (1971). A theory of cerebellar function. *Mathematical
   Biosciences* 10, 25–61.
 - Anderson, P. W. (1972). More is different. *Science* 177, 393–396.
+- Araque, A., Parpura, V., Sanzgiri, R. P., & Haydon, P. G. (1999).
+  Tripartite synapses: glia, the unacknowledged partner. *Trends in
+  Neurosciences* 22, 208–215.
+- Arjovsky, M., Shah, A., & Bengio, Y. (2016). Unitary evolution
+  recurrent neural networks. arXiv:1511.06464.
+- Aru, J., Suzuki, M., & Larkum, M. E. (2020). Cellular mechanisms of
+  conscious processing. *Trends in Cognitive Sciences* 24, 814–825.
 - Ashby, W. R. (1952). *Design for a Brain.* Chapman & Hall.
 - Azevedo, F. A. C., et al. (2009). Equal numbers of neuronal and
   nonneuronal cells make the human brain an isometrically scaled-up
@@ -781,6 +1098,12 @@ Order of work:
   232, 331–356.
 - Brady, D. J., Choi, K., Marks, D. L., Horisaki, R., & Lim, S. (2009).
   Compressive holography. *Optics Express* 17, 13040.
+- Bushong, E. A., Martone, M. E., Jones, Y. Z., & Ellisman, M. H.
+  (2002). Protoplasmic astrocytes in CA1 stratum radiatum occupy separate
+  anatomical domains. *Journal of Neuroscience* 22, 183–192.
+- Carhart-Harris, R. L., & Friston, K. J. (2019). REBUS and the anarchic
+  brain: toward a unified model of the brain action of psychedelics.
+  *Pharmacological Reviews* 71, 316–344.
 - Carr, C. E., & Konishi, M. (1990). A circuit for detection of interaural
   time differences in the brain stem of the barn owl. *Journal of
   Neuroscience* 10, 3227–3246.
@@ -797,18 +1120,31 @@ Order of work:
 - Ebbinghaus, H. (1885). *Über das Gedächtnis.* Duncker & Humblot.
 - Evci, U., Gale, T., Menick, J., Castro, P. S., & Elsen, E. (2020).
   Rigging the lottery: making all tickets winners. *ICML 2020.*
+- Feldmann, J., et al. (2021). Parallel convolutional processing using
+  an integrated photonic tensor core. *Nature* 589, 52–58.
 - Frémaux, N., & Gerstner, W. (2016). Neuromodulated spike-timing-dependent
   plasticity, and theory of three-factor learning rules. *Frontiers in
   Neural Circuits* 9, 85.
+- Frey, U., & Morris, R. G. M. (1997). Synaptic tagging and long-term
+  potentiation. *Nature* 385, 533–536.
+- Fries, P. (2005). A mechanism for cognitive dynamics: neuronal
+  communication through neuronal coherence. *Trends in Cognitive
+  Sciences* 9, 474–480.
 - Gabor, D. (1948). A new microscopic principle. *Nature* 161, 777–778.
 - Gabor, D. (1969). Associative holographic memories. *IBM Journal of
   Research and Development* 13, 156–159.
 - Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design
   Patterns: Elements of Reusable Object-Oriented Software.*
   Addison-Wesley.
+- Gibson, E. M., et al. (2014). Neuronal activity promotes
+  oligodendrogenesis and adaptive myelination in the mammalian brain.
+  *Science* 344, 1252304.
 - Gidon, A., et al. (2020). Dendritic action potentials and computation in
   human layer 2/3 cortical neurons. *Science* 367, 83–87.
   doi:10.1126/science.aax6239
+- González-Maeso, J., et al. (2007). Hallucinogens recruit specific
+  cortical 5-HT2A receptor-mediated signaling pathways to affect
+  behavior. *Neuron* 53, 439–452.
 - Goodman, J. W. (1968). *Introduction to Fourier Optics.* McGraw-Hill
   (later editions since).
 - He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning
@@ -827,9 +1163,17 @@ Order of work:
 - Hopfield, J. J. (1982). Neural networks and physical systems with
   emergent collective computational abilities. *Proceedings of the
   National Academy of Sciences* 79, 2554–2558.
+- Hughes, T. W., Minkov, M., Shi, Y., & Fan, S. (2018). Training of
+  photonic neural networks through in situ backpropagation and gradient
+  measurement. *Optica* 5, 864.
 - Isaac, J. T. R., Nicoll, R. A., & Malenka, R. C. (1995). Evidence for
   silent synapses: implications for the expression of LTP. *Neuron* 15,
   427–434.
+- Jakab, R. L., & Goldman-Rakic, P. S. (1998). 5-Hydroxytryptamine2A
+  serotonin receptors in the primate cerebral cortex: possible site of
+  action of hallucinogenic and antipsychotic drugs in pyramidal cell
+  apical dendrites. *PNAS* 95, 735–740.
+- James, W. (1890). *The Principles of Psychology.* Henry Holt.
 - Jang, E., Gu, S., & Poole, B. (2017). Categorical reparameterization
   with Gumbel-softmax. *ICLR 2017.*
 - Jeffress, L. A. (1948). A place theory of sound localization. *Journal
@@ -840,6 +1184,8 @@ Order of work:
 - Kelso, S. R., Ganong, A. H., & Brown, T. H. (1986). Hebbian synapses in
   hippocampus. *Proceedings of the National Academy of Sciences* 83,
   5326–5330.
+- Kingma, D. P., & Ba, J. (2015). Adam: a method for stochastic
+  optimization. arXiv:1412.6980.
 - Kirsch, L., & Schmidhuber, J. (2021). Meta learning backpropagation and
   improving it. *NeurIPS 2021.*
 - Klopf, A. H. (1982). *The Hedonistic Neuron: A Theory of Memory,
@@ -864,6 +1210,13 @@ Order of work:
   region of hippocampal slice. *Nature* 375, 400–404.
 - Lisman, J. E. (1997). Bursts as a unit of neural information: making
   unreliable synapses reliable. *Trends in Neurosciences* 20, 38–43.
+- Löwe, S., et al. (2022). Complex-valued autoencoders for object
+  discovery. arXiv:2204.02075.
+- Löwel, S., & Singer, W. (1992). Selection of intrinsic horizontal
+  connections in the visual cortex by correlated neuronal activity.
+  *Science* 255, 209–212.
+- Ly, C., et al. (2018). Psychedelics promote structural and functional
+  neural plasticity. *Cell Reports* 23, 3170–3182.
 - Marder, E. (2012). Neuromodulation of neuronal circuits: back to the
   future. *Neuron* 76, 1–11.
 - Markram, H., et al. (2004). Interneurons of the neocortical inhibitory
@@ -872,6 +1225,9 @@ Order of work:
   202, 437–470.
 - Marr, D. (1971). Simple memory: a theory for archicortex.
   *Philosophical Transactions of the Royal Society B* 262, 23–81.
+- McClelland, J. L., McNaughton, B. L., & O'Reilly, R. C. (1995). Why
+  there are complementary learning systems in the hippocampus and
+  neocortex. *Psychological Review* 102, 419–457.
 - Miconi, T., Clune, J., & Stanley, K. O. (2018). Differentiable
   plasticity: training plastic neural networks with backpropagation.
   *ICML 2018.*
@@ -882,9 +1238,21 @@ Order of work:
 - Napper, R. M., & Harvey, R. J. (1988). Number of parallel fiber
   synapses on an individual Purkinje cell in the cerebellum of the rat.
   *Journal of Comparative Neurology* 274, 168–177.
+- Oberheim, N. A., et al. (2009). Uniquely hominid features of adult
+  human astrocytes. *Journal of Neuroscience* 29, 3276–3287.
+- O'Keefe, J., & Recce, M. L. (1993). Phase relationship between
+  hippocampal place units and the EEG theta rhythm. *Hippocampus* 3,
+  317–330.
+- Orvieto, A., et al. (2023). Resurrecting recurrent neural networks for
+  long sequences. arXiv:2303.06349.
 - Plate, T. A. (1995). Holographic reduced representations. *IEEE
   Transactions on Neural Networks* 6, 623–641.
+- Preller, K. H., et al. (2017). The fabric of meaning and subjective
+  effects in LSD-induced states depend on serotonin 2A receptor
+  activation. *Current Biology* 27, 451–457.
 - Pribram, K. H. (1971). *Languages of the Brain.* Prentice-Hall.
+- Psaltis, D., Brady, D., Gu, X.-G., & Lin, S. (1990). Holography in
+  artificial neural networks. *Nature* 343, 325–330.
 - Ramsauer, H., et al. (2021). Hopfield networks is all you need. *ICLR
   2021.*
 - Redgrave, P., Prescott, T. J., & Gurney, K. (1999). The basal ganglia: a
@@ -893,12 +1261,19 @@ Order of work:
 - Reed, I. S., & Solomon, G. (1960). Polynomial codes over certain
   finite fields. *Journal of the Society for Industrial and Applied
   Mathematics* 8, 300–304.
+- Reichert, D. P., & Serre, T. (2014). Neuronal synchrony in
+  complex-valued deep networks. arXiv:1312.6115.
+- Schafer, D. P., et al. (2012). Microglia sculpt postnatal neural
+  circuits in an activity and complement-dependent manner. *Neuron* 74,
+  691–705.
 - Schultz, W., Dayan, P., & Montague, P. R. (1997). A neural substrate of
   prediction and reward. *Science* 275, 1593–1599.
 - Shamir, A. (1979). How to share a secret. *Communications of the ACM*
   22, 612–613.
 - Shazeer, N., et al. (2017). Outrageously large neural networks: the
   sparsely-gated mixture-of-experts layer. *ICLR 2017.*
+- Shen, Y., et al. (2017). Deep learning with coherent nanophotonic
+  circuits. *Nature Photonics* 11, 441–446.
 - Sherman, S. M. (2001). Tonic and burst firing: dual modes of
   thalamocortical relay. *Trends in Neurosciences* 24, 122–126.
 - Siletti, K., et al. (2023). Transcriptomic diversity of cell types across
@@ -910,10 +1285,22 @@ Order of work:
   (2024). The expressive leaky memory neuron: an efficient and expressive
   phenomenological neuron model can solve long-horizon tasks. *ICLR
   2024.*
+- Stevens, B., et al. (2007). The classical complement cascade mediates
+  CNS synapse elimination. *Cell* 131, 1164–1178.
+- Su, J., et al. (2021). RoFormer: enhanced Transformer with rotary
+  position embedding. arXiv:2104.09864.
 - Susskind, L. (1995). The world as a hologram. *Journal of
   Mathematical Physics* 36, 6377–6396.
+- Suzuki, M., & Larkum, M. E. (2020). General anesthesia decouples
+  cortical pyramidal neurons. *Cell* 180, 666–676.
 - Szabadics, J., et al. (2006). Excitatory effect of GABAergic axo-axonic
   cells in cortical microcircuits. *Science* 311, 233–235.
+- Tait, A. N., Nahmias, M. A., Shastri, B. J., & Prucnal, P. R. (2014).
+  Broadcast and weight: an integrated network for scalable photonic spike
+  processing. *Journal of Lightwave Technology* 32, 4029–4041.
+- Tait, A. N., et al. (2017). Neuromorphic photonic networks using
+  silicon photonic weight banks. *Scientific Reports* 7.
+- Trabelsi, C., et al. (2018). Deep complex networks. arXiv:1705.09792.
 - Trachtenberg, J. T., et al. (2002). Long-term in vivo imaging of
   experience-dependent synaptic plasticity in adult cortex. *Nature* 420,
   788–794.
@@ -922,9 +1309,15 @@ Order of work:
   neocortical neurons. *Nature* 391, 892–896.
 - Vander Lugt, A. (1964). Signal detection by complex spatial
   filtering. *IEEE Transactions on Information Theory* 10, 139–145.
+- Vollenweider, F. X., et al. (1998). Psilocybin induces
+  schizophrenia-like psychosis in humans via a serotonin-2 agonist
+  action. *NeuroReport* 9, 3897–3902.
+- Waddington, C. H. (1957). *The Strategy of the Genes.* Allen & Unwin.
 - Werfel, J., Xie, X., & Seung, H. S. (2005). Learning curves for
   stochastic gradient descent in linear feedforward networks. *Neural
   Computation* 17, 2699–2718.
+- Wetzstein, G., et al. (2020). Inference in artificial intelligence with
+  deep optics and photonics. *Nature* 588, 39–47.
 - Willshaw, D. J., Buneman, O. P., & Longuet-Higgins, H. C. (1969).
   Non-holographic associative memory. *Nature* 222, 960–962.
 
@@ -950,9 +1343,25 @@ How these were checked:
   recovery of sparse scenes, memories spread over regions) were not
   checked against their text. Goodman's title, author and year were
   checked against Open Library.
+- For "Signals like light", "Amplitude and phase", "Ports and
+  receptors", "The 5-HT2A receptor", "The canyon" and "The connection
+  ledger" (2026-11-23): Abraham & Bear, Araque et al., Aru et al., Bushong
+  et al., Carhart-Harris & Friston, Feldmann et al., Frey & Morris,
+  Fries, Gibson et al., González-Maeso et al., Hughes et al., Jakab &
+  Goldman-Rakic, Löwel & Singer, Ly et al., McClelland et al., Oberheim
+  et al., O'Keefe & Recce, Preller et al., Psaltis et al., Schafer et al.,
+  Shen et al., Stevens et al., Suzuki & Larkum, Tait et al. (both),
+  Vollenweider et al. and Wetzstein et al. were checked against Crossref;
+  Arjovsky et al., Kingma & Ba, Löwe et al., Orvieto et al., Reichert &
+  Serre, Su et al. and Trabelsi et al. against arXiv; the astrocyte
+  counts (about 140,000; up to two million) against the papers' pages on
+  jneurosci.org; James's words against the online text at
+  psychclassics.yorku.ca. These checks are of the references; the
+  findings were not all checked against the papers' text.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
-  Ramsauer et al., Shazeer et al., Simon, and the books, except
-  Goodman's title, author and year)
+  Ramsauer et al., Shazeer et al., Simon, Waddington, the colour
+  television figures, and the books, except Goodman's title, author and
+  year)
   are from Claude's knowledge, and are to be checked before this page is
   cited elsewhere.

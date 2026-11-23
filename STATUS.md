@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: Stage A, Gemini's BicameralTriNet against one TriNet, on two tasks (`experiments/README.md`, #7)
+- Claude: six proposals of the founder's in the catalog: signals like light, amplitude and phase, ports and receptors, the 5-HT2A receptor, the canyon, the connection ledger (`docs/NEURON-CATALOG.md`, #9)
 
 ## Next
 
@@ -64,6 +64,13 @@ on Hugging Face:
 
 ## Open questions
 
+- For the founder: do the canyon and the connection ledger become one
+  experiment (`docs/NEURON-CATALOG.md`, "The connection ledger"), to come
+  next after complex retention, with the 5-HT2A dial after it? The
+  technical lead's recommendation: yes to both. The ledger's use count is
+  what carves the canyon, so one experiment tests both, and the dial
+  needs a task whose rules change, which the other two do not. (asked
+  2026-11-23)
 - For the founder: does the hologram simulation proposed in
   `docs/NEURON-CATALOG.md` ("Writing and reading a hologram") run beside
   the items under "Next", as the general cell does, or after them? The
@@ -177,6 +184,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 36 sources added (#9)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
