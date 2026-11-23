@@ -65,7 +65,7 @@ Transformer beside it does better in most runs.
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install transformers safetensors numpy pytest
-python -m pytest -q                      # 56 tests, under a minute
+python -m pytest -q                      # 57 tests, under a minute
 python verify_hf_roundtrip.py            # Gemini's own check
 python train_trinet.py --preset smoke --smoke-test --seq-len 72 --steps 100
 python experiments/answers_only.py trinet  # minutes; see experiments/README.md

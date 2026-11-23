@@ -12,7 +12,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-23, the 56 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-23, the 57 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 

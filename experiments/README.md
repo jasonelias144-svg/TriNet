@@ -552,15 +552,18 @@ and writes `/kaggle/working/speed.json` (kept here as
   (counted by the independent review with PyTorch's saved-tensor hooks,
   and again here: 3.0 per layer per character, 89% of what is kept). The
   measured peaks agree: at `1m` and 128 × 256, three matrices make 9.4
-  GiB of the 10.61 measured; at `10m` and 128 × 32 they make 15.8 GiB,
-  more than this 16 GB card holds.
+  GiB of the 10.61 measured; at `10m` and 128 × 32 they make 15.8 GiB
+  (17.0 GB), more than this 16 GB card holds. The count is a test,
+  `tests/test_memory_kept.py`.
 - **At the `1m` size a Transformer trains 13.5 times faster at 128
   characters**, each at its best batch (310,536 characters a second
-  against 22,974), **and 86 times faster at 512** (247,906 against
-  2,888), in a fifth of the memory or less. One pass over TinyStories,
-  about 2 billion characters (our estimate of its size, not measured
-  here), would take TriNet about a day in texts of 128 characters, and
-  about 8 days in texts of 512; the Transformer about two hours.
+  against 22,974), **and 86 times faster at 512** (247,906 against 2,888),
+  in a seventieth of the memory at 128 characters (0.15 against 10.61 GiB)
+  and about two fifths at 512 (2.01 against 5.34 GiB). One pass over
+  TinyStories, about 2 billion characters (our estimate of its size, not
+  measured here), would take TriNet about a day in texts of 128
+  characters, and about 8 days in texts of 512; the Transformer about two
+  hours.
 - **At Stage A's size and batch, the CPU was about twice as fast.** In
   Stage A's runs (2026-11-22, two at a time on a 4-core Xeon, 2 threads
   each), one TriNet trained in 504 to 559 seconds on 1,500 batches of 32
@@ -571,18 +574,18 @@ and writes `/kaggle/working/speed.json` (kept here as
 **Our reading.** Before a long run on real text, TriNet needs a faster
 form: fewer and larger GPU operations, and the memory recomputed in the
 backward pass instead of stored. Which form is possible depends on the
-fair comparison (STATUS.md, Next 1). The update is
-`F ← clamp(λF + η·kᵀ(v − kF))`. If TriNet does as well when neither its
-gates nor its slow yellow state read the memory's surprise, and without
-the clamp (which did not bind in one Stage A run the independent review
-checked: seed 0, largest value 2.70 against a bound of 6), then the
-gates depend only on the input, through the bus and the yellow state
-(itself a simple recurrence over the bus that a parallel scan can
-compute), and the update is linear in the memory:
-`F ← (λI − η·kᵀk)F + η·kᵀv`. That is Gated DeltaNet's form, with its
-decay equal to λ, its write strength to η/λ and its values to λv, and it
-can be computed in parallel chunks. If surprise matters, each step must
-wait for the last, and the work is a single fused kernel for the loop.
+fair comparison (STATUS.md, Next 1). The update is `F ← clamp(λF + η·kᵀ(v
+− kF))`. If TriNet does as well when neither its gates nor its slow yellow
+state read the memory's surprise, and without the clamp (which did not
+bind in one Stage A run the independent review checked: seed 0, largest
+value 3.14 against a bound of 6, on evaluation batches during training),
+then the gates depend only on the input, through the bus and the yellow
+state (itself a simple recurrence over the bus that a parallel scan can
+compute), and the update is linear in the memory: `F ← (λI − η·kᵀk)F +
+η·kᵀv`. That is Gated DeltaNet's form, with its decay equal to λ, its
+write strength to η/λ and its values to λv, and it can be computed in
+parallel chunks. If surprise or the clamp matters, each step must wait for
+the last, and the work is a single fused kernel for the loop.
 
 **Not checked.** `torch.compile` or CUDA graphs; mixed precision; the
 second GPU; any chunked form; whether the clamp binds in larger models
