@@ -720,8 +720,8 @@ in a thick hologram, the peak of an optical correlator (Vander Lugt,
 
 1. **Simulate writing and reading** (numerical optics, on a CPU; done,
    `experiments/holography.py`, results in `experiments/README.md`,
-   several scenes both as a complex sum and as a plate recorded in
-   intensity): record
+   several memories, random-phase vectors and smooth random pages, both
+   as a complex sum and as a plate recorded in intensity): record
    the hologram of points at several depths; read it back and refocus
    at each depth; cut it, and measure how the image degrades; store
    several scenes under different keys, and measure the crosstalk as

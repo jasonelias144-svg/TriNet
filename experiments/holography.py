@@ -196,7 +196,8 @@ def write_matrix(keys, vals, rule):
     pass at full step, each write storing only what F does not yet return
     for its key, with no decay and no clipping (TriNet's fast memory adds
     both, and learned gates). "lstsq": the matrix fitted to all memories
-    at once by least squares, a bound on what any matrix can do."""
+    at once by least squares, the best fit in squared error, which
+    returns each memory exactly while there are no more than m."""
     m = keys.shape[1]
     if rule == "lstsq":
         return np.linalg.lstsq(keys / m, vals, rcond=None)[0]

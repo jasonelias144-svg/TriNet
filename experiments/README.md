@@ -356,8 +356,10 @@ matrix memories TriNet is built on?
 **Method** (`experiments/holography.py`, numpy only). Light of one colour
 (633 nm) as a scalar field on a plate 1,024 pixels of 1 micrometre wide.
 Light moves by the angular spectrum method (each spatial frequency
-changes only its phase), on a grid twice as wide so that light leaving
-the plate's edge does not wrap round. Writing records the plate's
+changes only its phase), on a grid twice as wide so that little of the
+light leaving the plate's edge wraps round (the FFT's grid is periodic;
+on wider grids still, the numbers below move by a few hundredths, or a
+pixel, at most). Writing records the plate's
 intensity, `|O + R|²`, for an object wave O and a reference R, a plane
 wave at 8.6 degrees. Reading lights the plate with R again and keeps only
 the light travelling the object's way (an aperture in the focal plane of
@@ -415,12 +417,16 @@ known list, not recalling it. Every store holds 4,096 complex numbers:
 - a hologram whose memories are 4,096 numbers each, either as the
   complex sum of the term a hologram is read for (value times conjugate
   key), or recorded on a plate in intensity, one exposure per memory,
-  each exposure's mean taken off (so its twin terms remain);
+  each exposure's mean taken off (so its twin terms remain). Taking it
+  off is what digital holography does with a camera's record; a film
+  plate keeps it, and it would come back as more noise, which is not
+  simulated here;
 - 64 × 64 matrices (TriNet's kind of memory) whose memories are 64
   numbers each: the plain sum of outer products; the delta rule in one
   pass at full step, without the decay, clipping and learned gates of
   TriNet's fast memory (`F ← λF + η·kᵀ(v − kF)`); and least squares,
-  fitted to all memories at once, the best a matrix can do.
+  fitted to all memories at once: the best fit in squared error, which
+  for up to 64 memories returns each exactly.
 
 | Memories | hologram, complex sum | hologram, recorded | matrix: sum | matrix: delta rule | matrix: least squares |
 |---|---|---|---|---|---|
@@ -467,7 +473,9 @@ known list, not recalling it. Every store holds 4,096 complex numbers:
   all on one side and apart by more than twice each page's band, so that
   each page's unwanted terms, and on the recorded plate its zero order
   and twin, travel in other directions, where the aperture leaves them
-  out. Such pages share the plate's frequencies, so their number is
+  out (the zero order also needs each carrier more than three times the
+  band from the axis, which these are: at least 26/256, against a band
+  of 0.02). Such pages share the plate's frequencies, so their number is
   capped by the plate's size.
 
 **What this shows.** The account in the catalog holds when computed: the
