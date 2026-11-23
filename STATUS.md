@@ -16,7 +16,10 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: six proposals of the founder's in the catalog: signals like light, amplitude and phase, ports and receptors, the 5-HT2A receptor, the canyon, the connection ledger (`docs/NEURON-CATALOG.md`, #9)
+- Claude: the founder's levels of text in the catalog, with an
+  experiment proposed (`docs/NEURON-CATALOG.md`, "Levels of text", #10)
+- Claude: TriNet's speed on a Kaggle GPU (Next 3's first step; a private
+  script on the founder's Kaggle account)
 - Claude: complex retention, the first test of complex signals (branch
   `claude/complex-retention`; its pull request to come)
 
@@ -55,16 +58,19 @@ of every session; update it on your branch at the end. Keep it short and true. -
 5. Publishing on Hugging Face, when the founder decides (P5).
 
 Beside these, not after them (Decided, 2026-11-23): the general cell, by
-the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
-Items 1 and 2 test what TriNet already is, and their results are what the
+the order of work in `docs/NEURON-CATALOG.md` ("The general cell"). Items
+1 and 2 test what TriNet already is, and their results are what the
 general cell is compared against. Also beside them (Decided, 2026-11-23):
 as the first test of complex signals, complex retention, a fast memory
 that fades and rotates, so a trace's phase tells its age (in its own pull
-request); then the canyon and the connection ledger as one experiment
-(`docs/NEURON-CATALOG.md`, "The connection ledger"), the first step
-toward temporary weights that become lasting ones. Set aside for now,
-each kept in the catalog with its test: optical hardware, the 5-HT2A
-dial, new port types, the holographic layer, and the receptor bus's
+request). After the fair comparison's first round, two levels of TriNet
+(`docs/NEURON-CATALOG.md`, "Levels of text"), because they decide what
+training on a GPU would cost (the technical lead's order, under the
+founder's word of 2026-11-23). Then the canyon and the connection ledger
+as one experiment (`docs/NEURON-CATALOG.md`, "The connection ledger"), the
+first step toward temporary weights that become lasting ones. Set aside
+for now, each kept in the catalog with its test: optical hardware, the
+5-HT2A dial, new port types, the holographic layer, and the receptor bus's
 colour signal written as a complex number.
 
 ## Before publishing
@@ -232,6 +238,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: the founder's levels of text in the catalog (a TriNet that steps through characters, then words, then sentences): why it would cut the steps one after another, what has been built before (clockwork and multiscale networks, byte patches, learned chunks), the brain's ladder of timescales, the power-law invariant of text, what would be TriNet's own (boundaries from surprise, context on the apical side, one cell at every level), cautions, and an experiment placed after the fair comparison's first round; 12 sources added (#10)
 - 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
