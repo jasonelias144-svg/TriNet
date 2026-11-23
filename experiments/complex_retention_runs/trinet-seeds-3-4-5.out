@@ -1,0 +1,15 @@
+trinet on harder, seed 3, 1500 steps, 33,748 parameters (525 s)
+    learning curve, % right at the training length, by step: 250: 57.2; 500: 76.6; 750: 87.2; 1000: 99.4; 1250: 99.5; 1500: 99.9
+    ~125 characters  all  99.8%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  98.9, before last overwrite  99.9)  [other value: current, overwritten  0.0, before last overwrite  0.0]
+    ~160 characters  all  99.9%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  99.2, before last overwrite 100.0)  [other value: current, overwritten  0.0, before last overwrite  0.0]
+    ~260 characters  all  99.8%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  99.4, before last overwrite  99.8)  [other value: current, overwritten  0.0, before last overwrite  0.1]
+trinet on harder, seed 4, 1500 steps, 33,748 parameters (523 s)
+    learning curve, % right at the training length, by step: 250: 57.8; 500: 83.1; 750: 99.1; 1000: 99.7; 1250: 99.7; 1500: 99.7
+    ~125 characters  all  99.8%  (current, not overwritten 100.0, current, overwritten  99.9, pointer  99.3, before last overwrite  99.9)  [other value: current, overwritten  0.0, before last overwrite  0.0]
+    ~160 characters  all  99.8%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  99.2, before last overwrite  99.7)  [other value: current, overwritten  0.0, before last overwrite  0.0]
+    ~260 characters  all  99.7%  (current, not overwritten  99.9, current, overwritten 100.0, pointer  99.1, before last overwrite  99.8)  [other value: current, overwritten  0.0, before last overwrite  0.0]
+trinet on harder, seed 5, 1500 steps, 33,748 parameters (532 s)
+    learning curve, % right at the training length, by step: 250: 19.8; 500: 53.1; 750: 77.6; 1000: 85.9; 1250: 87.3; 1500: 95.1
+    ~125 characters  all  95.4%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  80.3, before last overwrite  97.4)  [other value: current, overwritten  0.0, before last overwrite  1.0]
+    ~160 characters  all  94.1%  (current, not overwritten 100.0, current, overwritten  99.9, pointer  73.9, before last overwrite  97.2)  [other value: current, overwritten  0.1, before last overwrite  0.6]
+    ~260 characters  all  92.8%  (current, not overwritten  99.7, current, overwritten  99.8, pointer  69.4, before last overwrite  96.0)  [other value: current, overwritten  0.2, before last overwrite  1.7]

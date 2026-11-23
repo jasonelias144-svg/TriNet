@@ -1,0 +1,18 @@
+trinet-complex on harder, seed 0, 1500 steps, 33,828 parameters (850 s)
+    learning curve, % right at the training length, by step: 250: 49.4; 500: 68.2; 750: 70.8; 1000: 80.6; 1250: 91.0; 1500: 94.7
+    after training: layer 0: angle mean 0.0126, max 0.1257 (turn over 125 characters up to 15.71); |w_im| mean 0.047; layer 1: angle mean 0.1469, max 0.4340 (turn over 125 characters up to 54.25); |w_im| mean 0.156
+    ~125 characters  all  95.0%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  78.9, before last overwrite  97.0)  [other value: current, overwritten  0.0, before last overwrite  0.9]
+    ~160 characters  all  94.6%  (current, not overwritten 100.0, current, overwritten 100.0, pointer  76.1, before last overwrite  97.4)  [other value: current, overwritten  0.0, before last overwrite  0.5]
+    ~260 characters  all  92.0%  (current, not overwritten  98.0, current, overwritten 100.0, pointer  74.3, before last overwrite  91.4)  [other value: current, overwritten  0.0, before last overwrite  1.6]
+trinet-complex on harder, seed 1, 1500 steps, 33,828 parameters (891 s)
+    learning curve, % right at the training length, by step: 250: 40.2; 500: 64.8; 750: 80.2; 1000: 86.2; 1250: 92.4; 1500: 95.5
+    after training: layer 0: angle mean 0.0319, max 0.2551 (turn over 125 characters up to 31.89); |w_im| mean 0.038; layer 1: angle mean 0.0148, max 0.1548 (turn over 125 characters up to 19.35); |w_im| mean 0.068
+    ~125 characters  all  95.5%  (current, not overwritten  99.4, current, overwritten  98.3, pointer  90.0, before last overwrite  94.2)  [other value: current, overwritten  1.6, before last overwrite  2.3]
+    ~160 characters  all  95.1%  (current, not overwritten  99.7, current, overwritten  98.9, pointer  88.4, before last overwrite  93.4)  [other value: current, overwritten  1.0, before last overwrite  2.4]
+    ~260 characters  all  84.5%  (current, not overwritten  96.5, current, overwritten  97.8, pointer  75.3, before last overwrite  71.9)  [other value: current, overwritten  2.0, before last overwrite 12.2]
+trinet-complex on harder, seed 2, 1500 steps, 33,828 parameters (1526 s)
+    learning curve, % right at the training length, by step: 250: 63.7; 500: 88.3; 750: 98.2; 1000: 99.2; 1250: 99.8; 1500: 99.9
+    after training: layer 0: angle mean 0.0335, max 0.1894 (turn over 125 characters up to 23.68); |w_im| mean 0.082; layer 1: angle mean 0.0310, max 0.2657 (turn over 125 characters up to 33.21); |w_im| mean 0.116
+    ~125 characters  all  99.7%  (current, not overwritten  99.8, current, overwritten  99.9, pointer  99.4, before last overwrite  99.5)  [other value: current, overwritten  0.1, before last overwrite  0.0]
+    ~160 characters  all  99.5%  (current, not overwritten 100.0, current, overwritten  99.9, pointer  98.9, before last overwrite  99.3)  [other value: current, overwritten  0.0, before last overwrite  0.3]
+    ~260 characters  all  96.7%  (current, not overwritten  99.3, current, overwritten  99.8, pointer  97.8, before last overwrite  92.0)  [other value: current, overwritten  0.0, before last overwrite  0.4]
