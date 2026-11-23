@@ -730,7 +730,8 @@ in a thick hologram, the peak of an optical correlator (Vander Lugt,
    hold complex numbers (amplitude and phase), written with value times
    conjugate key and read with the key, against TriNet's delta-rule
    memory on the recall task, with the same count of stored numbers;
-   then delete parts of each and compare how they fail.
+   then delete parts of each and compare how they fail. Set aside for
+   now (STATUS.md, Decided, 2026-11-23).
 
 ## Signals like light
 

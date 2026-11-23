@@ -44,8 +44,8 @@ of every session; update it on your branch at the end. Keep it short and true. -
    that was the shortcut.) Find what decides it (weighting the answers in
    the loss, training longer, more seeds) and measure.
 3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
-   GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order);
-   first a short test of TriNet's speed there. The founder's Kaggle token
+   GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order).
+   A short test of TriNet's speed there comes first, now, beside Next 1. The founder's Kaggle token
    is among this environment's network secrets (never in the
    repository); on 2026-11-23 a call that needs it returned the account's
    GPU quota, 30 hours a week. Kaggle's own command-line tool cannot sign
@@ -118,7 +118,7 @@ on Hugging Face:
   up from 2), since it is what every other proposal is measured against;
   the canyon and the connection ledger become one experiment, after
   complex retention (the question asked here earlier that day, now
-  closed); optical hardware, the 5-HT2A dial, new port types and the
+  closed); optical hardware, the 5-HT2A dial, new port types, the
   holographic layer and the receptor bus's colour signal written as a
   complex number are set aside for now, each kept in
   `docs/NEURON-CATALOG.md` with its test. Of the hologram simulation
@@ -232,7 +232,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle, when the CPU experiments are worth it); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
+- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
