@@ -542,8 +542,8 @@ character at a time.
 - Chunks learned with the rest of the model, and the levels nested
   (Hwang, Wang & Gu, 2025).
 - An early precedent for boundaries from surprise, in a neural network: a
-  small recurrent network's error in predicting the next letter is highest at the start
-  of a word (Elman, 1990).
+  small recurrent network's error in predicting the next letter is highest
+  at the start of a word (Elman, 1990).
 
 **In the brain.**
 - Reported: areas higher in the cortex's hierarchy integrate over longer
