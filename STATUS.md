@@ -22,6 +22,8 @@ of every session; update it on your branch at the end. Keep it short and true. -
   under the founder's account (branch `claude/fair-comparison`)
 - Claude: TriNet's speed on a Kaggle GPU, its record
   (`experiments/README.md`, "Speed on a GPU", #11)
+- Claude: unit 0, a basic unit designed from the ground up, its design
+  page (`unit/README.md`, branch `claude/new-unit`)
 - Claude: complex retention, the first test of complex signals (branch
   `claude/complex-retention`; its pull request to come)
 
@@ -88,6 +90,12 @@ in the catalog with its test: optical hardware, the 5-HT2A dial, new port
 types, the holographic layer, and the receptor bus's colour signal written
 as a complex number.
 
+Unit 0 (Decided, 2026-11-23): a basic unit designed from the ground up
+(`unit/README.md`), built after the fair comparison's results, which may
+add dials to it. Its tests run in order: recall, length, images, levels
+of text, speed, each against the plain unit, `gated-delta`, a tuned
+Transformer and TriNet, with five seeds or more.
+
 ## Before publishing
 
 The founder's word (Decided, 2026-11-22): publishing comes last, and every
@@ -112,6 +120,25 @@ on Hugging Face:
 
 ## Decided
 
+- 2026-11-23, founder, in three messages on what comes after TriNet. On
+  images: "the three-channel neuron was meant to be efficient for image
+  processing because of the ability to associate a pixel with a neuron.
+  But if the pixels have already been flattened in the data, to
+  accommodate single channel neurons, then we would not expect to see the
+  benefit." On TriNet: "TriNet was just one idea. We can explore others.
+  Maybe start with a two-channel. My point is that we do not need to be
+  locked into TriNet." And: "I would rather, at this point, let you
+  design it from the ground up. Not starting with TriNet, but starting
+  with an invitation to build something from scratch that takes
+  everything we have learned and utilizes that knowledge to design a new
+  basic neural processing unit. And then we can build from there.
+  Thoughts on design from scratch, but with you leading the design?" The
+  words in full are in `unit/README.md`. Hence unit 0, designed by the
+  technical lead, its design page first, with predictions written before
+  any code; TriNet becomes one entry in its comparisons, not its starting
+  point; images are tested with each pixel's colours kept as channels, as
+  well as mixed. That unit 0 waits for the fair comparison's results, and
+  its order of tests, are the technical lead's order of work.
 - 2026-11-23, founder, on GPU training, after asking the technical lead
   what it needs and costs: "If you could provide a list of options at
   different price levels, and the benefits associated and I will get the
@@ -253,6 +280,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: at the founder's invitation, unit 0, a basic unit designed from the ground up (`unit/README.md`): what the work so far has shown, eight principles, the unit (a memory written by the delta rule, gates that read only the input so it can be computed in chunks, two inputs, from below and from above, and two outputs, what it found and its surprise), nine dials, five tests, eight predictions written before any code, and guard rails; TriNet one entry in its comparisons
 - 2026-11-23 Claude: TriNet's speed on a Kaggle GPU (a Tesla T4), the scripts and raw results kept in `experiments/kaggle/`: the step time hardly changes with the batch (about 2.6 ms per layer per character at every size), memory runs out first (three stored matrices per layer per character; the `10m` preset cannot train on 32 texts of 128 characters), and at the `1m` size a Transformer trains 13.5 times faster at 128 characters and 86 times at 512; without surprise and the clamp, TriNet's update is Gated DeltaNet's form; after independent review, the ranges per size, the memory count, the ratios like for like, and the condition for a chunked form corrected (#11)
 - 2026-11-23 Claude: the founder's levels of text in the catalog (a TriNet that steps through characters, then words, then sentences): why it would cut the steps one after another, what has been built before (clockwork and multiscale networks, byte patches, learned chunks), the brain's ladder of timescales, the power-law invariant of text, what would be TriNet's own (boundaries from surprise, context on the apical side, one cell at every level), cautions, and an experiment, on real text too, placed after the fair comparison's first five seeds; 13 sources added; after independent review, two citations narrowed, a theory labelled as one, the conditions of the cost argument stated, and what measures surprise corrected; Next 3's account of Kaggle access corrected (a script saved and run under the founder's account, not a call that may not need the token) (#10)
 - 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
