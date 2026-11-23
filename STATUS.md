@@ -44,10 +44,13 @@ of every session; update it on your branch at the end. Keep it short and true. -
    that was the shortcut.) Find what decides it (weighting the answers in
    the loss, training longer, more seeds) and measure.
 3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
-   GPUs (Decided, 2026-11-23), once Next 1 shows something worth taking
-   further; first a short test of TriNet's speed there. It needs the
-   founder's Kaggle token among this environment's network secrets
-   (never in the repository); not yet added.
+   GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order);
+   first a short test of TriNet's speed there. The founder's Kaggle token
+   is among this environment's network secrets (never in the
+   repository); on 2026-11-23 a call that needs it returned the account's
+   GPU quota, 30 hours a week. Kaggle's own command-line tool cannot sign
+   in with a token held this way (its check sends the token in the
+   request body), so the calls go to Kaggle's API directly.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
@@ -88,16 +91,20 @@ on Hugging Face:
 
 ## Decided
 
-- 2026-11-23, founder, on GPU training, after asking what it needs and
-  costs: "If you could provide a list of options at different price
-  levels, and the benefits associated and I will get the funding for the
-  GPU training. But let's waiting until we know we have something worth
-  taking to the next development stage. Until then, let's maximize the
-  resources at our disposal." Then, from the technical lead's list: "Ok,
-  Kaggle it is. 30 GPU-hours per week is plenty if we utilize that time
-  well." Hence Next 3: Kaggle's free GPUs under the founder's account,
-  once the experiments on this session's CPUs show something worth
-  taking further; paid GPUs wait for that and for the founder's funding.
+- 2026-11-23, founder, on GPU training, after asking the technical lead
+  what it needs and costs: "If you could provide a list of options at
+  different price levels, and the benefits associated and I will get the
+  funding for the GPU training. But let's waiting until we know we have
+  something worth taking to the next development stage. Until then, let's
+  maximize the resources at our disposal." Then, from the technical lead's
+  list: "Ok, Kaggle it is. 30 GPU-hours per week is plenty if we utilize
+  that time well." And: "I have a Kaggle account." Hence Kaggle's free
+  GPUs, under the founder's own Kaggle account, are a resource to use from
+  now on, starting with a test of TriNet's speed there; paid GPUs wait
+  until there is something worth taking to the next stage, and for the
+  founder's funding. That Next 3's training on real text comes after Next
+  1 is the technical lead's order of work, not the founder's words: it is
+  to show what TriNet adds before a long run is spent on it.
 - 2026-11-23, founder, after offering the day's proposals for
   discussion: "Honestly, my goal was to throw out so many ideas that we
   could move in any of a variety of directions and then let you decide
@@ -112,12 +119,13 @@ on Hugging Face:
   the canyon and the connection ledger become one experiment, after
   complex retention (the question asked here earlier that day, now
   closed); optical hardware, the 5-HT2A dial, new port types and the
-  holographic layer are set aside for now, each kept in
+  holographic layer and the receptor bus's colour signal written as a
+  complex number are set aside for now, each kept in
   `docs/NEURON-CATALOG.md` with its test. Of the hologram simulation
   agreed below ("Yes to both"), the first step is done (#8) and the
-  second, the holographic layer inside TriNet, is the one set aside. Where a GPU run happens, and
-  under which account a model is published, stay the founder's (Open
-  questions).
+  second, the holographic layer inside TriNet, is the one set aside.
+  Under which account a model is published stays the founder's (Open
+  questions); where GPU runs happen was answered later that day (above).
 - 2026-11-23, founder, answering two questions: does the hologram
   simulation run beside the items under "Next", and should the first test
   of complex signals be complex retention (a fast memory that fades and
@@ -224,7 +232,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 36 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, four proposals set aside; the founder's word on GPU training (Kaggle, when the CPU experiments are worth it); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
+- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle, when the CPU experiments are worth it); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)

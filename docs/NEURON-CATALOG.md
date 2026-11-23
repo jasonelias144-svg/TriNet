@@ -772,6 +772,9 @@ photodiode (listen and sum), a transistor (decide) and a laser or LED
   the nonlinearity, the precision (a few bits) and keeping phase steady
   are the hard parts.
 
+Building TriNet in optics is set aside for now (STATUS.md, Decided,
+2026-11-23).
+
 **Our reading:** TriNet's fast memory does the three things a dynamic
 hologram does: it writes (value less what it already reads) times key,
 reads with a key, and fades.
@@ -779,8 +782,8 @@ The yellow channel's write and retain gates would be the beam's strength
 and the rate of erasure.
 
 **Colour television as the example** (established: NTSC colour, adopted
-in the United States in 1953; the figures are from Claude's knowledge and
-the standard, 47 CFR § 73.682):
+in the United States in 1953; how the figures were checked is under
+"Sources"):
 1. **Compatibility.** Colour was added without breaking black-and-white
    sets: the old signal stayed as brightness, and colour rode in the same
    6 MHz channel. **Our proposal:** a light-like TriNet must reduce
@@ -800,7 +803,7 @@ the standard, 47 CFR § 73.682):
    metamers. **Our reading,** for the founder's words to Claude earlier
    the same day (2026-11-23), "Eventually, the six different types would
    be replaced by an infinite variety based on combinations of infinite
-   possibilities, like the collection of all possible colors.": the
+   possibilities, like the collection of all possible colors": the
    space of cells may be endless, while a task tells only a few of its
    dimensions apart.
    How many is a measurement.
@@ -850,7 +853,8 @@ objects.
 number and one complex number (the Clarke transform). TriNet's receptor
 bus has a three-number colour signal of its own (red, blue and yellow,
 made from the delay line's context), and it could be written so: its
-sum, which the bus calls intensity, and one complex number, its hue. The
+sum, which the bus calls intensity, and one complex number, its hue once
+divided by the sum. The
 bus already reads it this way. Its hue and each receptor's preferred hue
 lie where the three numbers add to one, and there distances are exactly
 √1.5 times those in the plane of the amplitude-invariant Clarke
@@ -877,7 +881,7 @@ particular form. Thoughts?"
 three-colour signal into an intensity and a hue; each of its receptors
 has a preferred hue and a width, and answers strongly to signals near it.
 These are ports tuned to the form of a signal. Today they feed the yellow
-gates and, with the rest of the layer, its output.
+state and gates and, with the rest of the layer, its output.
 
 **Established: the meaning is in the receiver.** Dopamine broadly excites
 through D1 receptors and inhibits through D2; acetylcholine acts in
@@ -908,7 +912,8 @@ list of typed ports, connections allowed only between ports that match.
 2. Ports as dials of the general cell: tuning, effect, speed, gain, and a
    switch between silent and active.
 3. The first new port type: one that needs two signals at once (as NMDA
-   does), tested on a task that needs coincidence.
+   does), tested on a task that needs coincidence. Set aside for now
+   (STATUS.md, Decided, 2026-11-23).
 
 ## The 5-HT2A receptor
 
@@ -1000,11 +1005,12 @@ when it starves the rest.
 
 **Where TriNet stands.** Training already carves `W_base`. Within use, the
 fast memory is rain on rock: it fades back toward nothing (unless its gate
-holds it at full retention, the top of its range from 0.5 to 1), and its
-delta rule stops writing once a path is learned. How temporary weights
-become lasting ones is not built (STATUS.md, Decided, 2026-11-22). In the
-brain this is the leading theory of complementary learning systems: a fast
-learner replays to a slow one (McClelland, McNaughton & O'Reilly, 1995).
+holds it at full retention, the top of a range that starts at its floor,
+0.5 by default), and its delta rule stops writing once a path is learned.
+How temporary weights become lasting ones is not built (STATUS.md,
+Decided, 2026-11-22). In the brain this is the leading theory of
+complementary learning systems: a fast learner replays to a slow one
+(McClelland, McNaughton & O'Reilly, 1995).
 
 ## The connection ledger
 
@@ -1386,10 +1392,10 @@ How these were checked:
   et al., Carhart-Harris & Friston, Feldmann et al., Frey & Morris,
   Fries, Gibson et al., González-Maeso et al., Hughes et al., Jakab &
   Goldman-Rakic, Löwel & Singer, Ly et al., McClelland et al., Oberheim
-  et al., O'Keefe & Recce, Preller et al., Psaltis et al., Schafer et al.,
-  Pai et al., Shen et al., Stevens et al., Suzuki & Larkum, Tait et al.
-  (both), Vollenweider et al. and Wetzstein et al. were checked against
-  Crossref;
+  et al., O'Keefe & Recce, Pai et al., Preller et al., Psaltis et al.,
+  Schafer et al., Shen et al., Stevens et al., Suzuki & Larkum, Tait et
+  al. (both), Vollenweider et al. and Wetzstein et al. were checked
+  against Crossref;
   Arjovsky et al., Kingma & Ba, Löwe et al., Orvieto et al., Reichert &
   Serre, Su et al. and Trabelsi et al. against arXiv; the astrocyte
   counts (about 140,000; up to two million) against the papers' pages on
@@ -1399,12 +1405,14 @@ How these were checked:
   independent review of #9, which checked several findings against the
   papers' abstracts: where 5-HT2A is densest was checked against Jakab &
   Goldman-Rakic's abstract on PubMed, and the review checked that Hughes
-  et al. simulated training in the optics rather than building it, and
-  the colour television figures against the standard.
+  et al. simulated training in the optics rather than building it. The
+  colour television figures were checked by the review of #9 against 47
+  CFR §§ 73.681–73.682 (subcarrier, line rate, the two colour
+  bandwidths, the burst, the 6 MHz channel); the 4.2 MHz figure and the
+  1953 date against the NTSC article on Wikipedia.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
-  Ramsauer et al., Shazeer et al., Simon, Waddington, the colour
-  television figures, and the books, except Goodman's title, author and
-  year)
+  Ramsauer et al., Shazeer et al., Simon, Waddington, and the books,
+  except Goodman's title, author and year)
   are from Claude's knowledge, and are to be checked before this page is
   cited elsewhere.

@@ -341,7 +341,8 @@ One guess, not tested: the two halves are too alike to bring different
 strengths (though `bicam-asym`, whose halves differ in how long they
 keep their memory, did not help either). A pair of different halves, a
 TriNet and a Transformer with an executive network between them, is to
-be one of the models of the fair comparison (STATUS "Next" 1). Its code
+be one of the models of the fair comparison once a Transformer learns
+the task (STATUS "Next" 1). Its code
 is on its own branch (`claude/hybrid-prototype`, not merged); its results
 will come with its own pull request.
 
