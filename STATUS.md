@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: levels of magnification, memory spread through the network, and writing and reading a hologram, in `docs/NEURON-CATALOG.md` (#6)
+- Claude: Stage A, Gemini's BicameralTriNet against one TriNet, on two tasks (`experiments/README.md`, #7)
 
 ## Next
 
@@ -176,6 +176,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the earlier "100%, three seeds" for one TriNet corrected to the committed script's 98.2 to 100% (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
 - 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)

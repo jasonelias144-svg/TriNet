@@ -314,6 +314,8 @@ Two TriNet stacks did not do measurably better than one, on either task.
 A likely reason: the two halves are too alike to bring different
 strengths. The next step was to be a pair of different halves, a
 TriNet and a Transformer, with an executive network between them. It is
-built on its own branch, but its first check failed: at this training
-budget the small Transformer does not learn recall, so it would bring
-the pair no strength of its own. That test is being redesigned.
+built on its own branch (`claude/hybrid-prototype`, not merged), but its
+first check failed: at the training budget used there, the small
+Transformer did not learn recall, so it would bring the pair no strength
+of its own. That test is being redesigned, and its results will come
+with its own pull request.
