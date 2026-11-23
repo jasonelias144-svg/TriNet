@@ -18,6 +18,8 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 - Claude: the founder's levels of text in the catalog, with an
   experiment proposed (`docs/NEURON-CATALOG.md`, "Levels of text", #10)
+- Claude: the fair comparison (Next 1), run on Kaggle's CPU sessions
+  under the founder's account (branch `claude/fair-comparison`)
 - Claude: TriNet's speed on a Kaggle GPU (Next 3's first step; a private
   script on the founder's Kaggle account)
 - Claude: complex retention, the first test of complex signals (branch

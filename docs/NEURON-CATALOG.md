@@ -511,23 +511,23 @@ invariants. Thoughts?"
 
 **Why it matters for cost.** TriNet's fast memory steps through its text
 one byte at a time (one character, in English; three for most Chinese
-characters), and each step's gates read the memory's surprise, so no
-step can begin before the one before it ends. A graphics card is fast
-when it does many things at once, so at this point it waits. **Our
-reading** (arithmetic, not measured): in training, levels would let each
-level step only over short spans, the characters of a word (about six,
-with its space), the words of a sentence (about fifteen to twenty), the
-sentences of a passage, and the spans of one level could run at the
-same time. A text of 512 characters would then take a few dozen steps
-one after another instead of 512, and each level added would multiply
-the length that a fixed number of steps can cover. Three conditions:
-the work goes once up the levels and once back down, each span below
-taking context only from spans above that are already finished (as the
-byte-patch models and H-Net below are built); if a word must instead
-wait for the level above to take in the word before it, the steps run
-one after another again. Each level's count is set by its longest span
-in a batch, not its average. And writing text still goes one character
-at a time.
+characters), and each step's gates read the memory's surprise, so no step
+can begin before the one before it ends. A graphics card is fast when it
+does many things at once, so at this point it waits. **Our reading**
+(arithmetic, not measured): in training, levels would let each level step
+only over short spans, the characters of a word (about six, with its
+space), the words of a sentence (about fifteen to twenty), the sentences
+of a passage, and the spans of one level could run at the same time. A
+text of 512 characters would then take a few dozen steps one after another
+instead of 512, and each level added would multiply the length that a
+fixed number of steps can cover. One condition and two limits. The
+condition: the work goes once up the levels and once back down, each span
+below taking context only from spans above that are already finished (as
+the byte-patch models and H-Net below are built); if a word must instead
+wait for the level above to take in the word before it, the steps run one
+after another again. The limits: each level's count is set by its longest
+span in a batch, not its average; and writing text still goes one
+character at a time.
 
 **Built before (reported, each by one group).**
 - Fixed clocks: a recurrent network whose modules update at different
@@ -541,8 +541,8 @@ at a time.
   scale matched models that read word pieces (Pagnoni et al., 2024).
 - Chunks learned with the rest of the model, and the levels nested
   (Hwang, Wang & Gu, 2025).
-- The oldest precedent for boundaries from surprise: a small recurrent
-  network's error in predicting the next letter is highest at the start
+- An early precedent for boundaries from surprise, in a neural network: a
+  small recurrent network's error in predicting the next letter is highest at the start
   of a word (Elman, 1990).
 
 **In the brain.**
@@ -587,9 +587,10 @@ what is new would be the cell, and three ways it fits:
    of operation.)
 3. **One cell at every level, one dial changed.** Higher levels keep
    their memory longer (TriNet's retention floor), as the cortex's
-   timescales grow. These are the one interface and the control both
-   ways of "Fractal design" above, and the stack of "Levels of
-   magnification".
+   timescales grow.
+
+All three are the one interface and the control both ways of "Fractal
+design" above, and the stack of "Levels of magnification".
 
 **Cautions** (our reading).
 - Spaces and punctuation are not boundaries in every language (Chinese
@@ -1560,7 +1561,8 @@ How these were checked:
   al., Hwang et al., Koutník et al., Nawrot et al., Pagnoni et al. and Yu
   et al. against arXiv. The independent review of #10 checked what the
   page says of each against its abstract (on Crossref, arXiv or PubMed),
-  and of Lin & Tegmark against the paper's text; Elman's finding is from
+  and of Lin & Tegmark against the paper's text; Larkum's anatomy is not
+  in Larkum's abstract and was not checked; Elman's finding is from
   Claude's knowledge of the paper.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
