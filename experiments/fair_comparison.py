@@ -12,6 +12,12 @@ parameters), unless said:
   trinet-no-fast
   trinet-no-delay        ... built with delay_lags=1 (6,144 parameters fewer:
                          the delay line's three earlier taps, in both layers)
+  trinet-no-clamp        ... built with max_fast_weight=1e9, so the clamp on
+                         the fast memory never binds (with no surprise as
+                         well, the update is Gated DeltaNet's form)
+  trinet-linear          both: no surprise and no clamp, the form that can be
+                         computed in parallel chunks (experiments/README.md,
+                         "Speed on a GPU")
   gated-delta            a plain gated delta-rule memory (gated_deltanet.py)
   transformer            answers_only.py's small Transformer, learned positions
   transformer-nope       the same without positions (causal attention alone
@@ -41,7 +47,8 @@ from gated_deltanet import GatedDeltaLM  # noqa: E402
 from trinet.configuration_trinet import TriNetConfig  # noqa: E402
 from trinet.modeling_trinet import TriNetForCausalLM  # noqa: E402
 
-MODELS = ["trinet", *ablations.ABLATIONS, "trinet-no-delay", "gated-delta",
+MODELS = ["trinet", *ablations.ABLATIONS, "trinet-no-delay", "trinet-no-clamp", "trinet-linear",
+          "gated-delta",
           "transformer", "transformer-nope", "transformer-sized"]
 
 
@@ -67,9 +74,13 @@ def build(name, task="harder"):
         cfg = dict(A.SMALL)
         if name == "trinet-no-delay":
             cfg["delay_lags"] = 1
+        if name in ("trinet-no-clamp", "trinet-linear"):
+            cfg["max_fast_weight"] = 1e9
         model = TriNetForCausalLM(TriNetConfig(**cfg))
         if name in ablations.ABLATIONS:
             ablations.ABLATIONS[name](model)
+        if name == "trinet-linear":
+            ablations.no_surprise(model)
         return model, (lambda x: model(x, use_cache=False).logits), S.HarderTask(bytes_as_tokens=True)
     if name == "gated-delta":
         model = GatedDeltaLM()

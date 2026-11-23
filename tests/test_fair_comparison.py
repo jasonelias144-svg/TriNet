@@ -85,6 +85,17 @@ def test_with_no_shunt_the_shunt_is_exactly_zero():
 
 
 @torch.no_grad()
+def test_without_the_clamp_the_model_is_the_same_until_the_clamp_would_bind():
+    torch.manual_seed(3)
+    plain = FC.build("trinet")[0].eval()
+    torch.manual_seed(3)
+    free = FC.build("trinet-no-clamp")[0].eval()
+    assert all(layer.max_fast_weight == 1e9 for layer in free.model.layers)
+    x = torch.randint(4, 256, (2, 40))
+    assert torch.equal(plain(x, use_cache=False).logits, free(x, use_cache=False).logits)  # far from the bound of 6
+
+
+@torch.no_grad()
 def test_the_gated_delta_memory_is_causal():
     torch.manual_seed(0)
     model = GatedDeltaLM().eval()
