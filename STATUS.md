@@ -18,8 +18,8 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 - Claude: the founder's levels of text in the catalog, with an
   experiment proposed (`docs/NEURON-CATALOG.md`, "Levels of text", #10)
-- Claude: TriNet's speed on a Kaggle GPU (Next 3's first step; a private
-  script on the founder's Kaggle account)
+- Claude: the fair comparison (Next 1), run on Kaggle's CPU sessions
+  under the founder's account (branch `claude/fair-comparison`)
 - Claude: complex retention, the first test of complex signals (branch
   `claude/complex-retention`; its pull request to come)
 
@@ -48,14 +48,19 @@ of every session; update it on your branch at the end. Keep it short and true. -
    the loss, training longer, more seeds) and measure.
 3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
    GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order).
-   A short test of TriNet's speed there comes first, now, beside Next 1.
-   The founder's Kaggle token is among this environment's network secrets
-   (never in the repository). On 2026-11-23, after the founder moved to
-   the Kaggle account that holds their phone number, a private script was
-   saved and run under it through the API; the account shows 30 GPU hours
-   a week. Kaggle's own command-line tool cannot sign in with a token held
-   this way (its check sends the token in the request body), so the calls
-   go to Kaggle's API directly.
+   Its first step, a test of TriNet's speed there, is done
+   (`experiments/README.md`, "Speed on a GPU"): a TriNet step takes the
+   same time whatever the batch, memory runs out first, and at the `1m`
+   size a Transformer trains 11 to 13.5 times faster. So before a long run
+   TriNet needs a faster form, and which form depends on Next 1 (whether
+   the gates need the memory's surprise). The founder's Kaggle token is
+   among this environment's network secrets (never in the repository). On
+   2026-11-23, after the founder moved to the Kaggle account that holds
+   their phone number, a private script was saved and run under it through
+   the API; the account shows 30 GPU hours a week. Kaggle's own
+   command-line tool cannot sign in with a token held this way (its check
+   sends the token in the request body), so the calls go to Kaggle's API
+   directly.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
@@ -240,6 +245,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: TriNet's speed on a Kaggle GPU (a Tesla T4), the scripts and raw results kept in `experiments/kaggle/`: a step takes the same time whatever the batch, memory runs out first (the `10m` preset cannot train on 32 texts of 128 characters), and at the `1m` size a Transformer trains 11 to 13.5 times faster; so TriNet needs a faster form before a long run (#11)
 - 2026-11-23 Claude: the founder's levels of text in the catalog (a TriNet that steps through characters, then words, then sentences): why it would cut the steps one after another, what has been built before (clockwork and multiscale networks, byte patches, learned chunks), the brain's ladder of timescales, the power-law invariant of text, what would be TriNet's own (boundaries from surprise, context on the apical side, one cell at every level), cautions, and an experiment placed after the fair comparison's first round; 12 sources added (#10)
 - 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)

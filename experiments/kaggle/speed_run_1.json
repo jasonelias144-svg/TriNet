@@ -1,0 +1,291 @@
+[
+ {
+  "torch": "2.11.0+cu130",
+  "transformers": "4.46.3",
+  "gpu": "Tesla T4",
+  "gpus": 2,
+  "commit": "ef9af1f8640aa04b62dc0b63ce2e138b5b31654d"
+ },
+ {
+  "model": "stage-a",
+  "length": 128,
+  "batch": 8,
+  "parameters": 33748,
+  "seconds_per_step": 0.6651,
+  "characters_per_second": 1540,
+  "peak_gib": 0.04
+ },
+ {
+  "model": "stage-a",
+  "length": 128,
+  "batch": 32,
+  "parameters": 33748,
+  "seconds_per_step": 0.6645,
+  "characters_per_second": 6164,
+  "peak_gib": 0.09
+ },
+ {
+  "model": "stage-a",
+  "length": 128,
+  "batch": 128,
+  "parameters": 33748,
+  "seconds_per_step": 0.6756,
+  "characters_per_second": 24251,
+  "peak_gib": 0.3
+ },
+ {
+  "model": "stage-a",
+  "length": 512,
+  "batch": 8,
+  "parameters": 33748,
+  "seconds_per_step": 2.7965,
+  "characters_per_second": 1465,
+  "peak_gib": 0.09
+ },
+ {
+  "model": "stage-a",
+  "length": 512,
+  "batch": 32,
+  "parameters": 33748,
+  "seconds_per_step": 2.7113,
+  "characters_per_second": 6043,
+  "peak_gib": 0.3
+ },
+ {
+  "model": "stage-a",
+  "length": 512,
+  "batch": 128,
+  "parameters": 33748,
+  "seconds_per_step": 2.6895,
+  "characters_per_second": 24367,
+  "peak_gib": 1.14
+ },
+ {
+  "model": "1m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 837512,
+  "seconds_per_step": 1.3591,
+  "characters_per_second": 753,
+  "peak_gib": 0.36
+ },
+ {
+  "model": "1m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 837512,
+  "seconds_per_step": 1.3512,
+  "characters_per_second": 3031,
+  "peak_gib": 1.35
+ },
+ {
+  "model": "1m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 837512,
+  "seconds_per_step": 1.3565,
+  "characters_per_second": 12078,
+  "peak_gib": 5.33
+ },
+ {
+  "model": "1m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 837512,
+  "seconds_per_step": 5.6416,
+  "characters_per_second": 726,
+  "peak_gib": 1.36
+ },
+ {
+  "model": "1m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 837512,
+  "seconds_per_step": 5.674,
+  "characters_per_second": 2888,
+  "peak_gib": 5.34
+ },
+ {
+  "model": "1m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 837512,
+  "out_of_memory": true
+ },
+ {
+  "model": "4m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 3797460,
+  "seconds_per_step": 2.0624,
+  "characters_per_second": 497,
+  "peak_gib": 1.6
+ },
+ {
+  "model": "4m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 3797460,
+  "seconds_per_step": 2.0451,
+  "characters_per_second": 2003,
+  "peak_gib": 6.17
+ },
+ {
+  "model": "4m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 3797460,
+  "out_of_memory": true
+ },
+ {
+  "model": "4m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 3797460,
+  "seconds_per_step": 8.5933,
+  "characters_per_second": 477,
+  "peak_gib": 6.18
+ },
+ {
+  "model": "4m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 3797460,
+  "out_of_memory": true
+ },
+ {
+  "model": "4m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 3797460,
+  "out_of_memory": true
+ },
+ {
+  "model": "10m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 10330288,
+  "seconds_per_step": 2.7319,
+  "characters_per_second": 375,
+  "peak_gib": 4.37
+ },
+ {
+  "model": "10m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 10330288,
+  "out_of_memory": true
+ },
+ {
+  "model": "10m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 10330288,
+  "out_of_memory": true
+ },
+ {
+  "model": "10m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 10330288,
+  "out_of_memory": true
+ },
+ {
+  "model": "10m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 10330288,
+  "out_of_memory": true
+ },
+ {
+  "model": "10m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 10330288,
+  "out_of_memory": true
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-1m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-1m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 989952,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 8,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 32,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 128,
+  "batch": 128,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 8,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 32,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ },
+ {
+  "model": "tf-10m",
+  "length": 512,
+  "batch": 128,
+  "parameters": 11236864,
+  "error": "RuntimeError: Expected all tensors to be on the same device, but got index is on cpu, different from other tensors on cuda:0 (when checking argument in method wrapper_CUDA__index_select)"
+ }
+]
