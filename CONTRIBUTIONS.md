@@ -34,6 +34,20 @@ to Claude, which no record holds, give their date, as `STATUS.md`
   `12e690d4540a1184c18da81618a613d7cd8f8d468ceee798a42bbad83a41e188`.
   (open-worlds lists an earlier, shorter copy; the line numbers here are
   of this one.)
+- **The stage texts 003, 004 and 005,** kept privately in `ebook-press`
+  (`history/`), as kept there (a personal name and account links
+  replaced; every line where it was); quoted in
+  `docs/NEURON-CATALOG.md` with the founder's consent (2026-11-23).
+  `003_Language.txt`: 15,770,840 bytes,
+  `40a8ecb802bd539df9196d1034343487100e51715cb44daafb2e05c823458cac`.
+  `004_Pattern.txt`: 13,887,988 bytes,
+  `5dcb422d85b9ce9ff7e8aef43a3ef4f661f2dee39770e3005e681f3b803f8a8c`.
+  `005_Method.txt`: 6,578,713 bytes,
+  `a9b9add06efcb670043cbc5328410957199ac91c473b50704429e225913b7e41`.
+- **The dialogue on shared-benefit optimization,** public in
+  [open-worlds](https://github.com/jasonelias144-svg/open-worlds/blob/main/library/008-SBO-CGPT-GROK-CLDE-Shared_Benefit_Optimization.txt):
+  397,885 bytes,
+  `d235ad9062af9c47a5b595f0c5a55c5c2424e257376fd8b8238eb20ffdf26507`.
 
 ## Recreating the results
 

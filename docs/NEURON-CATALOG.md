@@ -410,21 +410,25 @@ such memories can grow.
 
 The founder points to the project's earlier records for this structure,
 under the name "levels of magnification". The records are the project's
-stage texts. They are kept privately, in the `ebook-press` repository,
-for two reasons: some hold others' work at length, in published
-translations whose terms are still to be checked; and the founder's own
-copies hold a personal name and links tied to the founder's accounts,
-which the kept copies replace. The passages below hold neither, and the
-founder, asked whether they may be quoted here, answered on 2026-11-23:
-"Yes, quote them". Each gives its stage file and line, and the
+stage texts. They are kept privately, in the `ebook-press` repository, at
+the founder's word: some hold others' work at length, in published
+translations whose terms are still to be checked, and the founder has
+said that is one reason among others. (The kept copies also replace a
+personal name, in 003, 004, 005 and 007, and links tied to the founder's
+accounts, in 005 and 007: things no repository holds.) Asked whether
+passages from stages 003, 004 and 005 may be quoted here, the founder
+answered on 2026-11-23: "Yes, quote them". The passages below hold no
+translation, name or link. Each gives its stage file and line, and the
 conversation it is from. They are the words of ChatGPT, in the founder's
-conversations with them, unless marked otherwise.
+conversations with them, except the last, from the public dialogue on
+shared-benefit optimization.
 
 What the records say:
 
 - **The same pattern, different forms.** "Same field. / Different
-  magnification." And, of the founder's words: "your 'different sizes
-  make a single shape' insight: Wisdom may be fractal—not because the
+  magnification." And, of an insight of the founder's, in ChatGPT's
+  words: "your 'different sizes make a single shape' insight: / Wisdom
+  may be fractal—not because the
   same tactic repeats at every scale, but because the same relational
   orientation can generate different appropriate forms at different
   scales." (`004_Pattern.txt`, lines 27163–27169; from `004-CGPT-LI_0`.)
@@ -443,8 +447,8 @@ What the records say:
 - **Not a strict ladder.** "nature does not always provide neat
   ladders" (line 213441): there may be "networks that bypass
   intermediates" (line 213449), and "Some entities participate in
-  several larger wholes simultaneously" (line 213465). The name it gives
-  this is "PartiallyNestedMultiScaleOrganization" (line 213462).
+  several larger wholes simultaneously" (line 213465). The record's name
+  for this is "PartiallyNestedMultiScaleOrganization" (line 213462).
 - **The stack.** A "Magnification Stack" (line 213686): levels L₀ to
   Lₙ, where every entity is a whole made of the level below and a part of
   the level above. "Each level has: objects, relations, interfaces,
@@ -457,19 +461,15 @@ What the records say:
   no scale do we necessarily find the final whole." (Line 213766.)
 - **A whole becomes a unit.** "At one magnification, an entity is a
   whole. / At the next, it becomes a part." (Lines 217035–217037.)
-- **A whole's voice is not its whole identity.** "A coordinated whole at
-  one magnification can become one 'voice' at the next", without that
-  voice being the whole's total identity: "That is a very important
-  protection against reductionism." (`000_Memory.txt`, lines 52–60: an
-  AI's summary of where the project's ideas stood; the file does not
-  name the AI.)
 - **Another magnification as another view.** "Sometimes what the system
   needs is not another opinion but another magnification."
   (`003_Language.txt`, line 494822; from `003-CGPT-LRL_3`.)
 - **A whole is not an endpoint.** "A whole is therefore neither an
-  endpoint nor an authority that permanently subsumes its parts", and
-  the same pattern is applied "at wider levels of magnification"
-  (`005_Method.txt`, line 14471). Of Elinor Ostrom, between Hayek and
+  endpoint nor an authority that permanently subsumes its parts. It is a
+  temporary relational achievement that immediately becomes one
+  contributor among others to subsequent becoming", and the same pattern
+  is applied "at wider levels of magnification" (`005_Method.txt`, line
+  14471). Of Elinor Ostrom, between Hayek and
   Marx: "She changes the question and moves to another level of
   magnification." (Line 12713; both from `005-CGPT-OI_0`.)
 - **In shared-benefit optimization.** "The scale cut: “levels of
@@ -488,14 +488,15 @@ above.
 | emergent promotion: a whole becomes a higher-level unit | the black box: a working assembly wrapped behind the one interface |
 | generative propagation: the pattern survives but changes phenotype | one unit design, set differently by its controls at each level |
 | partially nested; networks that bypass intermediates | not a strict tree: units in several wholes, connections that skip levels |
-| a whole's "voice" at the next level is not its total identity | what a level passes up is a summary, not itself |
+| a whole becomes "one contributor among others", not an authority over its parts | what a level passes up is one contribution among others, not the whole of what it is |
 | the test: does the property persist as we zoom in and out? | every claim measured at every level: cell, layer, side, model |
 
 **Our proposal.** The test becomes a measurement. A claim about the
 network, such as "no part captures what the whole produces" (the
 shared-benefit test above), "it adapts while in use", or "its parts
-complement each other", is measured at each level. If it holds only at
-the top, it is nominal; if only at the bottom, fragile.
+complement each other", is measured at each level. If it holds for the
+whole but not its parts, it may be only nominal; if the parts show it
+but the whole destroys it, the parts may remain fragile.
 
 ## Memory spread through the network
 
@@ -512,18 +513,19 @@ state. As if a copy of that neuron was saved in the network memory."
 **Our reading:** two goals, with two kinds of mathematics.
 
 1. **Surviving damage gracefully** (holographic, distributed memory).
-   - **Established:** a memory is not held in one place. Lashley (1950)
-     searched the cortex for the one place and did not find it; current
-     work finds each memory held by sparse groups of cells spread over
-     several regions (Josselyn & Tonegawa, 2020).
-   - **Contested:** that the brain stores memory as a hologram does
-     (Pribram, 1971).
+   - **Established:** a memory is not held in one spot. Lashley (1950)
+     searched the cortex for it and did not find it.
+   - **Leading theory:** each memory is held by sparse groups of cells
+     spread over several connected regions (Josselyn & Tonegawa, 2020).
+   - **Contested, and a minority view with little support:** that the
+     brain stores memory as a hologram does (Pribram, 1971).
    - **Established, in models.** In a Hopfield network every memory is
      spread over every connection, so losing some connections weakens
      every memory a little rather than deleting some whole (Hopfield,
      1982). Willshaw, Buneman & Longuet-Higgins (1969) built an
-     associative memory without holography that spreads each memory in
-     the same way. Holographic reduced representations bind items with the
+     associative memory without holography in which many associations
+     share one set of connections, each using those between its own
+     active units. Holographic reduced representations bind items with the
      mathematics of holograms (Plate, 1995); sparse distributed memory
      spreads each item over many places (Kanerva, 1988).
    - **Our reading.** TriNet's fast memory is already of this kind: each
@@ -534,9 +536,10 @@ state. As if a copy of that neuron was saved in the network memory."
 2. **Restoring a lost unit exactly** (coded backups).
    - **Established.** Erasure codes spread k pieces of data over n shares
      so that any k of them rebuild the rest (Reed & Solomon, 1960). In the
-     simplest case, a group of units keeps one parity share, the sum of
-     their states, and any one lost unit is the parity minus the
-     survivors. Regenerating codes rebuild one lost node from the
+     simplest case, a group of units has one parity share, held outside
+     the group: the exclusive-or of their states' raw bits. Any one lost
+     unit is the parity combined, by exclusive-or, with the survivors,
+     bit for bit. Regenerating codes rebuild one lost node from the
      survivors with the least traffic, and show the trade-off between
      what each node stores and what a repair must move (Dimakis et al.,
      2010).
@@ -564,21 +567,27 @@ last checkpoint. The cell keeps little; the whole keeps the rest.
   what happened since. Each restoration is to be recorded.
 
 A first test: remove units from a trained TriNet layer one at a time, and
-measure how gradually it fails; then add parity shares across groups of
-cells, delete one, rebuild it, and check that it matches its checkpoint
-exactly.
+measure how gradually it fails; then add parity shares (exclusive-or of
+the raw bits) across groups of cells, delete one, rebuild it, and check
+that it matches its checkpoint bit for bit.
 
 ## Writing and reading a hologram
 
-The founder, 2026-11-23: "In terms of holographic memory, I do not just
-mean that as a metaphor, I would like to investigate how two-dimensional
-wave interference patterns store three-dimensional information. … How
-does coherent light interfere with itself in such a way that allows for
-the information to be retrieved? Fourier transforms come to mind." And:
-"I would like to look at reading and writing holographic information."
+The founder, 2026-11-23, for discussion: "In terms of holographic
+memory, I do not just mean that as a metaphor, I would like to
+investigate how two-dimensional wave interference patterns store
+three-dimensional information. This is the opposite to projecting from a
+higher to a lower dimensional space through some form of projection or
+encoding or injection or embedding of higher dimensional information into
+a lower dimensional representation. How does coherent light interfere
+with itself in such a way that allows for the information to be
+retrieved? Fourier transforms come to mind. Thoughts?" And: "Or I should
+say that I would like to look at reading and writing holographic
+information."
 
-All of what follows is **established** optics (Goodman's *Introduction
-to Fourier Optics* sets it out), except where it is labelled.
+What follows is **established** optics (Goodman's *Introduction to
+Fourier Optics* sets it out), except where a paragraph carries another
+label.
 
 **Writing.** One laser is split in two. The object beam scatters off the
 scene; at the plate its light O has an amplitude (brightness) and a
@@ -591,8 +600,9 @@ photograph has no depth. With the reference added it records
 
 The last two terms are fringes: where a fringe lies holds the phase, and
 how strong it is holds the amplitude. The reference turns the phase,
-which film cannot record, into a pattern it can. The fringes are about a
-wavelength apart, so the plate must stay still to a fraction of a
+which film cannot record, into a pattern it can. The fringes are
+λ/(2·sin(θ/2)) apart for beams θ apart, a micrometre or two for beams 20
+to 40 degrees apart, so the plate must stay still to a fraction of a
 wavelength while it is exposed, and the light must stay coherent over
 the difference in path lengths; holography became practical with the
 laser. In short, writing is: multiply the object wave by the conjugate of
@@ -616,10 +626,12 @@ this way as associative memories.
 **Where Fourier comes in.**
 
 1. A lens performs a two-dimensional Fourier transform: the light at its
-   focal plane is the transform of the light entering it.
+   back focal plane is the transform of the light at its front focal
+   plane.
 2. Free space is simple in Fourier terms. The field on a plane is a sum
-   of plane waves, one for each spatial frequency (kx, ky), and each
-   travels on with only a change of phase, `exp(i·kz·z)`, where
+   of plane waves, one for each spatial frequency (kx, ky). Each one that
+   travels (the rest, finer than a wavelength, die away within a few
+   wavelengths) goes on with only a change of phase, `exp(i·kz·z)`, where
    `kz = √(k² − kx² − ky²)` and `k = 2π/λ`. So the field on one plane,
    amplitude and phase, fixes it on every plane beyond, and reading at
    depth z is: transform, multiply by that phase, transform back.
@@ -628,12 +640,18 @@ this way as associative memories.
    a sphere, a surface. A one-colour light field, travelling one way, has
    only two dimensions of freedom.
 
-**What a hologram holds.** A thin hologram stores two-dimensional data,
-two numbers at each point: everything the light through that window
-carries, and no more. It does not hold the object's hidden side or its
-inside. What a photograph loses and a hologram keeps is the phase. So the
-difference from a projection is lossy against lossless, not lower
-against higher dimensions. Where three dimensions are held more fully:
+**What a hologram holds.** A thin hologram stores two-dimensional data.
+The plate records one real number at each point, the intensity, on fringes
+finer than the detail it holds; read together, the fringes give the
+complex field, amplitude and phase, at a coarser resolution. That is the
+light crossing the plate's window, within its resolution, and no more:
+not the object's hidden side or its inside. **Our reading,** in answer to
+the founder's contrast with projection: what a photograph loses and a
+hologram keeps is the phase, so the difference is that a photograph
+discards part of what reaches it and a hologram keeps it, rather than
+lower against higher dimensions. The three dimensions it shows were
+already fixed by two (point 3 above). Where three dimensions are held
+more fully:
 
 - **Volume holograms.** A thick medium holds many pages in one volume,
   each written with its own reference angle, up to about V/λ³ bits in a
@@ -642,35 +660,59 @@ against higher dimensions. Where three dimensions are held more fully:
   three-dimensional volume when the scene is sparse (Brady et al.,
   2009): three dimensions from two, paid for with an assumption about the
   scene.
-- **The holographic principle** in physics, a **leading theory**, not
-  established: the information a region of space can hold is bounded by
-  the area of its surface ('t Hooft, 1993; Susskind, 1995).
+- **The holographic principle** in physics, **open**: a conjecture in
+  quantum gravity, not tested, that the information a region of space can
+  hold is bounded by the area of its surface ('t Hooft, 1993; Susskind,
+  1995).
 
 **Each piece holds the whole.** In a Fourier hologram each point of the
 object becomes a plane wave over the whole plate, so every part of the
-plate holds light from every point. Cut the plate in four and each
-quarter still shows the whole image, less sharp, because a smaller
-window resolves less. This is the founder's memory proposal above, in
-physics: damage costs sharpness, not items.
+plate holds light from every point. For a diffusely lit object (or one
+given a random phase), cut the plate in four and each quarter still
+shows the whole image, less sharp, because a smaller window resolves
+less. (A smooth object's light gathers near the centre of the plate, and
+a piece far from it shows mostly edges.) **Our reading:** this is the
+founder's memory proposal above, in physics: damage costs sharpness, not
+items.
 
 **Many memories in one plate.** Writing several, `Σ Oᵢ·Rᵢ*`, and reading
-with the key Rⱼ gives Oⱼ, plus crosstalk from the others, which stays
-small while the keys are close to orthogonal (different angles, or
-random phase masks). **Our reading:** this is the mathematics of two
-memories already above.
+with the key Rⱼ gives Oⱼ, plus one term from each of the others. A thin
+plate reads point by point, so orthogonal keys do not make those terms
+small; they are kept apart in other ways.
 
-- TriNet's fast memory, `F = Σ vᵢ·kᵢᵀ` read with kⱼ, is the same
-  sum of value times key. Its delta rule does better than a plain
-  hologram: it writes only the error, the target less what the memory
-  already returns, which cuts the crosstalk.
-- Holographic reduced representations, in their Fourier form, bind by
-  multiplying unit complex numbers and unbind by multiplying by the
-  conjugate (Plate, 1995): the term `O·R*`, with the fast Fourier
-  transform in the lens's place. An optical correlator does the same
-  with a lens and a plate (Vander Lugt, 1964).
+- **Keys at different angles.** Each other memory comes back at full
+  strength, travelling in another direction, and a viewing aperture
+  leaves it out. The memories share the plate's spatial frequencies,
+  each in its own band, so the plate's fixed number of degrees of
+  freedom caps how many it holds.
+- **Random phase keys.** Each other memory comes back as noise over the
+  whole field. With n stored, the read-out's match with the one asked
+  for falls as 1/√n. The one asked for can still be told apart by
+  comparing the read-out with every memory stored.
 
-For a key and value of d numbers each, the hologram's trace holds d
-numbers and TriNet's matrix d²: the hologram is smaller and noisier.
+Crosstalk becomes small when the read sums over the key: Bragg selection
+in a thick hologram, the peak of an optical correlator (Vander Lugt,
+1964), or the inner product of a matrix memory.
+
+**Our reading:** two memories already above are relatives of the plate.
+
+- Holographic reduced representations, in their Fourier form, are the
+  plate's arithmetic: they bind by multiplying unit complex numbers point
+  by point and unbind by multiplying by the conjugate, the term `O·R*`,
+  with the fast Fourier transform in the lens's place. Their noisy
+  read-out is cleaned up by matching it against the items stored
+  (Plate, 1995).
+- TriNet's fast memory is a matrix F, read as `qF` and written by the
+  delta rule with decay, `F ← λF + η·kᵀ(v − kF)` (`modeling_trinet.py`),
+  then clipped. It stores sums of outer products of key and value, d²
+  numbers for keys and values of d. Reading takes an inner product with
+  the key, which averages the other memories' terms down while there are
+  fewer than d of them, and the delta rule writes only the error, the
+  target less what the memory already returns, cutting them further.
+  The plate keeps d numbers: a point-by-point product in the Fourier
+  domain is a circular convolution of the items themselves, which sums
+  their outer product along its diagonals (Plate, 1995). It is smaller,
+  and noisier memory by memory.
 
 **Our proposal**, in two steps.
 
@@ -901,7 +943,11 @@ How these were checked:
   Leith & Upatnieks, Plate, Reed & Solomon, Shamir, Susskind, van
   Heerden, Vander Lugt and Willshaw et al. were checked against Crossref
   on 2026-11-23, and 't Hooft against arXiv; where only a first page is
-  given, Crossref gives no more.
+  given, Crossref gives no more. These checks are of the references
+  themselves: the findings attributed to these papers (such as V/λ³,
+  recovery of sparse scenes, memories spread over regions) were not
+  checked against their text. Goodman's title, author and year were
+  checked against Open Library.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
   Ramsauer et al., Shazeer et al., Simon, and the books)

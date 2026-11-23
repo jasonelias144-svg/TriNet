@@ -40,10 +40,10 @@ of every session; update it on your branch at the end. Keep it short and true. -
 5. Publishing on Hugging Face, when the founder decides (P5).
 
 Beside these, not after them (Decided, 2026-11-23): the general cell, by
-the order of work in `docs/NEURON-CATALOG.md` ("The general cell"); and
-the hologram simulation proposed there ("Writing and reading a
-hologram"). Items 1 and 2 test what TriNet already is, and their results
-are what the general cell is compared against.
+the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
+Items 1 and 2 test what TriNet already is, and their results are what the
+general cell is compared against. Where the hologram simulation proposed
+there goes is asked under "Open questions".
 
 ## Before publishing
 
@@ -63,6 +63,12 @@ on Hugging Face:
 
 ## Open questions
 
+- For the founder: does the hologram simulation proposed in
+  `docs/NEURON-CATALOG.md` ("Writing and reading a hologram") run beside
+  the items under "Next", as the general cell does, or after them? The
+  technical lead's recommendation: beside. It is small, runs on a CPU,
+  and its second step compares a holographic memory with TriNet's own,
+  which is what Next 2 asks of TriNet's parts. (asked 2026-11-23)
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
   published. Not needed until Next item 3. (asked 2026-11-22)
@@ -78,8 +84,10 @@ on Hugging Face:
   day, on holographic memory: "I do not just mean that as a metaphor, I
   would like to investigate how two-dimensional wave interference
   patterns store three-dimensional information", and "I would like to
-  look at reading and writing holographic information." Hence "Writing
-  and reading a hologram" there, with a simulation proposed.
+  look at reading and writing holographic information." Offered for
+  discussion (the first ends "Thoughts?", and the second restates it):
+  hence "Writing and reading a hologram"
+  there, with a simulation proposed, not decided.
 - 2026-11-23, founder, on where TriNet is going: "first we should catalog
   the existing known types of neurons in the human brain. … My thought is
   to map the differences in shape and location and configuration to the
