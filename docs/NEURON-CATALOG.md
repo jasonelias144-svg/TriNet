@@ -406,13 +406,284 @@ between such memories and attention exact (Ramsauer et al., 2021). A
 memory of fixed size cannot recall arbitrarily many items; a level of
 such memories can grow.
 
-The founder points to the project's earlier records, stages 003 and 004,
-for "levels of magnification". The phrase is in the dialogue on
-shared-benefit optimization, now public (line 220): "The scale cut:
-“levels of magnification” — the same pattern asked to survive more than
-one partition." The other stage texts are kept privately; whether
-passages of them may be quoted here is asked in `STATUS.md` ("Open
-questions").
+## Levels of magnification
+
+The founder points to the project's earlier records for this structure,
+under the name "levels of magnification". The records are the project's
+stage texts. They are kept privately, in the `ebook-press` repository,
+for two reasons: some hold others' work at length, in published
+translations whose terms are still to be checked; and the founder's own
+copies hold a personal name and links tied to the founder's accounts,
+which the kept copies replace. The passages below hold neither, and the
+founder, asked whether they may be quoted here, answered on 2026-11-23:
+"Yes, quote them". Each gives its stage file and line, and the
+conversation it is from. They are the words of ChatGPT, in the founder's
+conversations with them, unless marked otherwise.
+
+What the records say:
+
+- **The same pattern, different forms.** "Same field. / Different
+  magnification." And, of the founder's words: "your 'different sizes
+  make a single shape' insight: Wisdom may be fractal—not because the
+  same tactic repeats at every scale, but because the same relational
+  orientation can generate different appropriate forms at different
+  scales." (`004_Pattern.txt`, lines 27163–27169; from `004-CGPT-LI_0`.)
+  And: "the same relational invariant may reappear at different
+  magnifications, while its concrete form changes." (Line 208373; from
+  `004-CGPT-LI_1`, as are the passages below from stage 004.)
+- **A test.** "EmergentProperty is mature when it remains visible under
+  magnification" (lines 208727–208728, in LaTeX). Then a test, named
+  the "Magnification Test" (line 208778), of a property a system
+  claims: "Does the claimed regenerative property persist meaningfully
+  as we zoom in and out across relevant scales? / Not identically. / But
+  relationally." (Lines 208783–208787.) A claim that holds for the whole
+  but not for its parts "may be partly nominal"; where the parts show the
+  property but the whole destroys it, "they may remain fragile" (lines
+  208759–208773).
+- **Not a strict ladder.** "nature does not always provide neat
+  ladders" (line 213441): there may be "networks that bypass
+  intermediates" (line 213449), and "Some entities participate in
+  several larger wholes simultaneously" (line 213465). The name it gives
+  this is "PartiallyNestedMultiScaleOrganization" (line 213462).
+- **The stack.** A "Magnification Stack" (line 213686): levels L₀ to
+  Lₙ, where every entity is a whole made of the level below and a part of
+  the level above. "Each level has: objects, relations, interfaces,
+  constraints, failure modes, emergent variables." (Lines
+  213705–213717.) On it are defined a "Scale-recursive
+  invariant", a "Cross-scale contradiction", "Emergent promotion"
+  ("RelationalWhole → HigherLevelUnit"), and "Generative propagation",
+  "where the pattern survives but changes phenotype" (line 213754). Put
+  together: "Magnification Grammar of Emergence" (line 213759). And: "At
+  no scale do we necessarily find the final whole." (Line 213766.)
+- **A whole becomes a unit.** "At one magnification, an entity is a
+  whole. / At the next, it becomes a part." (Lines 217035–217037.)
+- **A whole's voice is not its whole identity.** "A coordinated whole at
+  one magnification can become one 'voice' at the next", without that
+  voice being the whole's total identity: "That is a very important
+  protection against reductionism." (`000_Memory.txt`, lines 52–60: an
+  AI's summary of where the project's ideas stood; the file does not
+  name the AI.)
+- **Another magnification as another view.** "Sometimes what the system
+  needs is not another opinion but another magnification."
+  (`003_Language.txt`, line 494822; from `003-CGPT-LRL_3`.)
+- **A whole is not an endpoint.** "A whole is therefore neither an
+  endpoint nor an authority that permanently subsumes its parts", and
+  the same pattern is applied "at wider levels of magnification"
+  (`005_Method.txt`, line 14471). Of Elinor Ostrom, between Hayek and
+  Marx: "She changes the question and moves to another level of
+  magnification." (Line 12713; both from `005-CGPT-OI_0`.)
+- **In shared-benefit optimization.** "The scale cut: “levels of
+  magnification” — the same pattern asked to survive more than one
+  partition." (Line 220 of
+  `library/008-SBO-CGPT-GROK-CLDE-Shared_Benefit_Optimization.txt`, in
+  the open-worlds library, public: in its opening packet, whose writer
+  the file does not name.)
+
+**Our reading:** these are a specification for the fractal network
+above.
+
+| In the records | In the network |
+|---|---|
+| each level's objects, relations, interfaces, constraints, failure modes, emergent variables | what each level of units must define |
+| emergent promotion: a whole becomes a higher-level unit | the black box: a working assembly wrapped behind the one interface |
+| generative propagation: the pattern survives but changes phenotype | one unit design, set differently by its controls at each level |
+| partially nested; networks that bypass intermediates | not a strict tree: units in several wholes, connections that skip levels |
+| a whole's "voice" at the next level is not its total identity | what a level passes up is a summary, not itself |
+| the test: does the property persist as we zoom in and out? | every claim measured at every level: cell, layer, side, model |
+
+**Our proposal.** The test becomes a measurement. A claim about the
+network, such as "no part captures what the whole produces" (the
+shared-benefit test above), "it adapts while in use", or "its parts
+complement each other", is measured at each level. If it holds only at
+the top, it is nominal; if only at the bottom, fragile.
+
+## Memory spread through the network
+
+The founder, 2026-11-23, proposed for discussion: "How to distribute
+memory into and through a network? Leave the neuron to remember the least
+possible. With a fractal design upward and outward, there may be new ways
+of storing memories in a distributed or holographic manner, where each
+part contains some information related to the other parts, so each part,
+if removed, can be recreated from the overall record. … If one unit is
+damaged or destroyed, the others can combine their pieces of the removed
+units information, and then recreate the damaged unit but from an earlier
+state. As if a copy of that neuron was saved in the network memory."
+
+**Our reading:** two goals, with two kinds of mathematics.
+
+1. **Surviving damage gracefully** (holographic, distributed memory).
+   - **Established:** a memory is not held in one place. Lashley (1950)
+     searched the cortex for the one place and did not find it; current
+     work finds each memory held by sparse groups of cells spread over
+     several regions (Josselyn & Tonegawa, 2020).
+   - **Contested:** that the brain stores memory as a hologram does
+     (Pribram, 1971).
+   - **Established, in models.** In a Hopfield network every memory is
+     spread over every connection, so losing some connections weakens
+     every memory a little rather than deleting some whole (Hopfield,
+     1982). Willshaw, Buneman & Longuet-Higgins (1969) built an
+     associative memory without holography that spreads each memory in
+     the same way. Holographic reduced representations bind items with the
+     mathematics of holograms (Plate, 1995); sparse distributed memory
+     spreads each item over many places (Kanerva, 1988).
+   - **Our reading.** TriNet's fast memory is already of this kind: each
+     association is added into one matrix as an outer product, so every
+     part of the matrix holds a little of every association.
+   - Holography itself, how a hologram is written and read, is the next
+     section.
+2. **Restoring a lost unit exactly** (coded backups).
+   - **Established.** Erasure codes spread k pieces of data over n shares
+     so that any k of them rebuild the rest (Reed & Solomon, 1960). In the
+     simplest case, a group of units keeps one parity share, the sum of
+     their states, and any one lost unit is the parity minus the
+     survivors. Regenerating codes rebuild one lost node from the
+     survivors with the least traffic, and show the trade-off between
+     what each node stores and what a repair must move (Dimakis et al.,
+     2010).
+   - **Costs.** Every unit holds pieces of others, so the network stores
+     more than it knows. Each change to a unit must update its pieces in
+     the others, so in a network that learns all the time this is done
+     at checkpoints, and a restored unit returns "from an earlier state",
+     as the founder said: the last checkpoint.
+
+**Our proposal.** Two kinds of memory, two methods: what the network
+knows, held holographically and restored approximately, by pattern
+completion; and what each unit is (its controls and connections), backed
+up in coded pieces among its neighbours and restored exactly, as of the
+last checkpoint. The cell keeps little; the whole keeps the rest.
+
+- **Fractal.** The same coding at each level, measured at each level.
+- **Shared benefit.** Memory held in pieces across the whole has no
+  single point of capture.
+- **Privacy.** If a mind's memory is spread across others, the others
+  hold pieces of it. In secret sharing, fewer than a set number of
+  pieces reveal nothing, and that number of pieces together rebuild the
+  whole (Shamir, 1979). The same kind of coding can make a unit
+  restorable without any one neighbour being able to read it.
+- **Identity.** A unit or a mind restored from an earlier state has lost
+  what happened since. Each restoration is to be recorded.
+
+A first test: remove units from a trained TriNet layer one at a time, and
+measure how gradually it fails; then add parity shares across groups of
+cells, delete one, rebuild it, and check that it matches its checkpoint
+exactly.
+
+## Writing and reading a hologram
+
+The founder, 2026-11-23: "In terms of holographic memory, I do not just
+mean that as a metaphor, I would like to investigate how two-dimensional
+wave interference patterns store three-dimensional information. … How
+does coherent light interfere with itself in such a way that allows for
+the information to be retrieved? Fourier transforms come to mind." And:
+"I would like to look at reading and writing holographic information."
+
+All of what follows is **established** optics (Goodman's *Introduction
+to Fourier Optics* sets it out), except where it is labelled.
+
+**Writing.** One laser is split in two. The object beam scatters off the
+scene; at the plate its light O has an amplitude (brightness) and a
+phase (how far it has travelled, which is where the depth is). The
+reference beam R is a known wave, such as a plane wave arriving at an
+angle. Film records only intensity, so alone it loses the phase: a
+photograph has no depth. With the reference added it records
+
+`I = |O + R|² = |O|² + |R|² + O·R* + O*·R`
+
+The last two terms are fringes: where a fringe lies holds the phase, and
+how strong it is holds the amplitude. The reference turns the phase,
+which film cannot record, into a pattern it can. The fringes are about a
+wavelength apart, so the plate must stay still to a fraction of a
+wavelength while it is exposed, and the light must stay coherent over
+the difference in path lengths; holography became practical with the
+laser. In short, writing is: multiply the object wave by the conjugate of
+the key, and add.
+
+**Reading.** The developed plate passes light in proportion to I. Lit by
+the same R, it gives
+
+`R·I = (|O|² + |R|²)·R + |R|²·O + R²·O*`
+
+The middle term is the object's wave itself, amplitude and phase, times a
+constant. Nothing is computed into three dimensions: the wave is made
+again, and it travels on as the first one did, with its depth, parallax
+and focus. The last term is a twin image; a tilted reference sends the
+three terms in different directions (Leith & Upatnieks, 1962), which
+Gabor's first, in-line holograms could not (Gabor, 1948). Lit instead by
+the object, or part of it, the plate gives back the reference: show part
+of a memory and its key returns. Gabor (1969) described holograms used
+this way as associative memories.
+
+**Where Fourier comes in.**
+
+1. A lens performs a two-dimensional Fourier transform: the light at its
+   focal plane is the transform of the light entering it.
+2. Free space is simple in Fourier terms. The field on a plane is a sum
+   of plane waves, one for each spatial frequency (kx, ky), and each
+   travels on with only a change of phase, `exp(i·kz·z)`, where
+   `kz = √(k² − kx² − ky²)` and `k = 2π/λ`. So the field on one plane,
+   amplitude and phase, fixes it on every plane beyond, and reading at
+   depth z is: transform, multiply by that phase, transform back.
+3. That is how two dimensions hold three. Light of one colour has wave
+   vectors all of one length, so its three-dimensional spectrum lies on
+   a sphere, a surface. A one-colour light field, travelling one way, has
+   only two dimensions of freedom.
+
+**What a hologram holds.** A thin hologram stores two-dimensional data,
+two numbers at each point: everything the light through that window
+carries, and no more. It does not hold the object's hidden side or its
+inside. What a photograph loses and a hologram keeps is the phase. So the
+difference from a projection is lossy against lossless, not lower
+against higher dimensions. Where three dimensions are held more fully:
+
+- **Volume holograms.** A thick medium holds many pages in one volume,
+  each written with its own reference angle, up to about V/λ³ bits in a
+  volume V (van Heerden, 1963).
+- **Compressive holography.** One two-dimensional hologram recovers a
+  three-dimensional volume when the scene is sparse (Brady et al.,
+  2009): three dimensions from two, paid for with an assumption about the
+  scene.
+- **The holographic principle** in physics, a **leading theory**, not
+  established: the information a region of space can hold is bounded by
+  the area of its surface ('t Hooft, 1993; Susskind, 1995).
+
+**Each piece holds the whole.** In a Fourier hologram each point of the
+object becomes a plane wave over the whole plate, so every part of the
+plate holds light from every point. Cut the plate in four and each
+quarter still shows the whole image, less sharp, because a smaller
+window resolves less. This is the founder's memory proposal above, in
+physics: damage costs sharpness, not items.
+
+**Many memories in one plate.** Writing several, `Σ Oᵢ·Rᵢ*`, and reading
+with the key Rⱼ gives Oⱼ, plus crosstalk from the others, which stays
+small while the keys are close to orthogonal (different angles, or
+random phase masks). **Our reading:** this is the mathematics of two
+memories already above.
+
+- TriNet's fast memory, `F = Σ vᵢ·kᵢᵀ` read with kⱼ, is the same
+  sum of value times key. Its delta rule does better than a plain
+  hologram: it writes only the error, the target less what the memory
+  already returns, which cuts the crosstalk.
+- Holographic reduced representations, in their Fourier form, bind by
+  multiplying unit complex numbers and unbind by multiplying by the
+  conjugate (Plate, 1995): the term `O·R*`, with the fast Fourier
+  transform in the lens's place. An optical correlator does the same
+  with a lens and a plate (Vander Lugt, 1964).
+
+For a key and value of d numbers each, the hologram's trace holds d
+numbers and TriNet's matrix d²: the hologram is smaller and noisier.
+
+**Our proposal**, in two steps.
+
+1. **Simulate writing and reading** (numerical optics, on a CPU): record
+   the hologram of points at several depths; read it back and refocus
+   at each depth; cut it, and measure how the image degrades; store
+   several scenes under different keys, and measure the crosstalk as
+   their number grows.
+2. **The same operations as a network memory:** a layer whose units
+   hold complex numbers (amplitude and phase), written with value times
+   conjugate key and read with the key, against TriNet's delta-rule
+   memory on the recall task, with the same count of stored numbers;
+   then delete parts of each and compare how they fail.
 
 ## The general cell
 
@@ -464,6 +735,8 @@ Order of work:
   synaptic transmission in the dentate area of the anaesthetized rabbit
   following stimulation of the perforant path. *Journal of Physiology*
   232, 331–356.
+- Brady, D. J., Choi, K., Marks, D. L., Horisaki, R., & Lim, S. (2009).
+  Compressive holography. *Optics Express* 17, 13040.
 - Carr, C. E., & Konishi, M. (1990). A circuit for detection of interaural
   time differences in the brain stem of the barn owl. *Journal of
   Neuroscience* 10, 3227–3246.
@@ -474,27 +747,39 @@ Order of work:
   doi:10.1111/nan.12812
 - DeSieno, D. (1988). Adding a conscience to competitive learning.
   *IEEE International Conference on Neural Networks.*
+- Dimakis, A. G., Godfrey, P. B., Wu, Y., Wainwright, M. J., &
+  Ramchandran, K. (2010). Network coding for distributed storage systems.
+  *IEEE Transactions on Information Theory* 56, 4539–4551.
 - Ebbinghaus, H. (1885). *Über das Gedächtnis.* Duncker & Humblot.
 - Evci, U., Gale, T., Menick, J., Castro, P. S., & Elsen, E. (2020).
   Rigging the lottery: making all tickets winners. *ICML 2020.*
 - Frémaux, N., & Gerstner, W. (2016). Neuromodulated spike-timing-dependent
   plasticity, and theory of three-factor learning rules. *Frontiers in
   Neural Circuits* 9, 85.
+- Gabor, D. (1948). A new microscopic principle. *Nature* 161, 777–778.
+- Gabor, D. (1969). Associative holographic memories. *IBM Journal of
+  Research and Development* 13, 156–159.
 - Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). *Design
   Patterns: Elements of Reusable Object-Oriented Software.*
   Addison-Wesley.
 - Gidon, A., et al. (2020). Dendritic action potentials and computation in
   human layer 2/3 cortical neurons. *Science* 367, 83–87.
   doi:10.1126/science.aax6239
+- Goodman, J. W. (1968). *Introduction to Fourier Optics.* McGraw-Hill
+  (later editions since).
 - He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning
   for image recognition. *CVPR 2016*, 770–778.
 - Hebb, D. O. (1949). *The Organization of Behavior.* Wiley.
+- van Heerden, P. J. (1963). Theory of optical information storage in
+  solids. *Applied Optics* 2, 393.
 - Hinton, G. E., & Plaut, D. C. (1987). Using fast weights to deblur old
   memories. *Proceedings of the 9th Annual Conference of the Cognitive
   Science Society.*
 - Hofer, S. B., Mrsic-Flogel, T. D., Bonhoeffer, T., & Hübener, M. (2009).
   Experience leaves a lasting structural trace in cortical circuits.
   *Nature* 457, 313–317. doi:10.1038/nature07487
+- 't Hooft, G. (1993). Dimensional reduction in quantum gravity.
+  arXiv:gr-qc/9310026.
 - Hopfield, J. J. (1982). Neural networks and physical systems with
   emergent collective computational abilities. *Proceedings of the
   National Academy of Sciences* 79, 2554–2558.
@@ -505,6 +790,9 @@ Order of work:
   with Gumbel-softmax. *ICLR 2017.*
 - Jeffress, L. A. (1948). A place theory of sound localization. *Journal
   of Comparative and Physiological Psychology* 41, 35–39.
+- Josselyn, S. A., & Tonegawa, S. (2020). Memory engrams: recalling the
+  past and imagining the future. *Science* 367, eaaw4325.
+- Kanerva, P. (1988). *Sparse Distributed Memory.* MIT Press.
 - Kelso, S. R., Ganong, A. H., & Brown, T. H. (1986). Hebbian synapses in
   hippocampus. *Proceedings of the National Academy of Sciences* 83,
   5326–5330.
@@ -519,6 +807,11 @@ Order of work:
 - Larkum, M. E., Zhu, J. J., & Sakmann, B. (1999). A new cellular
   mechanism for coupling inputs arriving at different cortical layers.
   *Nature* 398, 338–341.
+- Lashley, K. S. (1950). In search of the engram. *Symposia of the
+  Society for Experimental Biology* 4, 454–482.
+- Leith, E. N., & Upatnieks, J. (1962). Reconstructed wavefronts and
+  communication theory. *Journal of the Optical Society of America* 52,
+  1123.
 - Leutgeb, J. K., Leutgeb, S., Moser, M.-B., & Moser, E. I. (2007).
   Pattern separation in the dentate gyrus and CA3 of the hippocampus.
   *Science* 315, 961–966.
@@ -545,13 +838,21 @@ Order of work:
 - Napper, R. M., & Harvey, R. J. (1988). Number of parallel fiber
   synapses on an individual Purkinje cell in the cerebellum of the rat.
   *Journal of Comparative Neurology* 274, 168–177.
+- Plate, T. A. (1995). Holographic reduced representations. *IEEE
+  Transactions on Neural Networks* 6, 623–641.
+- Pribram, K. H. (1971). *Languages of the Brain.* Prentice-Hall.
 - Ramsauer, H., et al. (2021). Hopfield networks is all you need. *ICLR
   2021.*
 - Redgrave, P., Prescott, T. J., & Gurney, K. (1999). The basal ganglia: a
   vertebrate solution to the selection problem? *Neuroscience* 89,
   1009–1023.
+- Reed, I. S., & Solomon, G. (1960). Polynomial codes over certain
+  finite fields. *Journal of the Society for Industrial and Applied
+  Mathematics* 8, 300–304.
 - Schultz, W., Dayan, P., & Montague, P. R. (1997). A neural substrate of
   prediction and reward. *Science* 275, 1593–1599.
+- Shamir, A. (1979). How to share a secret. *Communications of the ACM*
+  22, 612–613.
 - Shazeer, N., et al. (2017). Outrageously large neural networks: the
   sparsely-gated mixture-of-experts layer. *ICLR 2017.*
 - Sherman, S. M. (2001). Tonic and burst firing: dual modes of
@@ -565,6 +866,8 @@ Order of work:
   (2024). The expressive leaky memory neuron: an efficient and expressive
   phenomenological neuron model can solve long-horizon tasks. *ICLR
   2024.*
+- Susskind, L. (1995). The world as a hologram. *Journal of
+  Mathematical Physics* 36, 6377–6396.
 - Szabadics, J., et al. (2006). Excitatory effect of GABAergic axo-axonic
   cells in cortical microcircuits. *Science* 311, 233–235.
 - Trachtenberg, J. T., et al. (2002). Long-term in vivo imaging of
@@ -573,9 +876,13 @@ Order of work:
 - Turrigiano, G. G., Leslie, K. R., Desai, N. S., Rutherford, L. C., &
   Nelson, S. B. (1998). Activity-dependent scaling of quantal amplitude in
   neocortical neurons. *Nature* 391, 892–896.
+- Vander Lugt, A. (1964). Signal detection by complex spatial
+  filtering. *IEEE Transactions on Information Theory* 10, 139–145.
 - Werfel, J., Xie, X., & Seung, H. S. (2005). Learning curves for
   stochastic gradient descent in linear feedforward networks. *Neural
   Computation* 17, 2699–2718.
+- Willshaw, D. J., Buneman, O. P., & Longuet-Higgins, H. C. (1969).
+  Non-holographic associative memory. *Nature* 222, 960–962.
 
 How these were checked:
 
@@ -590,8 +897,13 @@ How these were checked:
   Schultz et al., Szabadics et al., Werfel et al., He et al. and DeSieno
   were checked against Crossref by the second round of that review, and
   Kelso et al., Monderer & Shapley and Del Rey et al. by the third.
+- Brady et al., Dimakis et al., Gabor (both), Josselyn & Tonegawa,
+  Leith & Upatnieks, Plate, Reed & Solomon, Shamir, Susskind, van
+  Heerden, Vander Lugt and Willshaw et al. were checked against Crossref
+  on 2026-11-23, and 't Hooft against arXiv; where only a first page is
+  given, Crossref gives no more.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
-  Kirsch & Schmidhuber, Koestler, Miconi et al., Najarro & Risi, Ramsauer
-  et al., Shazeer et al., Simon, and the books)
+  Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
+  Ramsauer et al., Shazeer et al., Simon, and the books)
   are from Claude's knowledge, and are to be checked before this page is
   cited elsewhere.
