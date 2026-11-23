@@ -16,7 +16,7 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: a catalog of neuron types, toward a general cell (`docs/NEURON-CATALOG.md`, #5)
+- Claude: levels of magnification, memory spread through the network, and writing and reading a hologram, in `docs/NEURON-CATALOG.md` (#6)
 
 ## Next
 
@@ -39,6 +39,12 @@ of every session; update it on your branch at the end. Keep it short and true. -
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
+Beside these, not after them (Decided, 2026-11-23): the general cell, by
+the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
+Items 1 and 2 test what TriNet already is, and their results are what the
+general cell is compared against. Where the hologram simulation proposed
+there goes is asked under "Open questions".
+
 ## Before publishing
 
 The founder's word (Decided, 2026-11-22): publishing comes last, and every
@@ -57,26 +63,31 @@ on Hugging Face:
 
 ## Open questions
 
-- For the founder: may passages of the project's earlier stage texts
-  (003, 004 and 005, kept privately in `ebook-press`), on "levels of
-  magnification", be quoted in `docs/NEURON-CATALOG.md`, or only
-  described, with the stage and line as the source? (The passage in 008
-  is public already, in the open-worlds library.) The technical lead's
-  recommendation: quote short passages, each with its stage and line,
-  and keep the stage texts themselves private; they are private for the
-  published translations they hold, not for these passages. A section
-  on them follows the answer. (asked 2026-11-23)
-- For the founder: does the work toward the general cell
-  (`docs/NEURON-CATALOG.md`, "Order of work") come before the items under
-  "Next", or run beside them? The technical lead's recommendation:
-  beside. Next 1 and 2 test what TriNet already is, and their results
-  are what the general cell is compared against. (asked 2026-11-23)
+- For the founder: does the hologram simulation proposed in
+  `docs/NEURON-CATALOG.md` ("Writing and reading a hologram") run beside
+  the items under "Next", as the general cell does, or after them? The
+  technical lead's recommendation: beside. It is small, runs on a CPU,
+  and its second step compares a holographic memory with TriNet's own,
+  which is what Next 2 asks of TriNet's parts. (asked 2026-11-23)
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
   published. Not needed until Next item 3. (asked 2026-11-22)
 
 ## Decided
 
+- 2026-11-23, founder, answering the two questions then open (may
+  passages of the stage texts 003 to 005 on "levels of magnification" be
+  quoted; does the general-cell work come before Next, or beside it):
+  "Yes, quote them, and alongside is fine." Hence the quoted passages in
+  `docs/NEURON-CATALOG.md` ("Levels of magnification"), the stage texts
+  themselves staying private, and the paragraph under Next. The same
+  day, on holographic memory: "I do not just mean that as a metaphor, I
+  would like to investigate how two-dimensional wave interference
+  patterns store three-dimensional information", and "I would like to
+  look at reading and writing holographic information." Offered for
+  discussion (the first ends "Thoughts?", and the second restates it):
+  hence "Writing and reading a hologram"
+  there, with a simulation proposed, not decided.
 - 2026-11-23, founder, on where TriNet is going: "first we should catalog
   the existing known types of neurons in the human brain. … My thought is
   to map the differences in shape and location and configuration to the
@@ -165,6 +176,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
 - 2026-11-22 Claude: at the founder's word on credit, `CONTRIBUTIONS.md` (who wrote each part, and the records quotations come from); ChatGPT named as a reviewer where their review led to a change, and quoted, with the source, for the five differences from linear attention; the machine, versions and threads for every result table (#4)
 - 2026-11-22 Claude: the pointer shortcut found and removed (change 6, `experiments/pointer_check.py`): trained on Gemini's task, both TriNet models answered pointers with the first value bound; every result run again on the fair task (answers only: TriNet 100%; whole-text training: 34% at best); README claims corrected; the founder's publishing word and weight-class intent recorded; the list "Before publishing" (#3)
