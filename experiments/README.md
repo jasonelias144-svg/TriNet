@@ -501,12 +501,13 @@ Run on Kaggle's free GPUs (STATUS.md, Next 3), on 2026-11-23: a Tesla
 T4 (one of the session's two), PyTorch 2.11.0 with CUDA 13.0,
 transformers 4.46.3, TriNet at commit ef9af1f. The scripts as run, and
 their raw results, are in `experiments/kaggle/`: `speed_run_1` times
-every size of `train_trinet.py`'s presets and Stage A's at two lengths
-and three batch sizes; `speed_run_2` adds larger batches, and the
-Transformer rows, which the first run lost to a fault in our script
-(`answers_only.SmallTransformer` makes its positions on the CPU). Each
-row is one training step (forward, backward, Adam) on random characters,
-averaged over four steps after one to warm up. Some rows:
+Stage A's size and the `1m`, `4m` and `10m` presets of
+`train_trinet.py`, at two lengths and three batch sizes; `speed_run_2`
+adds larger batches, and the Transformer rows, which the first run lost
+to a fault in our script (`answers_only.SmallTransformer` makes its
+positions on the CPU). Each row is one training step (forward, backward,
+Adam) on random characters, averaged over four steps after one to warm
+up. Some rows:
 
 | Model | Parameters | Characters × batch | Seconds a step | Characters a second | Peak memory |
 |---|---|---|---|---|---|
@@ -525,37 +526,64 @@ averaged over four steps after one to warm up. Some rows:
 | | | 512 × 128 | 0.264 | 247,906 | 2.01 GiB |
 | Transformer, width 384, 6 layers | 11,236,864 | 128 × 128 | 0.394 | 41,603 | 2.20 GiB |
 
+(Of the smaller Transformer's parameters, 131,072 are a table of 1,024
+positions, of which at most 512 are used.)
+
+**Run.** Each script as a Kaggle script, with a T4 GPU and the internet
+on. It installs transformers 4.46.3, clones this repository at ef9af1f
+and writes `/kaggle/working/speed.json` (kept here as
+`speed_run_N.json`). On another machine with CUDA, change the
+`/kaggle/working` paths.
+
 **What this shows.**
-- **A TriNet step takes the same time whatever the batch**, at every
-  size: 0.665 to 0.744 seconds for 128 characters, from 8 texts to
-  2,048. The GPU waits on the loop over characters, each step reading
-  the memory the step before wrote, not on arithmetic, so more texts at
-  once cost almost nothing until memory runs out.
-- **Memory runs out first.** Training keeps every character's memory
-  matrix for the backward pass: batch × length × d_key × d_val numbers
-  in each layer. The `10m` preset cannot train on 32 texts of 128
-  characters on this 16 GB card.
-- **At the `1m` size, a Transformer is 11 to 13.5 times faster**: the
-  best TriNet setting tried reaches 22,974 characters a second, a
-  Transformer of about the same size 247,906 to 310,536, in a fifth of
-  the memory or less. One pass over TinyStories, about 2 billion characters
-  (our estimate of its size, not measured here), would take TriNet about
-  a day and the Transformer about two hours.
-- **At Stage A's size and batch, the GPU is no faster than this
-  session's CPU.** On 2 threads the CPU trains it at about 11,000
-  characters a second (1,500 steps of 32 episodes of about 125
-  characters in 525 seconds); the T4 manages 6,164 at a batch of 32, and
-  gains only with far larger batches.
+- **At every size the step time hardly changes with the batch, until
+  memory runs out:** at Stage A's size, 0.665 to 0.744 seconds for 128
+  characters, from 8 texts to 2,048; at `1m`, 1.351 to 1.426 from 8 to
+  256; at `4m`, 2.045 to 2.062 from 8 to 32; at `10m` only 8 texts fit.
+  And the time per layer per character is about the same at every size,
+  2.60, 2.65, 2.69 and 2.67 milliseconds, while the parameters grow 300
+  times; from 128 characters to 512 the time grows about 4.1 times, as a
+  loop over characters would. The GPU waits on the loop, each step
+  reading the memory the step before wrote, and on the cost of starting
+  each small operation, not on arithmetic.
+- **Memory runs out first.** For the backward pass, training keeps about
+  three batch × length × d_key × d_val matrices in each layer: the
+  memory, the outer product written into it, and the clamp's input
+  (counted by the independent review with PyTorch's saved-tensor hooks,
+  and again here: 3.0 per layer per character, 89% of what is kept). The
+  measured peaks agree: at `1m` and 128 × 256, three matrices make 9.4
+  GiB of the 10.61 measured; at `10m` and 128 × 32 they make 15.8 GiB,
+  more than this 16 GB card holds.
+- **At the `1m` size a Transformer trains 13.5 times faster at 128
+  characters**, each at its best batch (310,536 characters a second
+  against 22,974), **and 86 times faster at 512** (247,906 against
+  2,888), in a fifth of the memory or less. One pass over TinyStories,
+  about 2 billion characters (our estimate of its size, not measured
+  here), would take TriNet about a day in texts of 128 characters, and
+  about 8 days in texts of 512; the Transformer about two hours.
+- **At Stage A's size and batch, the CPU was about twice as fast.** In
+  Stage A's runs (2026-11-22, two at a time on a 4-core Xeon, 2 threads
+  each), one TriNet trained in 504 to 559 seconds on 1,500 batches of 32
+  episodes averaging 125 characters: 10,800 to 11,900 characters a
+  second, with six learning-curve checks in that time. The T4 manages
+  6,164 at a batch of 32, and gains only with far larger batches.
 
 **Our reading.** Before a long run on real text, TriNet needs a faster
 form: fewer and larger GPU operations, and the memory recomputed in the
 backward pass instead of stored. Which form is possible depends on the
-fair comparison (STATUS.md, Next 1): if TriNet does as well when its
-gates do not read the memory's surprise, the memory's update depends
-only on the input, and it can be computed in parallel chunks, as Gated
-DeltaNet is; if surprise matters, each step must wait for the last, and
-the work is a single fused kernel for the loop.
+fair comparison (STATUS.md, Next 1). The update is
+`F ← clamp(λF + η·kᵀ(v − kF))`. If TriNet does as well when neither its
+gates nor its slow yellow state read the memory's surprise, and without
+the clamp (which did not bind in one Stage A run the independent review
+checked: seed 0, largest value 2.70 against a bound of 6), then the
+gates depend only on the input, through the bus and the yellow state
+(itself a simple recurrence over the bus that a parallel scan can
+compute), and the update is linear in the memory:
+`F ← (λI − η·kᵀk)F + η·kᵀv`. That is Gated DeltaNet's form, with its
+decay equal to λ, its write strength to η/λ and its values to λv, and it
+can be computed in parallel chunks. If surprise matters, each step must
+wait for the last, and the work is a single fused kernel for the loop.
 
 **Not checked.** `torch.compile` or CUDA graphs; mixed precision; the
-second GPU; any chunked form; time on real text rather than random
-characters.
+second GPU; any chunked form; whether the clamp binds in larger models
+or on real text; time on real text rather than random characters.

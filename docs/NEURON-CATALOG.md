@@ -510,16 +510,24 @@ architecture mirrors the structure of information or categories or some
 invariants. Thoughts?"
 
 **Why it matters for cost.** TriNet's fast memory steps through its text
-one character at a time, and each step's gates read the memory's
-surprise, so no step can begin before the one before it ends. A graphics
-card is fast when it does many things at once, so at this point it
-waits. In levels, each level steps only over short spans: the characters
-of a word (about six, with its space), the words of a sentence (about
-fifteen to twenty), the sentences of a passage. The spans of one level
-can run at the same time. A text of 512 characters would then take a few
-dozen steps one after another instead of 512, and each level added
-multiplies the length that a fixed number of steps can cover. (Our
-arithmetic, not measured.)
+one byte at a time (one character, in English; three for most Chinese
+characters), and each step's gates read the memory's surprise, so no step
+can begin before the one before it ends. A graphics card is fast when it
+does many things at once, so at this point it waits. **Our reading**
+(arithmetic, not measured): in training, levels would let each level step
+only over short spans, the characters of a word (about six, with its
+space), the words of a sentence (about fifteen to twenty), the sentences
+of a passage, and the spans of one level could run at the same time. A
+text of 512 characters would then take a few dozen steps one after another
+instead of 512, and each level added would multiply the length that a
+fixed number of steps can cover. One condition and two limits. The
+condition: the work goes once up the levels and once back down, each span
+below taking context only from spans above that are already finished (as
+the byte-patch models and H-Net below are built); if a word must instead
+wait for the level above to take in the word before it, the steps run one
+after another again. The limits: each level's count is set by its longest
+span in a batch, not its average; and writing text still goes one
+character at a time.
 
 **Built before (reported, each by one group).**
 - Fixed clocks: a recurrent network whose modules update at different
@@ -533,45 +541,58 @@ arithmetic, not measured.)
   scale matched models that read word pieces (Pagnoni et al., 2024).
 - Chunks learned with the rest of the model, and the levels nested
   (Hwang, Wang & Gu, 2025).
+- An early precedent for boundaries from surprise, in a neural network: a
+  small recurrent network's error in predicting the next letter is highest
+  at the start of a word (Elman, 1990).
 
 **In the brain.**
-- Reported: areas higher in the cortex's hierarchy integrate a story
-  over longer windows, from words to sentences to paragraphs (Hasson et
-  al., 2008; Lerner et al., 2011); and the cortex's activity follows
-  syllables, phrases and sentences, each at its own rate, even when
-  nothing in the sound marks the phrases (Ding et al., 2016).
-- Reported: across the monkey cortex, how long a region's activity
-  persists grows from the sensory areas to the prefrontal ones (Murray
-  et al., 2014).
-- Established: much of the feedback from higher areas ends on the far
-  branches of pyramidal cells' apical dendrites. A proposal: that the
-  cell joins this context to its input (Larkum, 2013).
-- Reported, with a theory behind it: people cut experience into events
-  where their predictions fail (event segmentation theory: Zacks et al.,
-  2007).
+- Reported: areas higher in the cortex's hierarchy integrate over longer
+  windows, for a silent film (Hasson et al., 2008), and for a story,
+  from words to sentences to paragraphs (Lerner et al., 2011); and the
+  cortex's activity follows syllables, phrases and sentences, each at
+  its own rate, even when nothing in the sound marks the phrases (Ding
+  et al., 2016).
+- Reported: across the monkey cortex, how long a region's spontaneous
+  fluctuations last grows from the sensory areas to the prefrontal ones
+  (Murray et al., 2014).
+- Established (reviewed in Larkum, 2013): much of the feedback from
+  higher areas ends on the far branches of pyramidal cells' apical
+  dendrites. That the cell joins this context to its input is a leading
+  theory, as in the catalog above.
+- Reported: people perceive activity as a series of separate events. A
+  theory (event segmentation theory: Zacks et al., 2007): a boundary is
+  perceived where predictions briefly fail.
 
-**An invariant.** Reported, with a proof for two kinds of process (Lin &
-Tegmark, 2017): in text, how much one character tells about another
-falls off with their distance as a power law. A Markov chain, each symbol
-depending only on the few before it, gives a much faster, exponential
-fall; a grammar that builds text in levels gives a power law. This is
-one signature of text built in levels, and a test of a model: whether
-the text it writes shows it.
+**An invariant.** Reported, with proofs (Lin & Tegmark, 2017): in text,
+how much one character tells about another falls off with their
+distance roughly as a power law. A Markov chain, each symbol depending
+only on the few before it, gives a much faster, exponential fall (as
+does a hidden Markov model); some grammars that build text in levels
+give a power law, though not all do. The paper uses this to test models:
+text written by a model, against text from a Markov chain. **Our
+reading:** the power law is one signature of text built in levels, and a
+test of a model in levels is whether the text it writes shows it.
 
-**What would be ours.** Models in levels have been built; what is new
-would be the cell, and three ways it fits:
-1. **Boundaries from surprise.** TriNet's yellow channel already measures
-   surprise. A level's boundary could fall where surprise jumps, as the
+**What would be ours** (our reading). Models in levels have been built;
+what is new would be the cell, and three ways it fits:
+1. **Boundaries from surprise.** TriNet already measures surprise (its
+   apical prediction against the basal value), and its yellow channel
+   reads it. A level's boundary could fall where surprise jumps, as the
    byte-patch model cuts where prediction is hard, and as event
    segmentation describes.
 2. **Context from above on the apical side.** TriNet's cell already
    compares an apical prediction with a basal value; the level above
-   would feed the apical side.
+   would feed the apical side. (TriNet subtracts the prediction, where
+   the pyramidal cell amplifies a coincidence: an analogy of place, not
+   of operation.)
 3. **One cell at every level, one dial changed.** Higher levels keep
    their memory longer (TriNet's retention floor), as the cortex's
    timescales grow.
 
-**Cautions.**
+All three are the one interface and the control both ways of "Fractal
+design" above, and the stack of "Levels of magnification".
+
+**Cautions** (our reading).
 - Spaces and punctuation are not boundaries in every language (Chinese
   has no spaces) or in code; learned boundaries are harder to train.
 - The lowest level gives up its own long memory: what earlier words held
@@ -580,12 +601,16 @@ would be the cell, and three ways it fits:
   Next 1) still decides that.
 
 **Our proposal.** On this session's CPUs: a TriNet of two levels against
-the flat one, at the same size, on the tasks of `experiments/`, with
-boundaries first at spaces and punctuation, then where surprise jumps.
-Measured: the score, and the number of steps one after another. Placed
-by the technical lead after the fair comparison's first round and before
-the canyon and the ledger (STATUS.md, Next), because it decides what
-training on a GPU would cost.
+the flat one, at the same size. The tasks of `experiments/` are bindings
+with random filler, with no words or sentences, and recall needs the
+long memory the lowest level would give up; so the test is on real text
+too, measured in bits per byte on text not trained on, with boundaries
+first at spaces and punctuation, then where surprise jumps. Measured:
+the score, and the number of steps one after another. Placed by the
+technical lead after the fair comparison's first five seeds and before
+the canyon and the ledger (STATUS.md, Next), because it bears on what
+training on a GPU would cost; the real training run of Next 3 does not
+wait for it.
 
 ## Memory spread through the network
 
@@ -1253,6 +1278,8 @@ Order of work:
   Cortical tracking of hierarchical linguistic structures in connected
   speech. *Nature Neuroscience* 19, 158–164 (online in 2015).
 - Ebbinghaus, H. (1885). *Über das Gedächtnis.* Duncker & Humblot.
+- Elman, J. L. (1990). Finding structure in time. *Cognitive Science* 14,
+  179–211.
 - Evci, U., Gale, T., Menick, J., Castro, P. S., & Elsen, E. (2020).
   Rigging the lottery: making all tickets winners. *ICML 2020.*
 - Feldmann, J., et al. (2021). Parallel convolutional processing using
@@ -1528,13 +1555,15 @@ How these were checked:
   CFR §§ 73.681–73.682 (subcarrier, line rate, the two colour
   bandwidths, the burst, the 6 MHz channel); the 4.2 MHz figure and the
   1953 date against the NTSC article on Wikipedia.
-- For "Levels of text" (2026-11-23): Ding et al., Hasson et al., Lerner
-  et al., Lin & Tegmark, Murray et al. and Zacks et al. were checked
-  against Crossref (Larkum 2013 was listed already); Chung et al., Hwang
-  et al., Koutník et al., Nawrot et al., Pagnoni et al. and Yu et al.
-  against arXiv. These checks are of the references; what the page says
-  of each paper is from Claude's knowledge of it, not checked against
-  its text.
+- For "Levels of text" (2026-11-23): Ding et al., Elman, Hasson et al.,
+  Lerner et al., Lin & Tegmark, Murray et al. and Zacks et al. were
+  checked against Crossref (Larkum 2013 was listed already); Chung et
+  al., Hwang et al., Koutník et al., Nawrot et al., Pagnoni et al. and Yu
+  et al. against arXiv. The independent review of #10 checked what the
+  page says of each against its abstract (on Crossref, arXiv or PubMed),
+  and of Lin & Tegmark against the paper's text; Larkum's anatomy is not
+  in Larkum's abstract and was not checked; Elman's finding is from
+  Claude's knowledge of the paper.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
   Kirsch & Schmidhuber, Koestler, Lashley, Miconi et al., Najarro & Risi,
   Ramsauer et al., Shazeer et al., Simon, Waddington, and the books,
