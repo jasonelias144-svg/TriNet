@@ -1,7 +1,8 @@
 """Ours, not Gemini's. A harder in-context task, with room left above one TriNet.
 
-On the task of answers_only.py, one TriNet answers every query (100%, three
-seeds), so a model built from two TriNets cannot show that it does better.
+On the task of answers_only.py, one TriNet answers 98.2 to 100% of the
+queries (three seeds; experiments/README.md, Stage A), so a model built
+from two TriNets has no room to show that it does better.
 This task asks more of a memory:
 
     h=4;g=3;f=1;c=4;e=5;z-x,,-d=h;f=3; g=5;z.b=c;--e=0;xf=1;e=4;c=2; c,- f?b>4;?f>1;?c>2;?f<3;?h>4;?g<3;?e>4;?c<4;?d>4;?g>5;?e<0;

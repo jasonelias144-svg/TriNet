@@ -141,3 +141,70 @@ def test_the_stage_a_script_runs_every_model_on_both_tasks(capsys):
             results = stage_a.run(name, task, seed=0, steps=2, eval_batches=1)
             assert set(results) == set(stage_a.TESTS[task])
     assert "before last overwrite" in capsys.readouterr().out
+
+
+def test_residual_error_makes_the_fast_memory_learn_what_w_base_gets_wrong():
+    # One layer, the same token again and again, every value zero. Without
+    # change 7 there is nothing to store, so F_fast stays zero. With it, the
+    # target 0 is predicted as k.(W_base + F_fast), so F_fast learns to
+    # cancel k.W_base. (A sign flip, or the query in place of the key, in
+    # the change-7 line would not.)
+    from trinet.modeling_trinet import TriNetLayer
+    out = {}
+    for residual in (False, True):
+        torch.manual_seed(0)
+        layer = TriNetLayer(TriNetConfig(**SMALL, residual_error=residual), 0).eval()
+        with torch.no_grad():
+            layer.W_val.weight.zero_()
+            layer.yellow_to_write.weight.zero_()
+            layer.yellow_to_write.bias.fill_(0.5)
+            layer.yellow_to_retain.weight.zero_()
+            layer.yellow_to_retain.bias.fill_(1.0)
+            h = torch.randn(1, 1, SMALL["d_model"]).repeat(1, 12, 1)
+            _, f_fast, _, _, _ = layer(h)
+            h_cat = torch.cat([torch.zeros(1, SMALL["d_model"], SMALL["delay_lags"] - 1), h.transpose(1, 2)], -1)
+            d_ctx = torch.nn.functional.silu(layer.delay_conv(h_cat).transpose(1, 2))[:, -1]
+            k = torch.nn.functional.silu(layer.W_key(d_ctx))
+            k = k / torch.sqrt((k * k).sum(-1, keepdim=True) + 1e-4)
+            base = (k @ layer.W_base).norm().item()
+            out[residual] = (f_fast.abs().max().item(), (k @ (layer.W_base + f_fast[0])).norm().item(), base)
+    assert out[False][0] == 0.0
+    assert out[True][0] > 0.0 and out[True][1] < 0.1 * out[True][2], out
+
+
+def test_the_stage_a_scoring_reads_the_answer_and_the_other_value_right():
+    import answers_only as A
+    import stage_a
+    data = stage_a.HarderTask(bytes_as_tokens=True)
+    x, metas = data.batch(64, 2, 10, np.random.default_rng(3))
+    perfect = torch.nn.functional.one_hot(torch.roll(x, -1, dims=1), 256).float()  # predicts the next byte
+    got, want, kinds, other = A.answers(perfect, metas)
+    assert torch.equal(got.argmax(-1), want)
+    for b, meta in enumerate(metas):
+        text = bytes(x[b].tolist()).rstrip(b"\0").decode()
+        head = text.partition("?")[0]
+        value, history = {}, collections.defaultdict(list)
+        for name, right in re.findall(r"([a-h])=([0-9a-h]);", head):
+            value[name] = value[right] if right.isalpha() else right
+            if right.isdigit():
+                history[name].append(right)
+        for pos, ans, kind, old in meta:
+            name = text[pos - 1]
+            expected = {2: history[name][-2:-1], 4: [value[name]]}.get(kind, [" "])[0] if kind in (2, 4) else " "
+            assert chr(old) == expected, (text, pos, kind)
+
+
+def test_the_learning_curve_does_not_change_the_training(monkeypatch):
+    import stage_a
+    built, build = [], stage_a.build
+
+    def keep(name, task):
+        made = build(name, task)
+        built.append(made[0])
+        return made
+
+    monkeypatch.setattr(stage_a, "build", keep)
+    torch.set_num_threads(1)
+    stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=1)
+    stage_a.run("trinet", "harder", seed=0, steps=3, eval_batches=1, curve_every=0)
+    assert all(torch.equal(p, q) for p, q in zip(built[0].parameters(), built[1].parameters()))

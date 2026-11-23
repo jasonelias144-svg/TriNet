@@ -34,7 +34,8 @@ predicted at the `>`. Filler of 2 to 10 characters. Adam, learning rate
 all), and with 24 and 74 characters of each filler (about 100 and 200).
 
 **Run.** `python experiments/answers_only.py MODEL` (two seeds, a few
-minutes each).
+minutes each, on 2 threads; on another number of threads a run can
+differ by a point or two, as Stage A below found).
 
 **Where the tables on this page ran** (2026-11-22): a CPU (Intel Xeon,
 2.10 GHz, 4 cores), on 2 threads unless stated otherwise (the
@@ -197,7 +198,7 @@ size? It runs two TriNet stacks side by side, joined by a narrow
 | `transformer` | the small Transformer above | 39,387 (39,322 on the task above, whose characters are fewer) |
 
 The two stacks are each 20 wide, with keys and values of 12, so that the
-pair comes within 2% of one TriNet. Gemini's random dropping of a whole
+pair comes within 2.1% of one TriNet. Gemini's random dropping of a whole
 stack in training (`hemisphere_dropout`) is off.
 
 **Training and test** as above: on the answers only, Adam at 0.003,
@@ -205,11 +206,11 @@ batches of 32, 1,500 steps; tested on 512 new episodes at each length.
 
 ### On the task above: no room to show a difference
 
-**Run.** `python experiments/stage_a.py MODEL --task answers` (seeds 0, 1
-and 2). The runs below used commit 2970da8 (its later changes are to
-docstrings only), two at a time, on 1 thread each, on 2026-11-23. The
-learning curve gives the score at the training length (about 52
-characters) every 250 steps.
+**Run.** `python experiments/stage_a.py MODEL --task answers --threads 1`
+(seeds 0, 1 and 2). The runs below used commit 2970da8 (its later
+changes are to docstrings only), two at a time, on 1 thread each, on
+2026-11-23. The learning curve gives the score at the training length
+(about 52 characters) every 250 steps.
 
 | Model | ~52 characters | ~100 characters | ~200 characters | First curve point at 95% or more (step) |
 |---|---|---|---|---|
@@ -223,9 +224,13 @@ characters) every 250 steps.
 - **Every TriNet model, one stack or two, scores 98.2 to 100%** at every
   length in every seed, and passes 95% on the learning curve by step
   500. A pair of stacks has no room to do better here.
-- An earlier run, from a script outside this repository, gave `trinet`
-  100% in all three seeds; the committed `stage_a.py` gives 98.2 to
-  99.2% in seed 1. The table above is the one to reproduce.
+- **The number of threads alone moves a run by up to 1.8 points.** On
+  the default 2 threads, `trinet` seed 1 scores 100% at every length (an
+  earlier run, and the independent review of #7); on 1 thread, as in the
+  table, 98.2 to 99.2%. PyTorch adds numbers in a different order on a
+  different number of threads, and training amplifies the difference.
+  So a single run's outcome, here and on the harder task below, carries
+  that much noise beside the seed's.
 - The small Transformer scores 34 to 51%, less as the text grows, as in
   the results above.
 - Time: 228 to 244 seconds a run for one TriNet, 403 to 447 for two
@@ -262,6 +267,11 @@ and 2; about 9 minutes a seed for one TriNet, 17 for two stacks, 1 for the
 Transformer). The runs below used commit ac96fb5, two at a time, on 2
 threads each.
 
+The task was made harder once before these runs. Its first version, with
+four names and four overwrites, let one TriNet score 96 to 97% at seed 0,
+leaving little room above it; five names and six overwrites gave 99.1 to
+99.5% at seed 0 but left room in other seeds (commit ac96fb5).
+
 ### Results, 2026-11-22 (harder task, seeds 0 / 1 / 2)
 
 | Model | ~125 characters | ~160 characters | ~260 characters | First curve point at 95% or more (step) |
@@ -277,23 +287,27 @@ threads each.
   models.** Every TriNet model scores 98.5 to 99.9% in some seeds, and five
   of the fifteen runs stop short (86.5 to 96.5%). Averaged over the three
   seeds at about 160 characters: `trinet` 95.8%, `trinet-residual` 95.4%,
-  `bicam-sym` 97.3%, `bicam-asym` 96.1%, `bicam-nocal` 99.4%. One run that
-  stops short decides each average, so three seeds do not show that any
-  of these differs from another.
+  `bicam-sym` 97.3%, `bicam-asym` 96.1%, `bicam-nocal` 99.4%. The runs
+  that stop short decide these averages (two for `bicam-asym`, one for
+  each of the first three, none for `bicam-nocal`), so three seeds do not
+  show that any of these differs from another.
 - **A run that stops short fails one kind of query.** `trinet` seed 2,
   `bicam-sym` seed 2 and `bicam-asym` seeds 0 and 2 answer "the value
   before the last overwrite" 69 to 92% right, and give the current value
   instead 7 to 23% of the time. `trinet-residual` seed 0 follows pointers
   29% of the time; everything else it answers 99 to 100% right.
 - **Only `bicam-nocal` learned the task in all three seeds**, and it is
-  the pair *without* the callosum. Whatever helps it is not the
-  connection between the stacks. One reading, not tested: two stacks that
-  learn on their own are two tries at the task, joined at the output.
+  the pair *without* the callosum. If anything helps it, which three
+  seeds do not show, it is not the connection between the stacks. One
+  reading, not tested: two stacks that learn on their own are two tries
+  at the task, joined at the output.
 - **The longer retention of one stack (`bicam-asym`) did not help.** It
   scored below `bicam-sym` in two seeds of three.
-- **Change 7 (`trinet-residual`) learns fastest when it learns:** 95% by
-  step 750 in two seeds, and the best final scores (99.7 and 99.9%). In
-  the third it never learned pointers. Not shown to be better; it stays
+- **Change 7 (`trinet-residual`) learns fastest when it learns:** at step
+  500 it is at 93.0 and 90.2% in seeds 1 and 2, where no other model is
+  above 86.6% in any seed. Its final scores, 99.7 and 99.9% at about 160
+  characters, are among the best (`bicam-nocal` seed 2 also has 99.7%).
+  In seed 0 it never learned pointers. Not shown to be better; it stays
   off by default.
 - **Seed 2 was hard for three models.** With the same seed every model
   sees the same episodes in the same order (the episodes come from
@@ -308,14 +322,22 @@ threads each.
   the text grows. It learns its positions and is untuned (STATUS "Next"
   2); it is no measure of what attention can do here.
 
+**Not checked:**
+- More seeds, and the thread noise above, for the harder task.
+- Gemini's own advice for Stage A (record 012-10-06, line 3893): to run
+  `hemisphere_dropout` at 0.1 as well as 0.0, and to match parameter
+  counts with and without the callosum (`bicam-nocal` has 1,137 fewer
+  parameters than `bicam-sym`).
+- Whether a model answers later queries from earlier answers in the same
+  episode. On the original task, `pointer_check.py` scores the first
+  query alone for this; the harder task has no such check yet.
+
 ### What Stage A shows
 
 Two TriNet stacks did not do measurably better than one, on either task.
-A likely reason: the two halves are too alike to bring different
-strengths. The next step was to be a pair of different halves, a
-TriNet and a Transformer, with an executive network between them. It is
-built on its own branch (`claude/hybrid-prototype`, not merged), but its
-first check failed: at the training budget used there, the small
-Transformer did not learn recall, so it would bring the pair no strength
-of its own. That test is being redesigned, and its results will come
-with its own pull request.
+One guess, not tested: the two halves are too alike to bring different
+strengths (though `bicam-asym`, whose halves differ in how long they
+keep their memory, did not help either). The next step is a pair of
+different halves, a TriNet and a Transformer, with an executive network
+between them. Its code is on its own branch (`claude/hybrid-prototype`,
+not merged); its results will come with its own pull request.
