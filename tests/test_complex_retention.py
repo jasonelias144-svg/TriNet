@@ -1,7 +1,8 @@
 """Ours. experiments/complex_retention.py: with its rotation at zero it is
 TriNetLayer bit for bit; with rotation it differs; stepping token by token
-with the cache gives what one full pass gives; and making a model complex
-leaves the random state as it was."""
+with the cache gives what one full pass gives; it equals the same layer
+written with torch's complex numbers; and making a model complex leaves
+the random state as it was."""
 import copy
 import sys
 from pathlib import Path
@@ -136,3 +137,64 @@ def test_at_exactly_zero_the_angles_get_no_gradient_and_near_zero_they_do(ids):
                         for layer in c.model.layers]
     assert all(g == (0.0, 0.0) for g in grads[0.0])
     assert any(t > 0.0 and w > 0.0 for t, w in grads[THETA_MAX])
+
+
+def _reference_layer(layer, h):
+    """The same layer written with torch's complex numbers: F complex, each
+    row turned by exp(i theta) as it fades (an independent check of the
+    real-and-imaginary bookkeeping in ComplexRetentionLayer)."""
+    import torch.nn.functional as F
+
+    bsz, steps, _ = h.shape
+    buf = torch.zeros(bsz, layer.d_model, layer.delay_lags - 1, dtype=h.dtype)
+    d_ctx = F.silu(layer.delay_conv(torch.cat([buf, h.transpose(1, 2)], -1)).transpose(1, 2))
+    rec = layer.receptor_bus(d_ctx)
+    k = F.silu(layer.W_key(d_ctx))
+    k = k / torch.sqrt((k * k).sum(-1, keepdim=True) + 1e-4)
+    q = F.silu(layer.W_query(d_ctx))
+    q = q / torch.sqrt((q * q).sum(-1, keepdim=True) + 1e-4)
+    v = layer.W_val(h)
+    mem = torch.zeros(bsz, layer.d_key, layer.d_val, dtype=torch.complex128)
+    turn = torch.exp(1j * layer.theta.double()).view(1, -1, 1)
+    tonic = torch.zeros(bsz, 1, dtype=h.dtype)
+    decay, g0 = torch.sigmoid(layer.tonic_decay_logit), torch.exp(layer.log_g0.clamp(-4, 1))
+    shunt, span, bound = F.softplus(layer.shunt_w), 1 - layer.min_retention, layer.max_fast_weight
+    outs = []
+    for t in range(steps):
+        qt, kt = q[:, t].double().to(torch.complex128), k[:, t].double().to(torch.complex128)
+        read = torch.einsum("bk,bkv->bv", qt, mem)
+        r = q[:, t].double() @ layer.W_base.double() + read.real + layer.w_im.double() * read.imag
+        outs.append((r / (g0 + (F.relu(r) * shunt).sum(-1, keepdim=True))).float())
+        pred = torch.einsum("bk,bkv->bv", kt, mem)
+        if layer.residual_error:
+            pred = pred + k[:, t].double() @ layer.W_base.double()
+        err = v[:, t].double().to(torch.complex128) - pred
+        surprise = torch.sqrt((err.abs() ** 2).mean(-1, keepdim=True) + 1e-6).float()
+        tonic = torch.clamp(decay * tonic + F.relu(layer.mod_in(torch.cat([rec[:, t], surprise], -1))), 0, 2)
+        gate_in = torch.cat([rec[:, t], surprise, tonic], -1)
+        eta = (layer.max_write_rate * torch.clamp(layer.yellow_to_write(gate_in), 0, 1)).double()
+        lam = (layer.min_retention + span * torch.clamp(layer.yellow_to_retain(gate_in), 0, 1)).double()
+        mem = lam.unsqueeze(-1) * turn * mem + eta.unsqueeze(-1) * torch.einsum("bk,bv->bkv", kt, err)
+        mem = torch.complex(mem.real.clamp(-bound, bound), mem.imag.clamp(-bound, bound))
+    out = layer.norm(h + layer.out_proj(torch.cat([torch.stack(outs, 1), d_ctx, rec], -1)))
+    return out, torch.cat([mem.real, mem.imag], -1).float()
+
+
+@torch.no_grad()
+@pytest.mark.parametrize("residual_error", [False, True])
+def test_the_layer_equals_the_same_layer_written_in_complex_numbers(residual_error):
+    torch.manual_seed(0)
+    cfg = TriNetConfig(vocab_size=256, d_model=32, d_key=12, d_val=10, n_layers=1, n_receptors=8,
+                       residual_error=residual_error)
+    layer = ComplexRetentionLayer(cfg, 0).eval()
+    layer.theta.uniform_(-0.5, 0.5)
+    layer.w_im.normal_(0.0, 1.0)
+    layer.mod_in.bias.fill_(0.3)
+    layer.yellow_to_write.bias.fill_(0.35)
+    layer.yellow_to_retain.bias.fill_(0.8)
+    h = torch.randn(3, 40, 32)
+    out, fast = layer(h)[:2]
+    ref_out, ref_fast = _reference_layer(layer, h)
+    assert fast[..., 10:].abs().max().item() > 0.1  # the imaginary part is in play
+    torch.testing.assert_close(out, ref_out, rtol=0, atol=1e-5)
+    torch.testing.assert_close(fast, ref_fast, rtol=0, atol=1e-5)

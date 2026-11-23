@@ -12,15 +12,14 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-23, the 67 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-23, the 69 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
 - Claude: the fair comparison (Next 1), run on Kaggle's CPU sessions
   under the founder's account (branch `claude/fair-comparison`)
 - Claude: complex retention, the first test of complex signals, its
-  results (`experiments/README.md`, "Complex retention"; branch
-  `claude/complex-retention-v2`)
+  results (`experiments/README.md`, "Complex retention", #12)
 
 ## Next
 
@@ -73,19 +72,20 @@ the order of work in `docs/NEURON-CATALOG.md` ("The general cell"). Items
 1 and 2 test what TriNet already is, and their results are what the
 general cell is compared against. Also beside them (Decided, 2026-11-23):
 as the first test of complex signals, complex retention, a fast memory
-that fades and rotates, so a trace's phase tells its age. It is done
-(`experiments/README.md`, "Complex retention"): with its angles started
-near zero it learns the task, but not better than TriNet in six seeds,
-and it loses more on longer texts; it stays an experiment. After the fair comparison's first five seeds of each model (now
-running), two levels of TriNet (`docs/NEURON-CATALOG.md`, "Levels of
-text"), because they bear on what training on a GPU would cost (the
-technical lead's order, under the founder's "What to work on next is up to
-you."). Then the canyon and the connection ledger as one experiment
-(`docs/NEURON-CATALOG.md`, "The connection ledger"), the first step toward
-temporary weights that become lasting ones. Set aside for now, each kept
-in the catalog with its test: optical hardware, the 5-HT2A dial, new port
-types, the holographic layer, and the receptor bus's colour signal written
-as a complex number.
+that fades and rotates, meant to let a trace's phase tell its age. It is
+done (`experiments/README.md`, "Complex retention"): with its angles
+started near zero it learns the task in three seeds of six (TriNet: four),
+not shown better, and it loses more on longer texts in every pair of
+seeds; it stays an experiment. After the fair comparison's first five
+seeds of each model (now running), two levels of TriNet
+(`docs/NEURON-CATALOG.md`, "Levels of text"), because they bear on what
+training on a GPU would cost (the technical lead's order, under the
+founder's "What to work on next is up to you."). Then the canyon and the
+connection ledger as one experiment (`docs/NEURON-CATALOG.md`, "The
+connection ledger"), the first step toward temporary weights that become
+lasting ones. Set aside for now, each kept in the catalog with its test:
+optical hardware, the 5-HT2A dial, new port types, the holographic layer,
+and the receptor bus's colour signal written as a complex number.
 
 ## Before publishing
 
@@ -252,7 +252,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-23 Claude: complex retention, a fast memory that fades and rotates (`experiments/complex_retention.py`, 10 tests), trained on the harder task in six seeds: with its angles drawn from [0, π/10) it fails (37 to 81%); started near zero it learns the task (three seeds at 99.5 to 99.7%, two at 95.0 and 95.5%, one failing at 70.4%, against TriNet's 88.9 to 99.8%), not shown better, and it loses 0.8 to 11.0 points on texts of 260 characters, where TriNet loses at most 2.6; the angles grow in training, so the model uses the rotation; it stays an experiment, off by default
+- 2026-11-23 Claude: complex retention, a fast memory that fades and rotates (`experiments/complex_retention.py`, 10 tests), trained on the harder task in six seeds: with its angles drawn from [0, π/10) it fails (37 to 81%); started near zero it learns the task in three seeds of six (99.5 to 99.7%; TriNet four, 99.2 to 99.8%), two stop short and one fails (70.4%), not shown better, and it loses 0.8 to 11.0 points on texts of 260 characters, more than TriNet in every pair of seeds (TriNet at most 2.6); training turns the angles away from zero, but whether the trained model depends on them was not checked; it stays an experiment, off by default; the raw logs kept; after independent review, the timing comparison, two claims and a reference test in complex numbers added (#12)
 - 2026-11-23 Claude: TriNet's speed on a Kaggle GPU (a Tesla T4), the scripts and raw results kept in `experiments/kaggle/`: the step time hardly changes with the batch (about 2.6 ms per layer per character at every size), memory runs out first (three stored matrices per layer per character; the `10m` preset cannot train on 32 texts of 128 characters), and at the `1m` size a Transformer trains 13.5 times faster at 128 characters and 86 times at 512; without surprise and the clamp, TriNet's update is Gated DeltaNet's form; after independent review, the ranges per size, the memory count, the ratios like for like, and the condition for a chunked form corrected (#11)
 - 2026-11-23 Claude: the founder's levels of text in the catalog (a TriNet that steps through characters, then words, then sentences): why it would cut the steps one after another, what has been built before (clockwork and multiscale networks, byte patches, learned chunks), the brain's ladder of timescales, the power-law invariant of text, what would be TriNet's own (boundaries from surprise, context on the apical side, one cell at every level), cautions, and an experiment, on real text too, placed after the fair comparison's first five seeds; 13 sources added; after independent review, two citations narrowed, a theory labelled as one, the conditions of the cost argument stated, and what measures surprise corrected; Next 3's account of Kaggle access corrected (a script saved and run under the founder's account, not a call that may not need the token) (#10)
 - 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)

@@ -608,10 +608,12 @@ tests). Each run trains one TriNet of Stage A's size (33,828 parameters,
 as Stage A does.
 
 **Two versions.**
-- **The first** drew the starting angles from [0, π/10). A trace then
-  turns half a circle in 10 characters or more, so an old trace, read
-  through Re(qF), is scaled by cos(θ·age), which swings between 1 and
-  −1 within one episode. It is kept as `trinet-complex-wide`.
+- **The first** drew the starting angles from [0, π/10). Most rows then
+  turn half a circle within the training length (every row with θ above
+  π/125, about 92% of draws), the fastest in 10 characters, so an old
+  trace, read through Re(qF), is scaled by cos(θ·age), which swings
+  between 1 and −1 within one episode. It is kept as
+  `trinet-complex-wide`.
 - **The second**, `trinet-complex`, draws them from [0, 0.003): at most
   0.38 radians over the training length, so the model starts close to
   TriNet and the angles it ends with are learned. (They cannot start at
@@ -622,13 +624,20 @@ as Stage A does.
 
 **Run.** `python experiments/stage_a.py trinet-complex --task harder
 --seeds 0 1 2 --threads 2`, and seeds 3 4 5, two runs at a time on this
-session's 4-core Xeon, on 2026-11-23. The second version ran from commit
-30341b7 (branch `claude/complex-v2-wip`), whose model and task code are
-the same as here. The first ran from 3085010 (branch
-`claude/complex-retention`); `trinet-complex-wide` here, built with the
-same seed, starts with the same weights and leaves the same random state.
-TriNet's seeds 0 to 2 are Stage A's (above); its seeds 3 to 5 ran beside
-the first version, from 3085010.
+session's 4-core Xeon, on 2026-11-23, from commit 30341b7 (branch
+`claude/complex-v2-wip`; `experiments/`, `trinet/`, `bicameral/`,
+`prototypes/` and `train_trinet.py` are the same here). The first
+version ran the same way, two runs at a time, from commit 3085010
+(branch `claude/complex-retention`, where it was named
+`trinet-complex`); here it is `python experiments/stage_a.py
+trinet-complex-wide --task harder --seeds ...`, and built with the same
+seed it starts with the same weights and leaves the same random state.
+TriNet's seeds 0 to 2 are Stage A's (above); its seeds 3 to 5 ran after
+the first version, from 3085010, one run at a time (`python
+experiments/stage_a.py trinet --task harder --seeds 3 4 5 --threads 2`).
+The raw logs are in `experiments/complex_retention_runs/`. With the same
+seed, TriNet and either version start from the same weights and see the
+same episodes, so the runs pair by seed.
 
 ### Results (harder task, six seeds)
 
@@ -645,42 +654,52 @@ at 125, except one run of the first version (seed 2, 2.8 points lower);
 the means are 96.8, 93.0 and 52.8%.
 
 - **The first version fails:** 37 to 81%, and lower as the text grows.
-- **Started near zero, it learns the task.** Three seeds of six reach
-  99.5 to 99.7%, two stop short (95.0 and 95.5%), and one fails (seed
-  5, 70.4%). TriNet has four seeds at 99.2 to 99.8% and two short (88.9
-  and 95.4%). The failure is unlike TriNet's weak runs, which each fail
-  one kind of query: seed 5 answers every kind poorly (52 to 82%). Six
-  seeds do not show that either model is better at the training length.
-- **When it learns, it can learn fast.** Seed 3 was at 95.3% at step
-  500, above every other run at that step, here or in Stage A (the best
-  of those is 93.0%, `trinet-residual`). Seeds 2 and 4 reached 95% at
-  step 750, as early as TriNet's earliest.
-- **It loses more on longer texts.** From 125 to 260 characters it
-  loses 0.8 to 11.0 points (3.0 / 11.0 / 3.0 / 0.8 / 6.0 / 6.9), where
-  TriNet loses at most 2.6 (Stage A found every TriNet model within a
-  point in seeds 0 to 2). The losses fall on old traces: at 260
-  characters, seed 1 answers "the value before the last overwrite"
-  71.9% right (94.2% at 125), and seed 4 answers "current, not
-  overwritten" 89.0% right (100% at 125). TriNet's seeds 3 to 5 answer
-  that second kind 99.7 to 100% right at 260.
-- **The model does use the rotation.** After training the angles
-  average 0.006 to 0.15 radians per character (from at most 0.003), and
-  the largest reach 0.43: up to 54 radians, many full turns, over 125
-  characters. `w_im`, which starts at zero, averages 0.02 to 0.16.
-- **Time, roughly:** 850 to 903 seconds a run (seeds 2 and 5 took about
-  1,520, probably because other work shared the machine then), against
-  523 to 532 for TriNet. The first version, the same computation, took
-  1,136 to 1,199, so the machine's load varied.
+- **Started near zero, it learns the task in three seeds of six**
+  (99.5 to 99.7%), where TriNet learns it in four (99.2 to 99.8%). Two
+  of its runs stop short (95.0 and 95.5%), as two of TriNet's do (88.9
+  and 95.4%), and one fails (seed 5, 70.4%). TriNet's runs that stop
+  short each fail one kind of query; seed 5 answers every kind poorly
+  (52 to 82%). Paired by seed, it scores below TriNet in five pairs of
+  six. Six seeds do not show that either model is better at the
+  training length.
+- **When it learns, it can learn fast.** On the harder task, seed 3 was
+  at 95.3% at step 500, above every other run at that step, here or in
+  Stage A (the best of those is 93.0%, `trinet-residual`). Seeds 2 and
+  4 reached 95% at step 750, as early as TriNet's earliest.
+- **It loses more on longer texts,** in every pair. From 125 to 260
+  characters it loses 0.8 to 11.0 points (3.0 / 11.0 / 3.0 / 0.8 / 6.0
+  / 6.9), where TriNet loses at most 2.6 (Stage A found every TriNet
+  model within a point in seeds 0 to 2). The losses fall on old traces:
+  at 260 characters, seed 1 answers "the value before the last
+  overwrite" 71.9% right (94.2% at 125), and seed 4 answers "current,
+  not overwritten" 89.0% right (100% at 125). TriNet's seeds 3 to 5
+  answer that second kind 99.7 to 100% right at 260.
+- **Training turned the angles away from zero.** After training, |θ|
+  averages 0.006 to 0.15 radians per character (from at most 0.003),
+  and the largest reach 0.43: up to 54 radians, many full turns, over
+  125 characters. |w_im|, which starts at zero, averages 0.02 to 0.16.
+  **Our reading:** this shows that training pushed them, not that the
+  trained model relies on them; Adam moves a parameter by about its
+  learning rate each step whenever its gradient keeps its sign, however
+  small the gradient.
+- **Time, roughly:** 850 to 903 seconds a run, two at a time (seeds 2
+  and 5 took about 1,520, probably because other work shared the
+  machine then); Stage A's TriNet took 504 to 559, also two at a time.
+  The first version, the same computation, took 1,136 to 1,199, so the
+  machine's load probably varied.
 
 **Our reading.** Rotation did not help at the training length, and it
-hurt on longer texts. One guess, not tested: a trace read through
-Re(qF) is scaled by cos(θ·age), and at ages longer than any seen in
-training that factor takes values the model never learned to read.
-Rotation can tell age, but read this way it ties the read to absolute
-age. Complex retention stays an experiment, off by default, and is not
-carried into TriNet. Any later design with phase should be tested on
-texts longer than it was trained on, as here.
+hurt on longer texts. One guess, not tested: slow rows (θ below about
+2π/125) never turn far within the training length, so at 260
+characters their factor cos(θ·age) takes values not seen in training,
+and the pattern of phases across all the rows is new as well. Rotation
+could tell age, but read this way the strength of every read depends on
+the trace's age, including ages longer than training. Complex retention
+stays an experiment, off by default, and is not carried into TriNet.
+Any later design with phase should be tested on texts longer than it
+was trained on, as here.
 
-**Not checked.** Whether the phase does tell a trace's age (no probe was
-trained); reads that do not depend on absolute age (the size |qF|, or
-the query turned by the same angles); more seeds; the original task.
+**Not checked.** Whether the trained model depends on the rotation (no
+evaluation with θ set to 0 after training); whether the phase does tell
+a trace's age (no probe was trained); reads that do not depend on age,
+such as the size |qF|; more seeds; the original task.
