@@ -407,9 +407,12 @@ memory of fixed size cannot recall arbitrarily many items; a level of
 such memories can grow.
 
 The founder points to the project's earlier records, stages 003 and 004,
-which use the phrase "levels of magnification" for this structure. Those
-records are kept privately; whether passages of them may be quoted here
-is asked in `STATUS.md` ("Open questions").
+for "levels of magnification". The phrase is in the dialogue on
+shared-benefit optimization, now public (line 220): "The scale cut:
+“levels of magnification” — the same pattern asked to survive more than
+one partition." The other stage texts are kept privately; whether
+passages of them may be quoted here is asked in `STATUS.md` ("Open
+questions").
 
 ## The general cell
 
@@ -467,7 +470,7 @@ Order of work:
 - Del Rey, N. L.-G., Trigo-Damas, I., Obeso, J. A., Cavada, C., & Blesa,
   J. (2022). Neuron types in the primate striatum: stereological analysis
   of projection neurons and interneurons in control and parkinsonian
-  monkeys. *Neuropathology and Applied Neurobiology* 48(5).
+  monkeys. *Neuropathology and Applied Neurobiology* 48(5), e12812.
   doi:10.1111/nan.12812
 - DeSieno, D. (1988). Adding a conscience to competitive learning.
   *IEEE International Conference on Neural Networks.*
@@ -585,9 +588,10 @@ How these were checked:
   findings quoted from them.
 - Anderson, Hopfield, Larkum et al. 1999, Lisman, Napper & Harvey,
   Schultz et al., Szabadics et al., Werfel et al., He et al. and DeSieno
-  were checked against Crossref by the second round of that review.
+  were checked against Crossref by the second round of that review, and
+  Kelso et al., Monderer & Shapley and Del Rey et al. by the third.
 - The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
-  Kirsch & Schmidhuber, Koestler, Miconi et al., Monderer & Shapley,
-  Najarro & Risi, Ramsauer et al., Shazeer et al., Simon, and the books)
+  Kirsch & Schmidhuber, Koestler, Miconi et al., Najarro & Risi, Ramsauer
+  et al., Shazeer et al., Simon, and the books)
   are from Claude's knowledge, and are to be checked before this page is
   cited elsewhere.

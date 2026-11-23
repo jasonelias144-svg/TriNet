@@ -58,10 +58,14 @@ on Hugging Face:
 ## Open questions
 
 - For the founder: may passages of the project's earlier stage texts
-  (003 and 004, kept privately in `ebook-press`), on "levels of
+  (003, 004 and 005, kept privately in `ebook-press`), on "levels of
   magnification", be quoted in `docs/NEURON-CATALOG.md`, or only
-  described, with the stage and line as the source? A section on them
-  follows the answer. (asked 2026-11-23)
+  described, with the stage and line as the source? (The passage in 008
+  is public already, in the open-worlds library.) The technical lead's
+  recommendation: quote short passages, each with its stage and line,
+  and keep the stage texts themselves private; they are private for the
+  published translations they hold, not for these passages. A section
+  on them follows the answer. (asked 2026-11-23)
 - For the founder: does the work toward the general cell
   (`docs/NEURON-CATALOG.md`, "Order of work") come before the items under
   "Next", or run beside them? The technical lead's recommendation:
