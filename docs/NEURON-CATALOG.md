@@ -77,7 +77,7 @@ artificial neuron.
 | **Basket and chandelier cells** (cortex) | Inhibitory. Basket cells wrap the cell bodies of pyramidal cells; chandelier cells end on the start of their axons (Markram et al., 2004). | Basket cells control the gain and timing of their targets. Chandelier cells were long thought to veto a cell's output; they can also excite their targets (Szabadics et al., 2006). | Anatomy established; basket cells' role a leading theory; chandelier cells' effect contested | `ShuntingInterneuron` |
 | **Martinotti cell** (cortex) | Inhibitory. Its axon climbs to the surface layer, onto the far ends of pyramidal dendrites (Markram et al., 2004). | Gates the feedback arriving from above. | Anatomy established; role a leading theory | none |
 | **Dentate granule and CA3 cells** (hippocampus) | Dentate granule cells fire sparsely; CA3 pyramidal cells are densely connected to one another. | Dentate gyrus keeps similar memories apart; CA3 completes a memory from a fragment (Marr, 1971; Leutgeb et al., 2007). | Leading theory | the fast memory `F_fast` of `TriChannelUnit`, in part |
-| **Medium spiny neuron** (striatum) | Spiny; the great majority of striatal neurons, 90 to 95% in rodents and a smaller share in primates, whose striatum holds more interneurons. Two kinds, a "go" and a "no-go" pathway, both tuned by dopamine. | Select which action or plan is let through (Redgrave, Prescott & Gurney, 1999). | Leading theory | none; the selection part of the planned executive (below) |
+| **Medium spiny neuron** (striatum) | Spiny; the great majority of striatal neurons, 90 to 95% in rodents; in macaque monkeys about 86%, the other 14% being interneurons (Del Rey et al., 2022). Two kinds, a "go" and a "no-go" pathway, both tuned by dopamine. | Select which action or plan is let through (Redgrave, Prescott & Gurney, 1999). | Leading theory | none; the selection part of the planned executive (below) |
 | **Neuromodulatory cells** (dopamine, serotonin, noradrenaline, acetylcholine; midbrain, brainstem, basal forebrain) | Few cells, whose axons branch across large parts of the brain. | Signal a state to many regions at once: a reward error, arousal, attention. They can change how a whole circuit behaves (Marder, 2012). | Wide projection established; what the signals carry, and how they differ from target to target, partly open | `ModulatorNucleus` (the yellow channel) |
 | **Thalamic relay cell** (thalamus) | Two firing modes, steady and bursting, switched by the cell's own voltage (Sherman, 2001). | Relays its input faithfully, or flags that something new has arrived. | Modes established; their role a leading theory | none |
 | **Delay lines and coincidence detectors** (auditory brainstem of birds) | Axons of graded length, the delay lines, reach a row of cells in nucleus laminaris at graded times; those cells fire when inputs from the two ears coincide (Jeffress, 1948). | Detect differences of millionths of a second between the two ears, to place a sound (Carr & Konishi, 1990). | Established in the barn owl; how far it holds in mammals is argued | `DelayLineUnit` |
@@ -147,14 +147,15 @@ dials, buttons, and switches."
 |---|---|---|
 | **Dial** | a value on a continuum, until turned | steady levels: resting excitability, the background level of a neuromodulator |
 | **Switch** | one of two states, until flipped | the thalamic relay cell's two modes; a silent or an active synapse (below) |
-| **Button** | a signal only while pressed, held or in bursts, so its message is in its timing | spikes and bursts: a burst can carry what a single spike cannot (Lisman, 1997). Dopamine is both: a steady level, and short bursts that signal a reward error (Schultz, Dayan & Montague, 1997). |
+| **Button** | a signal only while pressed, held or in bursts, so its message is in its timing | spikes and bursts. Leading theory: a burst can carry what a single spike cannot (Lisman, 1997). Established: dopamine is both, a steady level, and short bursts that signal a reward error (Schultz, Dayan & Montague, 1997). |
 
 **Our reading.** Standard training adjusts values by small steps, which
 suits dials. Switches and buttons are all or nothing, so standard
 training cannot adjust them directly. Known ways round this: train a soft
-version and harden it (Bengio, Léonard & Courville, 2013; Jang, Gu &
-Poole, 2017), or let something other than standard training operate them,
-such as the cell's own rule (below).
+version and harden it (Jang, Gu & Poole, 2017); use the hard value going
+forward and a stand-in gradient going back (Bengio, Léonard & Courville,
+2013); or let something other than standard training operate them, such
+as the cell's own rule (below).
 
 ## Sense, decide, act: two levels of learning
 
@@ -172,13 +173,13 @@ neural network."
   is the other cells and the broadcast; its actions are its outputs, and
   changes to its own dials, switches and connections; and those change
   its next inputs.
-- **Two levels of learning have working precedents.** Standard training
-  can set how plastic each connection is while a Hebbian rule changes the
-  connections in use (Miconi, Clune & Stanley, 2018). Each connection can
-  carry its own evolved local rule, so that networks starting from random
-  weights adapt during their lifetime (Najarro & Risi, 2020). Every
-  connection can run one tiny shared network, from whose local runs
-  learning emerges (Kirsch & Schmidhuber, 2021).
+- **Reported: two levels of learning have working precedents.** Standard
+  training can set how plastic each connection is while a Hebbian rule
+  changes the connections in use (Miconi, Clune & Stanley, 2018). Each
+  connection can carry its own evolved local rule, so that networks
+  starting from random weights adapt during their lifetime (Najarro &
+  Risi, 2020). Every connection can run one tiny shared network, from
+  whose local runs learning emerges (Kirsch & Schmidhuber, 2021).
 - **Our reading.** TriNet already does a small version: its fast memory
   is changed during each text by its own local rule, while its lasting
   weights and gates are set by training. The step proposed is to let the
@@ -198,8 +199,10 @@ What is known:
 
 - **Established.** Connections strengthen after strong activity:
   long-term potentiation, first shown with high-frequency stimulation
-  (Bliss & Lømo, 1973). Later work showed that it needs the cells on both
-  sides active together, as Hebb (1949) had proposed.
+  (Bliss & Lømo, 1973). Much of it, the NMDA-dependent kind found at
+  CA1 synapses in the hippocampus, needs the cells on both sides active
+  together, as Hebb (1949) had proposed (Kelso, Ganong & Brown, 1986);
+  not all of it does.
 - **Established.** New connections form and old ones vanish within days,
   even in adult cortex: dendritic spines appear and disappear
   (Trachtenberg et al., 2002).
@@ -255,7 +258,7 @@ What has been built or found before:
 
 - **Ashby's homeostat** (1952): when its essential variables left their
   safe range, it changed its own settings at random until stability
-  returned. That is a primitive choice built into a unit.
+  returned. Our reading: that is a primitive choice built into a unit.
 - **Klopf's "hedonistic neuron"** (1982): each neuron as an agent seeking
   its own reward.
 - **Barto, Sutton & Anderson** (1983): neuron-like learning agents that
@@ -299,14 +302,15 @@ Two cautions:
 
 ## The part and the whole: shared-benefit optimization
 
-The founder, 2026-11-23: "We did begin working that out with Shared
-Benefit Optimization. … when you mention a single neurons pursuing their
-own goals, it seems like a good time to revisit this topic, as it could
-provide the mathematical foundation for code to implement the concept."
+The founder, 2026-11-23, proposed for discussion: "We did begin working
+that out with Shared Benefit Optimization. … when you mention a single
+neurons pursuing their own goals, it seems like a good time to revisit
+this topic, as it could provide the mathematical foundation for code to
+implement the concept."
 
 The dialogue on it, between ChatGPT and Grok with Claude as its auditor,
 is kept whole in the open-worlds library
-([its entry](https://github.com/jasonelias144-svg/open-worlds/blob/main/library/README.md)).
+([its entry](https://github.com/jasonelias144-svg/open-worlds/blob/main/library/README.md#shared-benefit-optimization)).
 It asks how a part can improve its own condition while the whole stays
 viable, without any part capturing what the arrangement produces.
 
@@ -324,11 +328,15 @@ viable, without any part capturing what the arrangement produces.
 
 - **Alignment.** If every improvement a part makes for itself also raises
   one shared quantity, local improvements cannot go round in circles.
-  Networks already have this: in a Hopfield network each neuron's update
-  lowers one shared energy, and the network settles (Hopfield, 1982).
+  The general result is for potential games (Monderer & Shapley, 1996),
+  where the dialogue itself starts. Networks have a case of it: in a
+  Hopfield network with symmetric connections, updated one neuron at a
+  time, each update lowers one shared energy, and the network settles
+  (Hopfield, 1982).
 - **Circulation.** The dialogue's "permanent capture" has neural cases:
-  units that never receive input again, and mixture-of-experts networks
-  whose router sends every input to a few experts, met with a
+  units that stop activating, and so stop learning ("dead" units), and
+  mixture-of-experts networks whose router sends every input to a few
+  experts, met with a
   load-balancing term (Shazeer et al., 2017) or a handicap on units that
   win too often (DeSieno, 1988). Its distinction between capture and
   healthy circulation gives two measures to code: no permanent starvation
@@ -341,7 +349,7 @@ viable, without any part capturing what the arrangement produces.
 
 The founder, 2026-11-23, proposed for discussion: "we should consider
 fractal design as a methodology, where we start with the simplest
-lea[r]ning unit. And that is embedded within and controls the next level
+leaning unit. And that is embedded within and controls the next level
 or order of learning units. And each layer reproduces the architecture of
 the part, but now in the whole, and so that whole can become the next
 level of parts in a larger whole. If this fractal design is consistent,
@@ -389,15 +397,19 @@ scale (Anderson, 1972).
 tested: a network of general cells, arranged in levels, against the same
 cells beside a black-box Transformer, and against either alone, at the
 same size. The brain recalls without a Transformer, using the same
-building blocks arranged differently: CA3's dense web, beside the
-selection of the striatum. A level of many cells, each holding one
-binding, with a step that selects the cell that matches a query, is close
-to what attention does, and like attention its memory grows with the
-number of cells. A memory of fixed size cannot recall arbitrarily many
-items; a level of such memories can grow.
+building blocks arranged differently, such as CA3's dense web. By
+analogy with the striatum's selection: a level of many cells, each
+holding one binding, with a step that selects the cell that matches a
+query, is close to what attention does, and like attention its memory
+grows with the number of cells. Modern Hopfield networks make the link
+between such memories and attention exact (Ramsauer et al., 2021). A
+memory of fixed size cannot recall arbitrarily many items; a level of
+such memories can grow.
 
-The project's earlier records work out the same structure under the name
-"levels of magnification". A section on them is to follow.
+The founder points to the project's earlier records, stages 003 and 004,
+which use the phrase "levels of magnification" for this structure. Those
+records are kept privately; whether passages of them may be quoted here
+is asked in `STATUS.md` ("Open questions").
 
 ## The general cell
 
@@ -452,6 +464,11 @@ Order of work:
 - Carr, C. E., & Konishi, M. (1990). A circuit for detection of interaural
   time differences in the brain stem of the barn owl. *Journal of
   Neuroscience* 10, 3227–3246.
+- Del Rey, N. L.-G., Trigo-Damas, I., Obeso, J. A., Cavada, C., & Blesa,
+  J. (2022). Neuron types in the primate striatum: stereological analysis
+  of projection neurons and interneurons in control and parkinsonian
+  monkeys. *Neuropathology and Applied Neurobiology* 48(5).
+  doi:10.1111/nan.12812
 - DeSieno, D. (1988). Adding a conscience to competitive learning.
   *IEEE International Conference on Neural Networks.*
 - Ebbinghaus, H. (1885). *Über das Gedächtnis.* Duncker & Humblot.
@@ -485,6 +502,9 @@ Order of work:
   with Gumbel-softmax. *ICLR 2017.*
 - Jeffress, L. A. (1948). A place theory of sound localization. *Journal
   of Comparative and Physiological Psychology* 41, 35–39.
+- Kelso, S. R., Ganong, A. H., & Brown, T. H. (1986). Hebbian synapses in
+  hippocampus. *Proceedings of the National Academy of Sciences* 83,
+  5326–5330.
 - Kirsch, L., & Schmidhuber, J. (2021). Meta learning backpropagation and
   improving it. *NeurIPS 2021.*
 - Klopf, A. H. (1982). *The Hedonistic Neuron: A Theory of Memory,
@@ -515,11 +535,15 @@ Order of work:
 - Miconi, T., Clune, J., & Stanley, K. O. (2018). Differentiable
   plasticity: training plastic neural networks with backpropagation.
   *ICML 2018.*
+- Monderer, D., & Shapley, L. S. (1996). Potential games. *Games and
+  Economic Behavior* 14, 124–143.
 - Najarro, E., & Risi, S. (2020). Meta-learning through Hebbian
   plasticity in random networks. *NeurIPS 2020.*
 - Napper, R. M., & Harvey, R. J. (1988). Number of parallel fiber
   synapses on an individual Purkinje cell in the cerebellum of the rat.
   *Journal of Comparative Neurology* 274, 168–177.
+- Ramsauer, H., et al. (2021). Hopfield networks is all you need. *ICLR
+  2021.*
 - Redgrave, P., Prescott, T. J., & Gurney, K. (1999). The basal ganglia: a
   vertebrate solution to the selection problem? *Neuroscience* 89,
   1009–1023.
@@ -555,12 +579,15 @@ How these were checked:
 - The journal references of the first version of this page were checked
   against Crossref (authors, titles, journals, volumes, pages, years) by
   the independent review of #5.
-- Napper & Harvey, Szabadics et al., Hinton & Plaut, Werfel et al. and
-  Spieler et al. were checked against PubMed, the publishers' or the
-  authors' pages on 2026-11-23, for the findings quoted from them.
-- The others added after that review (Anderson, Beer, Bengio et al.,
-  DeSieno, Gamma et al., He et al., Hopfield, Jang et al., Kirsch &
-  Schmidhuber, Koestler, Larkum et al. 1999, Lisman, Miconi et al.,
-  Najarro & Risi, Schultz et al., Shazeer et al., Simon), the books, and
-  Evci et al., are from Claude's knowledge, and are to be checked before
-  this page is cited elsewhere.
+- Napper & Harvey, Szabadics et al., Hinton & Plaut, Werfel et al.,
+  Spieler et al., Kelso et al. and Del Rey et al. were checked against
+  PubMed, the publishers' or the authors' pages on 2026-11-23, for the
+  findings quoted from them.
+- Anderson, Hopfield, Larkum et al. 1999, Lisman, Napper & Harvey,
+  Schultz et al., Szabadics et al., Werfel et al., He et al. and DeSieno
+  were checked against Crossref by the second round of that review.
+- The rest (Beer, Bengio et al., Evci et al., Gamma et al., Jang et al.,
+  Kirsch & Schmidhuber, Koestler, Miconi et al., Monderer & Shapley,
+  Najarro & Risi, Ramsauer et al., Shazeer et al., Simon, and the books)
+  are from Claude's knowledge, and are to be checked before this page is
+  cited elsewhere.

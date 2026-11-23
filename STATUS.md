@@ -57,6 +57,11 @@ on Hugging Face:
 
 ## Open questions
 
+- For the founder: may passages of the project's earlier stage texts
+  (003 and 004, kept privately in `ebook-press`), on "levels of
+  magnification", be quoted in `docs/NEURON-CATALOG.md`, or only
+  described, with the stage and line as the source? A section on them
+  follows the answer. (asked 2026-11-23)
 - For the founder: does the work toward the general cell
   (`docs/NEURON-CATALOG.md`, "Order of work") come before the items under
   "Next", or run beside them? The technical lead's recommendation:

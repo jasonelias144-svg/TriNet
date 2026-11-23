@@ -18,8 +18,9 @@ to a change, the change says so.
 
 ## Where quotations come from
 
-Quotations from a record give the record and line. The founder's words to Claude, which no record holds, give their date, as `STATUS.md` ("Decided") does. The records,
-by size and SHA-256:
+Quotations from a record give the record and line. The founder's words
+to Claude, which no record holds, give their date, as `STATUS.md`
+("Decided") does. The records, by size and SHA-256:
 
 - **Gemini 012-08-04,** kept in
   [open-worlds](https://github.com/jasonelias144-svg/open-worlds/blob/main/sketches/records/012-08-04-GMNI-Patterns_Multiverses.txt):
