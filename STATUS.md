@@ -16,11 +16,24 @@ of every session; update it on your branch at the end. Keep it short and true. -
 
 ## Now
 
-- Claude: the hologram simulation (`experiments/holography.py`, #8)
+- Claude: six proposals of the founder's in the catalog: signals like light, amplitude and phase, ports and receptors, the 5-HT2A receptor, the canyon, the connection ledger (`docs/NEURON-CATALOG.md`, #9)
+- Claude: complex retention, the first test of complex signals (branch
+  `claude/complex-retention`; its pull request to come)
 
 ## Next
 
-1. **Teach the in-context task under the training script.** Trained on
+1. **A fair comparison**, the main line (Decided, 2026-11-23): what
+   every other proposal is measured against. On the harder task
+   (`experiments/harder_task.py`), where Stage A found the seeds differ
+   more than the models, with more seeds and a fixed number of threads:
+   a tuned Transformer of the same size, including one without learned
+   positions; a plain gated delta-rule memory (Gated DeltaNet) of the
+   same size; and TriNet with its own parts removed one at a time (the
+   receptor bus, the yellow gates, the shunt, the delays), to show what
+   they add. Then the hybrid of `experiments/README.md` ("What Stage A
+   shows"), a TriNet and a Transformer with an executive network between
+   them, once a Transformer learns the task.
+2. **Teach the in-context task under the training script.** Trained on
    the answers, the model learns the task with change 6 completely (100%,
    two seeds, on 2 threads; 98.2 to 100% in Stage A's three seeds on 1
    thread; `experiments/README.md`). Under `train_trinet.py`, which
@@ -30,13 +43,14 @@ of every session; update it on your branch at the end. Keep it short and true. -
    (Before change 6 it seemed to do better, 99.7% at seed 0, but much of
    that was the shortcut.) Find what decides it (weighting the answers in
    the loss, training longer, more seeds) and measure.
-2. **A fair comparison.** A tuned Transformer of the same size, including
-   one without learned positions, on the task of `experiments/` (ours is
-   small and untuned); and a plain gated delta-rule memory (Gated DeltaNet)
-   of the same size, with TriNet's own parts removed one at a time, to show
-   what they add.
-3. A real training run (the `1m` preset on TinyStories) on a GPU, with the
-   founder's choice of where it runs.
+3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
+   GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order).
+   A short test of TriNet's speed there comes first, now, beside Next 1. The founder's Kaggle token
+   is among this environment's network secrets (never in the
+   repository); on 2026-11-23 a call that needs it returned the account's
+   GPU quota, 30 hours a week. Kaggle's own command-line tool cannot sign
+   in with a token held this way (its check sends the token in the
+   request body), so the calls go to Kaggle's API directly.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
@@ -44,11 +58,14 @@ Beside these, not after them (Decided, 2026-11-23): the general cell, by
 the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
 Items 1 and 2 test what TriNet already is, and their results are what the
 general cell is compared against. Also beside them (Decided, 2026-11-23):
-the hologram simulation proposed there ("Writing and reading a
-hologram"), whose first step is in `experiments/README.md`; and, as the
-first test of complex signals, complex retention: a fast memory that
-fades and rotates, so a trace's phase tells its age (in its own pull
-request).
+as the first test of complex signals, complex retention, a fast memory
+that fades and rotates, so a trace's phase tells its age (in its own pull
+request); then the canyon and the connection ledger as one experiment
+(`docs/NEURON-CATALOG.md`, "The connection ledger"), the first step
+toward temporary weights that become lasting ones. Set aside for now,
+each kept in the catalog with its test: optical hardware, the 5-HT2A
+dial, new port types, the holographic layer, and the receptor bus's
+colour signal written as a complex number.
 
 ## Before publishing
 
@@ -57,7 +74,7 @@ change moves toward it. What stands between this repository and a model
 on Hugging Face:
 
 - [x] A task without the fixed-roles shortcut (change 6, #3).
-- [ ] The comparisons of Next 2, so the model card says honestly what
+- [ ] The comparisons of Next 1, so the model card says honestly what
       TriNet adds.
 - [ ] A model trained on real text (Next 3), judged on text it was not
       trained on (see Noticed: validation).
@@ -68,12 +85,47 @@ on Hugging Face:
 
 ## Open questions
 
-- For the founder: where a GPU training run should happen (Colab, a Hugging
-  Face Space, or elsewhere), and under which account a model would be
-  published. Not needed until Next item 3. (asked 2026-11-22)
+- For the founder: under which account a model would be published. Not
+  needed until Next item 5. (asked 2026-11-22; where GPU runs happen was
+  answered on 2026-11-23, Decided)
 
 ## Decided
 
+- 2026-11-23, founder, on GPU training, after asking the technical lead
+  what it needs and costs: "If you could provide a list of options at
+  different price levels, and the benefits associated and I will get the
+  funding for the GPU training. But let's waiting until we know we have
+  something worth taking to the next development stage. Until then, let's
+  maximize the resources at our disposal." Then, from the technical lead's
+  list: "Ok, Kaggle it is. 30 GPU-hours per week is plenty if we utilize
+  that time well." And: "I have a Kaggle account." Hence Kaggle's free
+  GPUs, under the founder's own Kaggle account, are a resource to use from
+  now on, starting with a test of TriNet's speed there; paid GPUs wait
+  until there is something worth taking to the next stage, and for the
+  founder's funding. That Next 3's training on real text comes after Next
+  1 is the technical lead's order of work, not the founder's words: it is
+  to show what TriNet adds before a long run is spent on it.
+- 2026-11-23, founder, after offering the day's proposals for
+  discussion: "Honestly, my goal was to throw out so many ideas that we
+  could move in any of a variety of directions and then let you decide
+  what to do from there. … What to work on next is up to you. I mention
+  the 5-HT2A receptor because I have always been curious, but it may have
+  nothing to do with our work. And that goes for the other ideas. But if
+  something of interest strikes you as worth further development, let's
+  move in that direction. Thoughts on where to move forward next?"
+  Hence, decided by the technical lead (Claude)
+  the same day: the fair comparison becomes the main line (Next 1, moved
+  up from 2), since it is what every other proposal is measured against;
+  the canyon and the connection ledger become one experiment, after
+  complex retention (the question asked here earlier that day, now
+  closed); optical hardware, the 5-HT2A dial, new port types, the
+  holographic layer and the receptor bus's colour signal written as a
+  complex number are set aside for now, each kept in
+  `docs/NEURON-CATALOG.md` with its test. Of the hologram simulation
+  agreed below ("Yes to both"), the first step is done (#8) and the
+  second, the holographic layer inside TriNet, is the one set aside.
+  Under which account a model is published stays the founder's (Open
+  questions); where GPU runs happen was answered later that day (above).
 - 2026-11-23, founder, answering two questions: does the hologram
   simulation run beside the items under "Next", and should the first test
   of complex signals be complex retention (a fast memory that fades and
@@ -180,6 +232,7 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
+- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 37 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, five proposals set aside; the founder's word on GPU training (Kaggle from now on, starting with a speed test; paid GPUs when there is something worth taking further); after independent review, a training claim, where 5-HT2A sits, a theory's label and what the receptor bus feeds corrected (#9)
 - 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
