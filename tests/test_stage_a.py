@@ -137,10 +137,11 @@ def test_residual_error_is_off_by_default_and_changes_the_model_when_on():
 def test_the_stage_a_script_runs_every_model_on_both_tasks(capsys):
     import stage_a
     for task in stage_a.TASKS:
-        for name in ("trinet-residual", "bicam-nocal", "transformer"):
+        for name in ("trinet-residual", "trinet-complex", "bicam-nocal", "transformer"):
             results = stage_a.run(name, task, seed=0, steps=2, eval_batches=1)
             assert set(results) == set(stage_a.TESTS[task])
-    assert "before last overwrite" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "before last overwrite" in out and "after training: layer 0: angle mean" in out
 
 
 def test_residual_error_makes_the_fast_memory_learn_what_w_base_gets_wrong():

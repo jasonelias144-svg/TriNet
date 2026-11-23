@@ -13,6 +13,12 @@ the Transformer:
   trinet           one TriNet (TriNetForCausalLM), as in answers_only.py
   trinet-residual  the same, with residual_error=True (change 7): the fast
                    memory stores adjustments to W_base
+  trinet-complex   the same as trinet, with complex retention
+                   (complex_retention.py): the fast memory fades and
+                   rotates, so a trace's phase tells its age; the angles
+                   start near zero, in [0, 0.003)
+  trinet-complex-wide  the same, with the angles of the first version,
+                   in [0, pi/10)
   bicam-sym        two identical stacks, joined by the callosum
   bicam-asym       the same, but stack A keeps its memory longer
                    (retention floor 0.95 against 0.5)
@@ -38,6 +44,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import answers_only as A  # noqa: E402
+import complex_retention as C  # noqa: E402
 import harder_task as H  # noqa: E402
 from bicameral.bicameral_stage_a import BicameralTriNetConfig, BicameralTriNetForCausalLM  # noqa: E402
 from trinet.configuration_trinet import TriNetConfig  # noqa: E402
@@ -49,7 +56,8 @@ CHARS = sorted(set(H.VARS + H.VALS + H.FILLER + list("=;?><")))
 HALF = dict(vocab_size=256, d_model=32, d_hemi=20, d_key=12, d_val=12, n_layers=2, delay_lags=4,
             n_receptors=8, callosum_dim=8, hemisphere_dropout=0.0)
 BICAMERAL = {"bicam-sym": {}, "bicam-asym": {"symmetric": False}, "bicam-nocal": {"callosum": False}}
-MODELS = ["trinet", "trinet-residual", *BICAMERAL, "transformer"]
+COMPLEX = {"trinet-complex": C.THETA_MAX, "trinet-complex-wide": C.THETA_MAX_WIDE}
+MODELS = ["trinet", "trinet-residual", *COMPLEX, *BICAMERAL, "transformer"]
 TASKS = ["answers", "harder"]
 # Filler lengths as in answers_only.TESTS; the harder task's episodes are longer.
 TESTS = {"answers": A.TESTS,
@@ -86,8 +94,10 @@ def build(name, task):
     """A model, a function from token ids to logits, and the task."""
     bytes_as_tokens = name != "transformer"
     data = HarderTask(bytes_as_tokens) if task == "harder" else A.CharTask(bytes_as_tokens)
-    if name in ("trinet", "trinet-residual"):
+    if name in ("trinet", "trinet-residual", *COMPLEX):
         model = TriNetForCausalLM(TriNetConfig(**A.SMALL, residual_error=(name == "trinet-residual")))
+        if name in COMPLEX:
+            C.make_complex(model, COMPLEX[name])  # the same starting weights as trinet, plus angles
     elif name in BICAMERAL:
         model = BicameralTriNetForCausalLM(BicameralTriNetConfig(**{**HALF, **BICAMERAL[name]}))
     elif name == "transformer":
@@ -129,6 +139,8 @@ def run(name, task, seed, steps, eval_batches=8, curve_every=0):
           flush=True)
     if curve:
         print("    learning curve, % right at the training length, by step: " + "; ".join(curve), flush=True)
+    if name in COMPLEX:
+        print("    after training: " + C.angles(model), flush=True)
     kinds = H.KINDS if task == "harder" else {1: "direct", 2: "overwrite", 3: "two hops"}
     results = {}
     with torch.no_grad():
