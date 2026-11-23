@@ -99,7 +99,7 @@ def build(name, task):
 
 
 def curve_point(logits_of, data, step):
-    """Accuracy at the training length on two fixed batches, for the
+    """Accuracy at the training length on 128 fixed episodes, for the
     learning curve. Its own random generator, so the training is the same
     with or without it."""
     with torch.no_grad():

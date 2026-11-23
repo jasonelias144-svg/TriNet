@@ -53,7 +53,7 @@ def make_episode(
 ) -> Tuple[str, List[Tuple[int, int, int]], Dict]:
     """One episode: its text, and for each query (position of its ">" or
     "<", the answer's character code, kind). The third value records what
-    happened, for the checks in tests/test_experiments.py."""
+    happened, for the checks in tests/test_stage_a.py."""
     names = [str(v) for v in rng.choice(VARS, size=n_bound + n_pointers, replace=False)]
     bound, pointers = names[:n_bound], names[n_bound:]
 
