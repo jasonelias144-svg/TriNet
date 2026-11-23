@@ -718,7 +718,10 @@ in a thick hologram, the peak of an optical correlator (Vander Lugt,
 
 **Our proposal**, in two steps.
 
-1. **Simulate writing and reading** (numerical optics, on a CPU): record
+1. **Simulate writing and reading** (numerical optics, on a CPU; done,
+   `experiments/holography.py`, results in `experiments/README.md`,
+   several memories, random-phase vectors and smooth random pages, both
+   as a complex sum and as a plate recorded in intensity): record
    the hologram of points at several depths; read it back and refocus
    at each depth; cut it, and measure how the image degrades; store
    several scenes under different keys, and measure the crosstalk as
@@ -929,7 +932,10 @@ consciousness in some interesting ways. Thoughts?"
 port would be a dial on how far the prediction is trusted: turned down,
 surprise grows, and the model writes and learns more, and holds less
 steady. Test: change the task's rules within an episode, and measure
-whether the dial helps it relearn, and what it costs.
+whether the dial helps it relearn, and what it costs. Set aside for now by
+the technical lead, at the founder's word (STATUS.md, Decided,
+2026-11-23): it needs a task whose rules change, which the work ahead
+does not yet have.
 
 ## The canyon
 
@@ -1035,7 +1041,9 @@ floor and a ceiling; connections never used cost nothing; an auditor
 prunes those long unused, unless their canyon is deep. Tests: savings
 (relearning faster than learning), interference between memories, memory
 size against connections used, and, with its rates at zero, today's
-TriNet exactly.
+TriNet exactly. Decided by the technical lead, at the founder's word
+(STATUS.md, Decided, 2026-11-23): one experiment, after complex
+retention.
 
 ## The general cell
 

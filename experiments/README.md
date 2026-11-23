@@ -343,3 +343,151 @@ keep their memory, did not help either). The next step is a pair of
 different halves, a TriNet and a Transformer, with an executive network
 between them. Its code is on its own branch (`claude/hybrid-prototype`,
 not merged); its results will come with its own pull request.
+
+## Writing and reading a hologram
+
+**Question.** The founder asked to look at how holograms are written and
+read, as physics, not as a metaphor (STATUS.md, Decided, 2026-11-23).
+`docs/NEURON-CATALOG.md` ("Writing and reading a hologram") sets out the
+optics and proposed this simulation: does the textbook account hold when
+it is computed, and how does a hologram compare, as a memory, with the
+matrix memories TriNet is built on?
+
+**Method** (`experiments/holography.py`, numpy only). Light of one colour
+(633 nm) as a scalar field on a plate 1,024 pixels of 1 micrometre wide.
+Light moves by the angular spectrum method (each spatial frequency
+changes only its phase), on a grid twice as wide so that little of the
+light leaving the plate's edge wraps round (the FFT's grid is periodic;
+on wider grids still, the numbers below move by a few hundredths, or a
+pixel, at most). Writing records the plate's
+intensity, `|O + R|²`, for an object wave O and a reference R, a plane
+wave at 8.6 degrees. Reading lights the plate with R again and keeps only
+the light travelling the object's way (an aperture in the focal plane of
+a lens), then moves it back to each depth.
+
+**Run.** `python experiments/holography.py` (about 90 seconds; run on
+2026-11-23 on 1 thread, with NumPy 2.4.6, on the machine above).
+
+**A. Each point comes back at its own depth.** Three points of light, at
+20, 30 and 40 mm behind the plate. Brightness at each point's place, as a
+share of the brightest value in each refocused plane:
+
+| Refocused at | point at 20 mm | point at 30 mm | point at 40 mm |
+|---|---|---|---|
+| 20 mm | **1.00** | 0.00 | 0.00 |
+| 30 mm | 0.00 | **1.00** | 0.00 |
+| 40 mm | 0.00 | 0.00 | **1.00** |
+| *control, without a reference beam:* | | | |
+| 20 mm | 0.33 | 0.16 | 0.22 |
+| 30 mm | 0.07 | 0.18 | 0.00 |
+| 40 mm | 0.00 | 0.01 | 0.01 |
+
+With the reference, each point is sharp in its own plane and absent from
+the others. The control records the intensity of the object's light
+alone, as film does without holography, then lights that plate straight
+on and refocuses it in the same way: no point is the brightest thing in
+its own plane. Intensity alone keeps how the points' waves differ in
+phase from one another, but not their phase against a known wave, so the
+wave cannot be rebuilt; the reference gives that known wave.
+
+**B. A quarter of the plate still shows every point.** Spot widths at
+half maximum along x and y, in micrometres, with diffraction's 0.886 λz/D
+for a square window of width D in brackets:
+
+| Point at | whole plate, x / y | one quarter, x / y | how much wider, x / y | quarter's spot, brightness beside the whole plate's |
+|---|---|---|---|---|
+| 20 mm | 11.3 / 10.8 (11.0) | 22.5 / 19.8 (21.9) | 1.99 / 1.84 | 0.058 |
+| 30 mm | 17.0 / 16.6 (16.4) | 34.6 / 30.7 (32.9) | 2.04 / 1.85 | 0.057 |
+| 40 mm | 22.3 / 22.1 (21.9) | 43.4 / 42.8 (43.8) | 1.95 / 1.94 | 0.068 |
+
+Cutting the plate to a quarter (half the width each way) loses none of
+the three points: each spot is about twice as wide, as a window half as
+wide should make it, and about a sixteenth as bright, as a quarter of the
+area gathers a quarter of the light into a spot four times the area.
+Each spot's peak lies within 0 to 1 pixel of its point on the whole
+plate, and 0 to 3 on the quarter. **Our reading:** damage cost
+sharpness and light, not points, for these three isolated points.
+
+**C. Many memories in one store.** n memories of unit phases, each read
+back with its key, 100 trials each. "Score" is the mean match between the
+read-out and the memory asked for (1 is perfect); "found" is how often
+that memory is the best match among those stored: picking it from a
+known list, not recalling it. Every store holds 4,096 complex numbers:
+
+- a hologram whose memories are 4,096 numbers each, either as the
+  complex sum of the term a hologram is read for (value times conjugate
+  key), or recorded on a plate in intensity, one exposure per memory,
+  each exposure's mean taken off (so its twin terms remain). Taking it
+  off is what digital holography does with a camera's record; a film
+  plate keeps it, and it would come back as more noise, which is not
+  simulated here;
+- 64 × 64 matrices (TriNet's kind of memory) whose memories are 64
+  numbers each: the plain sum of outer products; the delta rule in one
+  pass at full step, without the decay, clipping and learned gates of
+  TriNet's fast memory (`F ← λF + η·kᵀ(v − kF)`); and least squares,
+  fitted to all memories at once: the best fit in squared error, which
+  for up to 64 memories returns each exactly.
+
+| Memories | hologram, complex sum | hologram, recorded | matrix: sum | matrix: delta rule | matrix: least squares |
+|---|---|---|---|---|---|
+| 1 | 1.000, 100% | 0.707, 100% | 1.000, 100% | 1.000, 100% | 1.000, 100% |
+| 2 | 0.707, 100% | 0.501, 100% | 0.993, 100% | 0.995, 100% | 1.000, 100% |
+| 8 | 0.354, 100% | 0.250, 100% | 0.951, 100% | 0.971, 100% | 1.000, 100% |
+| 32 | 0.179, 100% | 0.126, 100% | 0.823, 100% | 0.834, 100% | 1.000, 100% |
+| 64 | 0.126, 100% | 0.090, 100% | 0.715, 100% | 0.682, 98% | 1.000, 100% |
+| 128 | 0.089, 100% | 0.061, 97% | 0.580, 100% | 0.476, 60% | 0.706, 100% |
+| 512 | 0.047, 69% | 0.033, 17% | 0.347, 59% | 0.185, 11% | 0.369, 66% |
+
+- **The hologram's read-out falls as 1/√n** (0.707, 0.354, 0.177, 0.125,
+  0.088, 0.044), as the catalog says: the other memories come back as
+  noise spread over the whole field. Recorded on a plate, the twins add
+  as much noise again, and the match falls as 1/√(2n). The memory asked
+  for is still the one found, every time, up to 128 memories as a
+  complex sum and up to 64 when recorded.
+- **The matrices read far more cleanly** (0.82 against 0.18 at 32
+  memories), because reading takes an inner product with the key, which
+  averages the other memories down; least squares returns every memory
+  exactly up to 64, as many as a key has numbers. But their memories are
+  64 numbers, not 4,096, so "found" does not compare like with like.
+  With 100 trials (a standard error of about 5 points at 512), the sum
+  of outer products finds the memory as often as the hologram up to 128,
+  and a little less at 512 (59% against 69%).
+- **The one-pass delta rule favours the newest memories.** Its match by
+  age, oldest quarter to newest, on 64 × 64:
+
+  | Memories | oldest quarter | second | third | newest quarter |
+  |---|---|---|---|---|
+  | 32 | 0.74 | 0.81 | 0.88 | 0.96 |
+  | 64 | 0.48 | 0.59 | 0.73 | 0.91 |
+  | 128 | 0.21 | 0.32 | 0.50 | 0.81 |
+
+  Each write at full step makes its own key exact and disturbs the
+  earlier ones, so on average it beats the sum only while there are few
+  memories, and falls behind from about 50. This is the delta rule
+  without TriNet's decay, clipping and gates, on random keys; TriNet's
+  keys are learned, which is the next test.
+- **Keys at different angles read back exactly**, both as a complex sum
+  (largest relative error 4.5 × 10⁻¹⁵) and recorded on a plate in
+  intensity, one exposure per page (1.3 × 10⁻¹³). There are nine pages,
+  each using 0.14% of the plate's spatial frequencies. The carriers are
+  all on one side and apart by more than twice each page's band, so that
+  each page's unwanted terms, and on the recorded plate its zero order
+  and twin, travel in other directions, where the aperture leaves them
+  out (the zero order also needs each carrier more than three times the
+  band from the axis, which these are: at least 26/256, against a band
+  of 0.02). Such pages share the plate's frequencies, so their number is
+  capped by the plate's size.
+
+**What this shows.** The account in the catalog holds when computed: the
+reference beam is what lets the wave, and so the depth, be rebuilt; a
+piece of the plate shows the whole, less sharp and less bright; and many
+memories share one plate, kept apart by direction, or traded against
+noise. As a memory, a hologram holds big memories noisily in few
+numbers; a matrix holds small memories cleanly. Which serves a network
+better is the catalog's next step: the same operations inside a TriNet
+layer, with learned keys, on the recall task.
+
+**Not checked.** Light of more than one colour; a thick (volume)
+hologram; noise in the recording; objects other than isolated points (a
+smooth object's light gathers near the plate's centre, so a quarter away
+from it would show mostly edges); and learned keys.

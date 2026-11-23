@@ -12,15 +12,26 @@ of every session; update it on your branch at the end. Keep it short and true. -
 <!-- What users get right now (handbook P6). -->
 - Where: not deployed. Nothing is on Hugging Face.
 - Version: none
-- Last check: 2026-11-23, the 46 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
+- Last check: 2026-11-23, the 56 tests and Gemini's round-trip check pass with transformers 4.46.3 and 5.24.0
 
 ## Now
 
 - Claude: six proposals of the founder's in the catalog: signals like light, amplitude and phase, ports and receptors, the 5-HT2A receptor, the canyon, the connection ledger (`docs/NEURON-CATALOG.md`, #9)
+- Claude: complex retention, the first test of complex signals (branch
+  `claude/complex-retention`; its pull request to come)
 
 ## Next
 
-1. **Teach the in-context task under the training script.** Trained on
+1. **A fair comparison**, the main line (Decided, 2026-11-23): what
+   every other proposal is measured against. On the harder task
+   (`experiments/harder_task.py`), where Stage A found the seeds differ
+   more than the models, with more seeds and a fixed number of threads:
+   a tuned Transformer of the same size, including one without learned
+   positions; a plain gated delta-rule memory (Gated DeltaNet) of the
+   same size; and TriNet with its own parts removed one at a time (the
+   receptor bus, the yellow gates, the shunt, the delays), to show what
+   they add.
+2. **Teach the in-context task under the training script.** Trained on
    the answers, the model learns the task with change 6 completely (100%,
    two seeds, on 2 threads; 98.2 to 100% in Stage A's three seeds on 1
    thread; `experiments/README.md`). Under `train_trinet.py`, which
@@ -30,11 +41,6 @@ of every session; update it on your branch at the end. Keep it short and true. -
    (Before change 6 it seemed to do better, 99.7% at seed 0, but much of
    that was the shortcut.) Find what decides it (weighting the answers in
    the loss, training longer, more seeds) and measure.
-2. **A fair comparison.** A tuned Transformer of the same size, including
-   one without learned positions, on the task of `experiments/` (ours is
-   small and untuned); and a plain gated delta-rule memory (Gated DeltaNet)
-   of the same size, with TriNet's own parts removed one at a time, to show
-   what they add.
 3. A real training run (the `1m` preset on TinyStories) on a GPU, with the
    founder's choice of where it runs.
 4. This repository's own model card, from what has been measured here.
@@ -43,8 +49,14 @@ of every session; update it on your branch at the end. Keep it short and true. -
 Beside these, not after them (Decided, 2026-11-23): the general cell, by
 the order of work in `docs/NEURON-CATALOG.md` ("The general cell").
 Items 1 and 2 test what TriNet already is, and their results are what the
-general cell is compared against. Where the hologram simulation proposed
-there goes is asked under "Open questions".
+general cell is compared against. Also beside them (Decided, 2026-11-23):
+as the first test of complex signals, complex retention, a fast memory
+that fades and rotates, so a trace's phase tells its age (in its own pull
+request); then the canyon and the connection ledger as one experiment
+(`docs/NEURON-CATALOG.md`, "The connection ledger"), the first step
+toward temporary weights that become lasting ones. Set aside for now,
+each kept in the catalog with its test: optical hardware, the 5-HT2A
+dial, new port types, and the holographic layer.
 
 ## Before publishing
 
@@ -64,25 +76,34 @@ on Hugging Face:
 
 ## Open questions
 
-- For the founder: do the canyon and the connection ledger become one
-  experiment (`docs/NEURON-CATALOG.md`, "The connection ledger"), to come
-  next after complex retention, with the 5-HT2A dial after it? The
-  technical lead's recommendation: yes to both. The ledger's use count is
-  what carves the canyon, so one experiment tests both, and the dial
-  needs a task whose rules change, which the other two do not. (asked
-  2026-11-23)
-- For the founder: does the hologram simulation proposed in
-  `docs/NEURON-CATALOG.md` ("Writing and reading a hologram") run beside
-  the items under "Next", as the general cell does, or after them? The
-  technical lead's recommendation: beside. It is small, runs on a CPU,
-  and its second step compares a holographic memory with TriNet's own,
-  which is what Next 2 asks of TriNet's parts. (asked 2026-11-23)
 - For the founder: where a GPU training run should happen (Colab, a Hugging
   Face Space, or elsewhere), and under which account a model would be
   published. Not needed until Next item 3. (asked 2026-11-22)
 
 ## Decided
 
+- 2026-11-23, founder, after offering the day's proposals for
+  discussion: "Honestly, my goal was to throw out so many ideas that we
+  could move in any of a variety of directions and then let you decide
+  what to do from there. … What to work on next is up to you. I mention
+  the 5-HT2A receptor because I have always been curious, but it may have
+  nothing to do with our work. And that goes for the other ideas. But if
+  something of interest strikes you as worth further development, let's
+  move in that direction." Hence, decided by the technical lead (Claude)
+  the same day: the fair comparison becomes the main line (Next 1, moved
+  up from 2), since it is what every other proposal is measured against;
+  the canyon and the connection ledger become one experiment, after
+  complex retention (the question asked here earlier that day, now
+  closed); optical hardware, the 5-HT2A dial, new port types and the
+  holographic layer are set aside for now, each kept in
+  `docs/NEURON-CATALOG.md` with its test. Where a GPU run happens, and
+  under which account a model is published, stay the founder's (Open
+  questions).
+- 2026-11-23, founder, answering two questions: does the hologram
+  simulation run beside the items under "Next", and should the first test
+  of complex signals be complex retention (a fast memory that fades and
+  rotates, so a trace's phase tells its age)? "Yes to both, alongside is
+  fine." Hence `experiments/holography.py` and the paragraph under Next.
 - 2026-11-23, founder, answering the two questions then open (may
   passages of the stage texts 003 to 005 on "levels of magnification" be
   quoted; does the general-cell work come before Next, or beside it):
@@ -184,7 +205,8 @@ on Hugging Face:
 ## Log
 
 <!-- Newest first. One line per session: date, who, what, pull request. -->
-- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 36 sources added (#9)
+- 2026-11-23 Claude: six proposals of the founder's in the catalog, each quoted and offered for discussion, with what is established, what is theory, and a test: signals like light (optoelectronics, optical multiplexing, colour television as the example), amplitude and phase (complex signals), ports and receptors, the 5-HT2A receptor, the canyon (learning carves paths; William James, 1890), and the connection ledger (with glia); 36 sources added; at the founder's word, what comes next decided by the technical lead: the fair comparison first, the canyon and the ledger as one experiment after complex retention, four proposals set aside (#9)
+- 2026-11-23 Claude: at the founder's word, the hologram simulation (`experiments/holography.py`, 10 tests): each of three points comes back at its own depth with a reference beam, and not in a control without one; a quarter of the plate shows every point, about twice as wide and a sixteenth as bright; as a memory, a hologram's read-out falls as 1/sqrt(n) (1/sqrt(2n) recorded on a plate) but finds the memory asked for up to 128 memories in 4,096 numbers, where 64 x 64 matrices read more cleanly, the one-pass delta rule favouring the newest; keys at different angles read back exactly, recorded or not; after independent review, a fair control, plates recorded in intensity, padding and more trials (#8)
 - 2026-11-23 Claude: Stage A: Gemini's BicameralTriNet (record 012-10-06) kept as given in `bicameral/`, a TriNet of two stacks joined by a callosum, measured against one TriNet of the same size on two tasks, three seeds each: on the original task every TriNet model scores 98.2 to 100%; on a harder task (`experiments/harder_task.py`) the difference between seeds is larger than between models, and only the pair without the callosum learned it in all three seeds; change 7 (`residual_error`, off by default) learns fastest when it learns; the number of threads alone moved a run by 1.8 points in the one case compared; after independent review, the cause of the difference from the earlier "100%" corrected (threads), the hybrid's unrecorded first check taken out, and two tests made stronger (#7)
 - 2026-11-23 Claude: at the founder's word, the stage texts' passages on levels of magnification quoted with stage file and line, and read as a specification for the fractal network; memory spread through the network (holographic memory and coded backups, the founder's proposal); writing and reading a hologram (the optics, Fourier's part, what a hologram holds, and a simulation proposed); 18 sources added; the two review notes of #5 taken (#6)
 - 2026-11-23 Claude: at the founder's word, a catalog of ten neuron families (shape, place, wiring, function, how sure, nearest TriNet part), five functions TriNet lacks as candidate dials, and the founder's proposals for a general cell (dials, switches and buttons; two levels of learning; connections that fade and come back; a cell that chooses; shared-benefit optimization; fractal design), with an order of work; after independent review, the census counts, the archetype numbering, the labels and five other claims corrected (#5)
