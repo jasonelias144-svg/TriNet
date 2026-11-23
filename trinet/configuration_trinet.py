@@ -29,6 +29,7 @@ class TriNetConfig(PretrainedConfig):
         max_fast_weight: float = 6.0,
         max_write_rate: float = 1.5,
         min_retention: float = 0.5,
+        residual_error: bool = False,
         initializer_range: float = 0.02,
         use_cache: bool = True,
         tie_word_embeddings: bool = False,
@@ -47,6 +48,8 @@ class TriNetConfig(PretrainedConfig):
         self.max_fast_weight = float(max_fast_weight)
         self.max_write_rate = float(max_write_rate)
         self.min_retention = float(min_retention)
+        # Change 7 (provenance/MANIFEST.json): predict against W_base + F_fast.
+        self.residual_error = bool(residual_error)
         self.initializer_range = float(initializer_range)
         self.use_cache = bool(use_cache)
 

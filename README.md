@@ -53,6 +53,7 @@ Transformer beside it does better in most runs.
 | `verify_hf_roundtrip.py` | Gemini's check: save, load through `AutoModelForCausalLM`, and generate with and without the cache |
 | `app.py`, `requirements.txt` | A Gradio app that shows the model's yellow gates and fast memory, token by token |
 | `prototypes/` | Gemini's earlier prototypes, kept as given, for checking what they reported ([README](prototypes/README.md)) |
+| `bicameral/` | Gemini's BicameralTriNet for Stage A: two TriNet stacks, with a narrow "callosum" between them, kept as given ([experiments/README.md](experiments/README.md), "Stage A") |
 | `experiments/` | Ours: experiments that anyone can run again, with their results ([README](experiments/README.md)) |
 | `docs/` | Ours: [a catalog of neuron types](docs/NEURON-CATALOG.md), toward one general cell whose dials can set it to act like any of them |
 | `provenance/` | Where each of Gemini's files was taken from, the changes made here, and Gemini's draft model card |
@@ -64,7 +65,7 @@ Transformer beside it does better in most runs.
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install transformers safetensors numpy pytest
-python -m pytest -q                      # 43 tests, seconds
+python -m pytest -q                      # 54 tests, under a minute
 python verify_hf_roundtrip.py            # Gemini's own check
 python train_trinet.py --preset smoke --smoke-test --seq-len 72 --steps 100
 python experiments/answers_only.py trinet  # minutes; see experiments/README.md
@@ -76,15 +77,21 @@ CI runs the tests and Gemini's check with transformers 4.46.3 and 5.24.0.
 
 Checked here, on 2026-11-22:
 
-- **Five small changes were needed.** Four for the model to work with the
-  real transformers library: Gemini's sandbox did not have it, and Gemini
-  tested against a stand-in of their own (they said so, line 41318). Three
-  made it run at all; the fourth, found by this repository's first review,
-  made `generate()` on transformers 5.x use the cache instead of reading
-  the whole text again at every step. The fifth lets the model learn: it
-  starts from PyTorch's own initial values. Each change is listed with its
-  reason in `provenance/MANIFEST.json`; a test undoes them and checks that
-  the rest is, byte for byte, what Gemini gave.
+- **Seven changes have been made to Gemini's code.** Each is listed with
+  its reason in `provenance/MANIFEST.json`; a test undoes them and checks
+  that the rest is, byte for byte, what Gemini gave.
+  - Changes 1 to 4 make the model work with the real transformers library:
+    Gemini's sandbox did not have it, and Gemini tested against a stand-in
+    of their own (they said so, line 41318). Three made it run at all; the
+    fourth, found by this repository's first review, made `generate()` on
+    transformers 5.x use the cache instead of reading the whole text again
+    at every step.
+  - Change 5 lets the model learn: it starts from PyTorch's own initial
+    values.
+  - Change 6 removes a shortcut from the training task.
+  - Change 7 is a switch, off by default, for the founder's two classes of
+    weights: with `residual_error=True` the fast memory stores adjustments
+    to the lasting weights `W_base`, not whole associations.
 - **Stepping token by token with the cache gives what one full pass
   gives**, each of the cache's three states matters, `generate()` feeds the
   model one new token at a time, and the cache stays the same size, however
