@@ -48,12 +48,14 @@ of every session; update it on your branch at the end. Keep it short and true. -
    the loss, training longer, more seeds) and measure.
 3. A real training run (the `1m` preset on TinyStories) on Kaggle's free
    GPUs (Decided, 2026-11-23), after Next 1 (the technical lead's order).
-   A short test of TriNet's speed there comes first, now, beside Next 1. The founder's Kaggle token
-   is among this environment's network secrets (never in the
-   repository); on 2026-11-23 a call that needs it returned the account's
-   GPU quota, 30 hours a week. Kaggle's own command-line tool cannot sign
-   in with a token held this way (its check sends the token in the
-   request body), so the calls go to Kaggle's API directly.
+   A short test of TriNet's speed there comes first, now, beside Next 1.
+   The founder's Kaggle token is among this environment's network secrets
+   (never in the repository). On 2026-11-23, after the founder moved to
+   the Kaggle account that holds their phone number, a private script was
+   saved and run under it through the API; the account shows 30 GPU hours
+   a week. Kaggle's own command-line tool cannot sign in with a token held
+   this way (its check sends the token in the request body), so the calls
+   go to Kaggle's API directly.
 4. This repository's own model card, from what has been measured here.
 5. Publishing on Hugging Face, when the founder decides (P5).
 
