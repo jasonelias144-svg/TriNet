@@ -491,3 +491,40 @@ layer, with learned keys, on the recall task.
 hologram; noise in the recording; objects other than isolated points (a
 smooth object's light gathers near the plate's centre, so a quarter away
 from it would show mostly edges); and learned keys.
+
+## The fair comparison (STATUS.md, Next 1)
+
+### Predictions, written before any result was read
+
+Written by the technical lead on 2026-11-23 at 05:30 UTC, while the runs
+were still going on Kaggle and before any of their output was read; the
+commit's time records it. Each is for the harder task at about 125
+characters, five seeds (0 to 4), 1,500 steps, unless said. "Within the
+noise" means a mean within 3 points of `trinet`'s and no more seeds that
+stop short (below 97%) than it has, plus one.
+
+1. `trinet` scores as in Stage A and the complex-retention runs: a mean
+   of 95 to 98%, with one seed of five or none stopping short.
+2. `trinet-no-fast` fails, below 40% in every seed: without the fast
+   memory nothing carries a value over a hundred characters. (Confident.)
+3. `trinet-no-surprise`, `trinet-no-bus` and `trinet-no-shunt` are
+   within the noise of `trinet`. (Fairly confident for the bus and the
+   shunt; for surprise, about two chances in three.)
+4. `trinet-fixed-gates` is within the noise (about even chances): the
+   delta rule overwrites by itself, so learned constant gates may do.
+5. `trinet-no-delay` is worse, a mean more than 5 points lower (about
+   two chances in three): without the delay line a key can see the
+   character before it only through the memory itself.
+6. `gated-delta` is within the noise of `trinet` or better (about two
+   chances in three).
+7. `trinet-no-clamp` gives the same scores as `trinet`, within half a
+   point in every seed, since the clamp did not bind in the one run
+   checked; `trinet-linear` is within the noise of `trinet-no-surprise`.
+8. The Transformers (`transformer`, `transformer-nope`,
+   `transformer-sized`) stay below 50% at 1,500 steps at every learning
+   rate tried. At 6,000 steps the best of them may learn the task
+   (about even chances that one setting passes 90%).
+
+If 3 and 7 hold, the linear form (Speed on a GPU) is open to TriNet. If
+2 holds and 3 to 6 mostly do, what TriNet's recall rests on is the fast
+memory written by the delta rule, not its other parts.
