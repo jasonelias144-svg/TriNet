@@ -108,11 +108,14 @@ def curve_point(logits_of, data, step):
     return f"{step}: {100 * (got.argmax(-1) == want).float().mean():.1f}"
 
 
-def run(name, task, seed, steps, eval_batches=8, curve_every=0):
+def run(name, task, seed, steps, eval_batches=8, curve_every=0, lr=3e-3, builder=None):
+    """Train one model and print its scores. `builder` (name, task) ->
+    (model, logits_of, data) defaults to build() above; fair_comparison.py
+    passes its own."""
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
-    model, logits_of, data = build(name, task)
-    opt = torch.optim.Adam(model.parameters(), lr=3e-3)
+    model, logits_of, data = (builder or build)(name, task)
+    opt = torch.optim.Adam([p for p in model.parameters() if p.requires_grad], lr=lr)
     start, curve = time.time(), []
     for step in range(1, steps + 1):
         x, metas = data.batch(32, 2, 10, rng)
