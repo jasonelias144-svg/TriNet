@@ -7,7 +7,7 @@ founder's rule, `STATUS.md` "Decided").
 |---|---|
 | `trinet/`, `train_trinet.py`, `verify_hf_roundtrip.py`, `app.py`, `requirements.txt`, `provenance/model-card-draft.md`, the five `.py` files in `prototypes/` | Gemini, in their conversation with the founder (record 012-08-04). `provenance/MANIFEST.json` gives each file's lines in the record and its hash. Claude made six changes to these files; each is listed in the manifest with its reason. |
 | `tests/`, `experiments/`, `provenance/MANIFEST.json`, `.github/workflows/ci.yml`, `pytest.ini`, `.gitignore` | Claude, technical lead |
-| `README.md`, `STATUS.md`, `AGENTS.md`, the READMEs in `experiments/` and `prototypes/`, and this page | Claude, technical lead |
+| `README.md`, `STATUS.md`, `AGENTS.md`, the READMEs in `experiments/` and `prototypes/`, `docs/`, and this page | Claude, technical lead |
 | `CONTRIBUTING.md`, `SECURITY.md`, `CLAUDE.md`, and `.github/` apart from `ci.yml` | Unchanged copies of the policy handbook's files (handbook P9), which Claude wrote |
 | `LICENSE` | Creative Commons' CC0 1.0 text, added by Claude as the founder's standing licence (handbook decision 0003) |
 
@@ -18,8 +18,9 @@ to a change, the change says so.
 
 ## Where quotations come from
 
-Quotations in this repository give their record and line. The records,
-by size and SHA-256:
+Quotations from a record give the record and line. The founder's words
+to Claude, which no record holds, give their date, as `STATUS.md`
+("Decided") does. The records, by size and SHA-256:
 
 - **Gemini 012-08-04,** kept in
   [open-worlds](https://github.com/jasonelias144-svg/open-worlds/blob/main/sketches/records/012-08-04-GMNI-Patterns_Multiverses.txt):
